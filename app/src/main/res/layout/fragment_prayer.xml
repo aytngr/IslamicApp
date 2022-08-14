@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PrayerFragment"
+    android:orientation="vertical"
+    android:background="@drawable/prayer_bg"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bakı"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:textColor="@color/black"/>
+    <TextView
+        android:id="@+id/prayerFragmentDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Şənbə, 13 avqust 2022"
+        android:textSize="25sp"
+        android:layout_gravity="center"
+        android:textColor="@color/black"/>
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="#baf2bb"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="15dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/fajr_icon"
+                android:layout_marginEnd="10dp"/>
+            <TextView
+                android:id="@+id/fajr_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sübh namazı"
+                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/fajr_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="04:08"
+
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="15dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/sunrise_icon"
+                android:layout_marginEnd="10dp"
+                android:layout_gravity="center"
+                />
+            <TextView
+                android:id="@+id/sunrise_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Gün çıxır"
+                android:layout_weight="1"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/sunrise_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="05:49"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="20sp" />
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="15dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/dhuhr_icon"/>
+            <TextView
+                android:id="@+id/dhuhr_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Zöhr namazı"
+                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/dhuhr_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="12:46"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:textSize="20sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="15dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/asr_icon"/>
+            <TextView
+                android:id="@+id/asr_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Əsr namazı"
+                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/asr_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="16:36"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="15dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/maghrib_icon"/>
+            <TextView
+                android:id="@+id/maghrib_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Məğrib namazı"
+                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/maghrib_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="19:41"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="15dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/isha_icon"/>
+            <TextView
+                android:id="@+id/isha_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="İşa namazı"
+                android:textColor="@color/black"
+
+                android:layout_weight="1"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/isha_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="21:17"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
