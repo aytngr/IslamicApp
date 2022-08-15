@@ -27,17 +27,19 @@ class MainActivity : AppCompatActivity() {
 
         val myCalendar: Calendar = Calendar.getInstance()
         val year = myCalendar.get(Calendar.YEAR)
+        val day = myCalendar.get(Calendar.DAY_OF_MONTH) - 1
         val month = myCalendar.get(Calendar.MONTH)
 
         prayerViewModel.sendPost().observe(this, Observer {
-            Log.i("eac","api result ${it.data[month].timings!!.Fajr!!}")
-            prefs.fajr_time = it.data[month].timings!!.Fajr!!.substringBefore(" ")
-            prefs.sunrise_time = it.data[month].timings!!.Sunrise!!.substringBefore(" ")
-            prefs.dhuhr_time = it.data[month].timings!!.Dhuhr!!.substringBefore(" ")
-            prefs.asr_time = it.data[month].timings!!.Asr!!.substringBefore(" ")
-            prefs.maghrib_time = it.data[month].timings!!.Maghrib!!.substringBefore(" ")
-            prefs.isha_time = it.data[month].timings!!.Isha!!.substringBefore(" ")
+            prefs.fajr_time = it.data[day].timings!!.Fajr!!.substringBefore(" ")
+            prefs.sunrise_time = it.data[day].timings!!.Sunrise!!.substringBefore(" ")
+            prefs.dhuhr_time = it.data[day].timings!!.Dhuhr!!.substringBefore(" ")
+            prefs.asr_time = it.data[day].timings!!.Asr!!.substringBefore(" ")
+            prefs.maghrib_time = it.data[day].timings!!.Maghrib!!.substringBefore(" ")
+            prefs.isha_time = it.data[day].timings!!.Isha!!.substringBefore(" ")
         })
+
+
 
         bottomNavView.setOnItemSelectedListener{
             when(it.itemId){

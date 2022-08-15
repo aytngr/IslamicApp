@@ -5,35 +5,84 @@
     android:layout_height="match_parent"
     tools:context=".PrayerFragment"
     android:orientation="vertical"
-    android:background="@drawable/prayer_bg"
-    >
+    android:background="@drawable/prayer_bg_drawable"
+    android:theme="@style/TextViewTheme">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Bakı"
         android:textSize="20sp"
         android:layout_gravity="center"
-        android:layout_margin="20dp"
-        android:textColor="@color/black"/>
-    <TextView
-        android:id="@+id/prayerFragmentDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Şənbə, 13 avqust 2022"
-        android:textSize="25sp"
-        android:layout_gravity="center"
-        android:textColor="@color/black"/>
-    <View
-        android:id="@+id/view"
+        android:layout_margin="20dp"/>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="#baf2bb"
-        android:layout_gravity="bottom"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/left"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/left"
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/prayerFragmentDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@+id/right"
+            android:layout_toEndOf="@+id/left"
+            android:gravity="center"
+            android:text="Şənbə, 13 avqust 2022"
+            android:textSize="22sp" />
+
+        <ImageButton
+            android:id="@+id/right"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/right" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_margin="10dp">
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@drawable/line_bg_green"
+            android:layout_weight="3"/>
+        <TextView
+            android:id="@+id/tv_day"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bugün"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_weight="4" />
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@drawable/line_bg_green"
+            android:layout_weight="3"/>
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -45,8 +94,8 @@
             android:gravity="center"
             android:padding="15dp">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:src="@drawable/fajr_icon"
                 android:layout_marginEnd="10dp"/>
             <TextView
@@ -54,7 +103,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Sübh namazı"
-                android:textColor="@color/black"
                 android:layout_weight="1"
                 android:textSize="20sp"/>
 
@@ -66,7 +114,6 @@
 
                 android:gravity="center"
                 android:layout_weight="1"
-                android:textColor="@color/black"
                 android:textSize="20sp" />
         </LinearLayout>
         <LinearLayout
@@ -76,8 +123,8 @@
             android:gravity="center"
             android:padding="15dp">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:src="@drawable/sunrise_icon"
                 android:layout_marginEnd="10dp"
                 android:layout_gravity="center"
@@ -106,8 +153,8 @@
             android:gravity="center"
             android:padding="15dp">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginEnd="10dp"
                 android:src="@drawable/dhuhr_icon"/>
             <TextView
@@ -115,7 +162,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Zöhr namazı"
-                android:textColor="@color/black"
                 android:layout_weight="1"
                 android:textSize="20sp"/>
 
@@ -125,7 +171,6 @@
                 android:layout_height="wrap_content"
                 android:text="12:46"
                 android:layout_weight="1"
-                android:textColor="@color/black"
                 android:gravity="center"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -136,8 +181,8 @@
             android:gravity="center"
             android:padding="15dp">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginEnd="10dp"
                 android:src="@drawable/asr_icon"/>
             <TextView
@@ -145,7 +190,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Əsr namazı"
-                android:textColor="@color/black"
                 android:layout_weight="1"
                 android:textSize="20sp"/>
 
@@ -156,7 +200,6 @@
                 android:gravity="center"
                 android:text="16:36"
                 android:layout_weight="1"
-                android:textColor="@color/black"
                 android:textSize="20sp" />
         </LinearLayout>
         <LinearLayout
@@ -166,8 +209,8 @@
             android:gravity="center"
             android:padding="15dp">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginEnd="10dp"
                 android:src="@drawable/maghrib_icon"/>
             <TextView
@@ -175,7 +218,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Məğrib namazı"
-                android:textColor="@color/black"
                 android:layout_weight="1"
                 android:textSize="20sp"/>
 
@@ -186,7 +228,6 @@
                 android:text="19:41"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="@color/black"
                 android:textSize="20sp" />
         </LinearLayout>
         <LinearLayout
@@ -196,8 +237,8 @@
             android:gravity="center"
             android:padding="15dp">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginEnd="10dp"
                 android:src="@drawable/isha_icon"/>
             <TextView
@@ -205,7 +246,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="İşa namazı"
-                android:textColor="@color/black"
 
                 android:layout_weight="1"
                 android:textSize="20sp"/>
@@ -217,7 +257,6 @@
                 android:text="21:17"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="@color/black"
                 android:textSize="20sp" />
         </LinearLayout>
 

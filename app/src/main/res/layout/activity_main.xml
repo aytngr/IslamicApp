@@ -26,7 +26,12 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_gravity="bottom"
-            app:menu="@menu/bottom_nav_menu" />
+            app:menu="@menu/bottom_nav_menu"
+            android:background="@drawable/bottomappbar_drawable"
+            app:itemHorizontalTranslationEnabled="true"
+            app:itemIconTint="@color/bottom_icon_color"
+            app:itemBackground="@android:color/transparent"
+            app:itemTextColor="@color/bottom_icon_color"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

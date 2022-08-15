@@ -36,9 +36,6 @@ class PrayerFragment : Fragment() {
         val year = myCalendar.get(Calendar.YEAR)
         val month = myCalendar.get(Calendar.MONTH)
         val day = myCalendar.get(Calendar.DAY_OF_MONTH)
-        val dayOfWeek = myCalendar.get(Calendar.DAY_OF_WEEK)
-        val hour = myCalendar.get(Calendar.HOUR)
-        val minute = myCalendar.get(Calendar.MINUTE)
         val MONTHS: ArrayList<String> = arrayListOf("Yanvar","Fevral","Mart","Aprel","May","İyun","İyul","Avqust","Sentyabr","Oktyabr","Noyabr","Dekabr")
 
 
@@ -55,6 +52,11 @@ class PrayerFragment : Fragment() {
         ishaTime = binding.ishaTime
 
         val tvDate = binding.prayerFragmentDate
+        val leftBtn = binding.left
+        val rightBtn = binding.right
+        var line1 = binding.view1
+        var line2 = binding.view2
+        val tvDay = binding.tvDay
 
         val sdf = SimpleDateFormat("EEEE")
         val d = Date()
@@ -68,6 +70,38 @@ class PrayerFragment : Fragment() {
         asrTime.text = prefs.asr_time
         maghribTime.text = prefs.maghrib_time
         ishaTime.text = prefs.isha_time
+
+        val dayList = arrayListOf<String>("Dünən","Bugün","Sabah")
+        var pos = 1
+        leftBtn.setOnClickListener {
+            if(pos != 0){
+                pos -= 1
+                tvDay.text = dayList[pos]
+                if (pos == 1){
+                    line1.setBackgroundResource(R.drawable.line_bg_green)
+                    line2.setBackgroundResource(R.drawable.line_bg_green)
+                }else{
+                    line1.setBackgroundResource(R.drawable.line_bg_red)
+                    line2.setBackgroundResource(R.drawable.line_bg_red)
+                }
+
+
+            }
+        }
+        rightBtn.setOnClickListener {
+            if(pos != 2){
+                pos += 1
+                tvDay.text = dayList[pos]
+                if (pos == 1){
+                    line1.setBackgroundResource(R.drawable.line_bg_green)
+                    line2.setBackgroundResource(R.drawable.line_bg_green)
+                }else{
+                    line1.setBackgroundResource(R.drawable.line_bg_red)
+                    line2.setBackgroundResource(R.drawable.line_bg_red)
+                }
+
+            }
+        }
 
         return root
     }
