@@ -46,14 +46,14 @@
             android:layout_margin="15dp"
             app:cardCornerRadius="20dp"
             android:background="@android:color/white"
-            app:cardElevation="10dp">
+            app:cardElevation="15dp">
             <LinearLayout
                 android:id="@+id/home_linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="10dp"
-                android:background="@drawable/dhuhr_bg_drawable"
+                android:background="@drawable/isha_bg_drawable"
 
                 >
                 <LinearLayout

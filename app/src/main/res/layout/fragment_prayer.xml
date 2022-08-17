@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".PrayerFragment"
     android:orientation="vertical"
-    android:background="@drawable/prayer_bg_drawable"
-    android:theme="@style/TextViewTheme">
+    android:background="@drawable/prayer_bg_drawable">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -83,7 +82,16 @@
             android:layout_weight="3"/>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/warning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Öncəki ay vaxtları üçün təqvimə baxın."
+        android:gravity="center"
+        android:textColor="#F44336"
+        android:visibility="gone"/>
     <LinearLayout
+        android:id="@+id/prayer_times_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">

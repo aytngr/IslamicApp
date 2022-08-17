@@ -8,15 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import gr.aytn.islamicapp.databinding.FragmentHomeBinding
-import java.lang.Math.abs
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class HomeFragment : Fragment() {
 
@@ -31,7 +29,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
@@ -68,6 +66,8 @@ class HomeFragment : Fragment() {
         val asrTime: Date = formatter.parse(prefs.asr_time) as Date
         val maghribTime: Date = formatter.parse(prefs.maghrib_time) as Date
         val ishaTime: Date = formatter.parse(prefs.isha_time) as Date
+        val midnightTime: Date = formatter.parse("24:00") as Date
+        val midnightTime2: Date = formatter.parse("00:00") as Date
 
         tvDate.text = "$day ${MONTHS[month]} $year"
         tvCheckAll?.setOnClickListener {
@@ -121,11 +121,18 @@ class HomeFragment : Fragment() {
             countdown(millis)
         }
 
-        else if(currentTimeDate.compareTo(ishaTime)>0 && currentTimeDate.compareTo(fajrTime)<0){
+        else if((currentTimeDate.compareTo(ishaTime)>0 && currentTimeDate.compareTo(midnightTime)<0)
+            || (currentTimeDate.compareTo(midnightTime2)>0 && currentTimeDate.compareTo(fajrTime)<0)){
             tvCurrentPrayer.text = "İşa Namazı"
             currentPrayer = "isha"
             tvCurrentPrayerTime.text = prefs.isha_time
-            millis = fajrTime.time - currentTimeDate.time
+            if(currentTimeDate.compareTo(ishaTime)>0 && currentTimeDate.compareTo(midnightTime)<0){
+                millis = (midnightTime.time - currentTimeDate.time) + (fajrTime.time - midnightTime2.time)
+            }
+            else if(currentTimeDate.compareTo(midnightTime2)>0 && currentTimeDate.compareTo(fajrTime)<0){
+                millis = fajrTime.time - currentTimeDate.time
+            }
+
             setBg(R.drawable.isha_bg_drawable)
             countdown(millis)
         }
@@ -142,7 +149,17 @@ class HomeFragment : Fragment() {
                 tvRemainingTime?.text = String.format("- %02d:%02d:", hour, min);
                 tvRemainingTimeSec?.text = sec.toString();
             }
-            override fun onFinish() {}
+            override fun onFinish() {
+                Toast.makeText(activity,"Namaz çıxdı",Toast.LENGTH_SHORT).show()
+                val fragmentManager = activity!!.supportFragmentManager
+                Log.i("home","$activity")
+                val currentFragment = fragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main)
+                Log.i("home","$currentFragment")
+                val transaction = fragmentManager.beginTransaction()
+                transaction.detach(currentFragment!!)
+                transaction.attach(currentFragment)
+                transaction.commit()
+            }
         }
         timer.start()
     }

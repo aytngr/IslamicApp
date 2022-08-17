@@ -28,23 +28,16 @@ class MainActivity : AppCompatActivity() {
         val myCalendar: Calendar = Calendar.getInstance()
         val year = myCalendar.get(Calendar.YEAR)
         val day = myCalendar.get(Calendar.DAY_OF_MONTH) - 1
-        val month = myCalendar.get(Calendar.MONTH)
+        val month = myCalendar.get(Calendar.MONTH) + 1
 
-        prayerViewModel.sendPost().observe(this, Observer {
-            prefs.fajr_time = it.data[day].timings!!.Fajr!!.substringBefore(" ")
-            prefs.sunrise_time = it.data[day].timings!!.Sunrise!!.substringBefore(" ")
-            prefs.dhuhr_time = it.data[day].timings!!.Dhuhr!!.substringBefore(" ")
-            prefs.asr_time = it.data[day].timings!!.Asr!!.substringBefore(" ")
-            prefs.maghrib_time = it.data[day].timings!!.Maghrib!!.substringBefore(" ")
-            prefs.isha_time = it.data[day].timings!!.Isha!!.substringBefore(" ")
-        })
-
-
+        Log.i("wefw", day.toString())
+        Log.i("activity", prefs.warning_message)
 
         bottomNavView.setOnItemSelectedListener{
             when(it.itemId){
                 R.id.home -> {
                     currentFragment = HomeFragment()
+                    Log.i("main","${currentFragment.id}")
                 }
                 R.id.prayer -> {
                     currentFragment = PrayerFragment()
@@ -64,4 +57,5 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
 }

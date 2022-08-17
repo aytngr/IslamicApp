@@ -1,8 +1,11 @@
 package gr.aytn.islamicapp
 
+import android.opengl.Visibility
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -25,7 +28,13 @@ class PrayerFragment : Fragment() {
     private var myResponseList = ArrayList<PrayerResponse>()
 
     private lateinit var prayerViewModel: PrayerViewModel
+    val myCalendarYesterday: Calendar = Calendar.getInstance()
     val myCalendar: Calendar = Calendar.getInstance()
+    val myCalendarTomorrow: Calendar = Calendar.getInstance()
+
+    lateinit var line1:View
+    lateinit var line2:View
+    lateinit var warningMessage: TextView
 
 
     override fun onCreateView(
@@ -38,6 +47,20 @@ class PrayerFragment : Fragment() {
         val day = myCalendar.get(Calendar.DAY_OF_MONTH)
         val MONTHS: ArrayList<String> = arrayListOf("Yanvar","Fevral","Mart","Aprel","May","İyun","İyul","Avqust","Sentyabr","Oktyabr","Noyabr","Dekabr")
 
+        val formatterDayMonth = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale("az"))
+
+        val todayDateString = formatterDayMonth.format(myCalendar.time)
+            .split(" ").joinToString(separator = " ", transform = String::capitalize)
+//        val formatterMonth = SimpleDateFormat("M")
+        myCalendarYesterday.add(Calendar.DATE, -1)
+        val yesterdayMonthDayString = formatterDayMonth.format(myCalendarYesterday.time)
+            .split(" ").joinToString(separator = " ", transform = String::capitalize)
+//        val yesterdayDayString = formatterDayMonth.format(myCalendarYesterday.time)
+        myCalendarTomorrow.add(Calendar.DAY_OF_MONTH, 1)
+        val tomorrowMonthDayString = formatterDayMonth.format(myCalendarTomorrow.time)
+            .split(" ").joinToString(separator = " ", transform = String::capitalize)
+//        val tomorrowDayString = formatterDayMonth.format(myCalendarTomorrow.time)
+//        val yesterdayMonthDate: Date = formatterMonth.parse(yesterdayMonthString) as Date
 
         prayerViewModel = ViewModelProvider(this).get(PrayerViewModel::class.java)
 
@@ -54,22 +77,17 @@ class PrayerFragment : Fragment() {
         val tvDate = binding.prayerFragmentDate
         val leftBtn = binding.left
         val rightBtn = binding.right
-        var line1 = binding.view1
-        var line2 = binding.view2
+        line1 = binding.view1
+        line2 = binding.view2
         val tvDay = binding.tvDay
+        warningMessage = binding.warning
 
-        val sdf = SimpleDateFormat("EEEE")
-        val d = Date()
-        val dayOfTheWeek: String = weekday(sdf.format(d))
+//        val sdf = SimpleDateFormat("EEEE")
+//        val d = Date()
+//        val dayOfTheWeek: String = weekday(sdf.format(d))
 
-        tvDate.text = "$dayOfTheWeek, $day ${MONTHS[month]} $year"
-
-        fajrTime.text = prefs.fajr_time
-        sunriseTime.text = prefs.sunrise_time
-        dhuhrTime.text = prefs.dhuhr_time
-        asrTime.text = prefs.asr_time
-        maghribTime.text = prefs.maghrib_time
-        ishaTime.text = prefs.isha_time
+        setPrayerTimes("today")
+        tvDate.text = todayDateString
 
         val dayList = arrayListOf<String>("Dünən","Bugün","Sabah")
         var pos = 1
@@ -78,11 +96,21 @@ class PrayerFragment : Fragment() {
                 pos -= 1
                 tvDay.text = dayList[pos]
                 if (pos == 1){
-                    line1.setBackgroundResource(R.drawable.line_bg_green)
-                    line2.setBackgroundResource(R.drawable.line_bg_green)
+                    setPrayerTimes("today")
+                    tvDate.text = todayDateString
+                    setViews("green")
+                    warningMessage.visibility = View.GONE
                 }else{
-                    line1.setBackgroundResource(R.drawable.line_bg_red)
-                    line2.setBackgroundResource(R.drawable.line_bg_red)
+                    setPrayerTimes("yesterday")
+                    Log.i("wa", prefs.warning_message)
+                    if (prefs.warning_message == "no_yesterday"){
+                        Log.i("wa", "no yesterday")
+                        setWarning()
+                    }else{
+                        warningMessage.visibility = View.GONE
+                    }
+                    tvDate.text = yesterdayMonthDayString
+                    setViews("red")
                 }
 
 
@@ -93,11 +121,19 @@ class PrayerFragment : Fragment() {
                 pos += 1
                 tvDay.text = dayList[pos]
                 if (pos == 1){
-                    line1.setBackgroundResource(R.drawable.line_bg_green)
-                    line2.setBackgroundResource(R.drawable.line_bg_green)
+                    setPrayerTimes("today")
+                    tvDate.text = todayDateString
+                    setViews("green")
+                    warningMessage.visibility = View.GONE
                 }else{
-                    line1.setBackgroundResource(R.drawable.line_bg_red)
-                    line2.setBackgroundResource(R.drawable.line_bg_red)
+                    setPrayerTimes("tomorrow")
+                    if (prefs.warning_message == "no_tomorrow"){
+                        setWarning()
+                    }else{
+                        warningMessage.visibility = View.GONE
+                    }
+                    tvDate.text = tomorrowMonthDayString
+                    setViews("red")
                 }
 
             }
@@ -105,20 +141,73 @@ class PrayerFragment : Fragment() {
 
         return root
     }
-
-    fun weekday(weekday: String):String{
-        var weekdayInAzeri: String = ""
-        when(weekday){
-            "Monday" -> weekdayInAzeri =  "Bazar ertəsi"
-            "Tuesday" -> weekdayInAzeri =  "Çərşənbə axşamı"
-            "Wednesday" -> weekdayInAzeri =  "Çərşənbə"
-            "Thursday" -> weekdayInAzeri =  "Cümə axşamı"
-            "Friday" -> weekdayInAzeri =  "Cümə"
-            "Saturday" -> weekdayInAzeri =  "Şənbə"
-            "Sunday" -> weekdayInAzeri =  "Bazar"
+    fun setViews(color: String){
+        when(color){
+            "red" ->{
+                line1.setBackgroundResource(R.drawable.line_bg_red)
+                line2.setBackgroundResource(R.drawable.line_bg_red)
+            }
+            "green" ->{
+                line1.setBackgroundResource(R.drawable.line_bg_green)
+                line2.setBackgroundResource(R.drawable.line_bg_green)
+            }
         }
-        return  weekdayInAzeri
     }
+    fun setPrayerTimes(date: String){
+        when(date){
+            "yesterday" -> {
+                fajrTime.text = prefs.fajr_time_yesterday
+                sunriseTime.text = prefs.sunrise_time_yesterday
+                dhuhrTime.text = prefs.dhuhr_time_yesterday
+                asrTime.text = prefs.asr_time_yesterday
+                maghribTime.text = prefs.maghrib_time_yesterday
+                ishaTime.text = prefs.isha_time_yesterday
+            }
+            "today" -> {
+                fajrTime.text = prefs.fajr_time
+                sunriseTime.text = prefs.sunrise_time
+                dhuhrTime.text = prefs.dhuhr_time
+                asrTime.text = prefs.asr_time
+                maghribTime.text = prefs.maghrib_time
+                ishaTime.text = prefs.isha_time
+            }
+            "tomorrow" -> {
+                fajrTime.text = prefs.fajr_time_tomorrow
+                sunriseTime.text = prefs.sunrise_time_tomorrow
+                dhuhrTime.text = prefs.dhuhr_time_tomorrow
+                asrTime.text = prefs.asr_time_tomorrow
+                maghribTime.text = prefs.maghrib_time_tomorrow
+                ishaTime.text = prefs.isha_time_tomorrow
+            }
+
+        }
+
+    }
+    fun setWarning(){
+        if (prefs.warning_message == "no_yesterday"){
+            warningMessage.text = "Öncəki ay vaxtları üçün təqvimə baxın"
+            warningMessage.visibility = View.VISIBLE
+        }else if (prefs.warning_message == "no_tomorrow"){
+            warningMessage.text = "Sonrakı ay vaxtları üçün təqvimə baxın"
+            warningMessage.visibility = View.VISIBLE
+        }else{
+            warningMessage.visibility = View.GONE
+        }
+    }
+
+//    fun weekday(weekday: String):String{
+//        var weekdayInAzeri: String = ""
+//        when(weekday){
+//            "Monday" -> weekdayInAzeri =  "Bazar ertəsi"
+//            "Tuesday" -> weekdayInAzeri =  "Çərşənbə axşamı"
+//            "Wednesday" -> weekdayInAzeri =  "Çərşənbə"
+//            "Thursday" -> weekdayInAzeri =  "Cümə axşamı"
+//            "Friday" -> weekdayInAzeri =  "Cümə"
+//            "Saturday" -> weekdayInAzeri =  "Şənbə"
+//            "Sunday" -> weekdayInAzeri =  "Bazar"
+//        }
+//        return  weekdayInAzeri
+//    }
 
 
 
