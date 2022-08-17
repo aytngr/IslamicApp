@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PrayerFragment"
+    tools:context=".ui.PrayerFragment"
     android:orientation="vertical"
     android:background="@drawable/prayer_bg_drawable">
     <TextView
@@ -41,7 +41,7 @@
             android:layout_toEndOf="@+id/left"
             android:gravity="center"
             android:text="Şənbə, 13 avqust 2022"
-            android:textSize="22sp" />
+            android:textSize="20sp" />
 
         <ImageButton
             android:id="@+id/right"

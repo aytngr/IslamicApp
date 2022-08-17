@@ -1,4 +1,4 @@
-package gr.aytn.islamicapp
+package gr.aytn.islamicapp.ui
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

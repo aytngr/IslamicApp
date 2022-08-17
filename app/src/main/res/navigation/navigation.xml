@@ -6,16 +6,18 @@
     app:startDestination="@+id/homeFragment">
     <fragment
         android:id="@+id/homeFragment"
-        android:name="gr.aytn.islamicapp.HomeFragment"
+        android:name="gr.aytn.islamicapp.ui.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeFragment_to_prayerFragment"
-            app:destination="@id/prayerFragment" />
-    </fragment>
+        </fragment>
     <fragment
         android:id="@+id/prayerFragment"
-        android:name="gr.aytn.islamicapp.PrayerFragment"
+        android:name="gr.aytn.islamicapp.ui.PrayerFragment"
         android:label="fragment_prayer"
         tools:layout="@layout/fragment_prayer" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="gr.aytn.islamicapp.ui.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

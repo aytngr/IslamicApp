@@ -1,18 +1,18 @@
-package gr.aytn.islamicapp
+package gr.aytn.islamicapp.ui
 
-import android.opengl.Visibility
+
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import gr.aytn.islamicapp.R
 import gr.aytn.islamicapp.databinding.FragmentPrayerBinding
 import gr.aytn.islamicapp.model.PrayerResponse
+import gr.aytn.islamicapp.prefs
 import java.text.SimpleDateFormat
 import java.util.*
 
