@@ -4,27 +4,29 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainerView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 import gr.aytn.islamicapp.R
 import gr.aytn.islamicapp.prefs
 import java.util.*
 
-
-class MainActivity : AppCompatActivity(), SettingsFragment.settingsLocationOnClickListener {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListener {
 
     private lateinit var currentFragment : Fragment
-
-
+    private lateinit var bottomNavView: BottomNavigationView
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val bottomNavView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
+        bottomNavView = findViewById(R.id.bottomNavigationView)
         bottomNavView.background = null
 
         val prayerViewModel = ViewModelProvider(this).get(PrayerViewModel::class.java)
@@ -76,38 +78,70 @@ class MainActivity : AppCompatActivity(), SettingsFragment.settingsLocationOnCli
                 prefs.isha_time_tomorrow = "00:00"
             }
         })
-
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main)
+        navController = navHostFragment?.findNavController()!!
 
 
         bottomNavView.setOnItemSelectedListener{
             when(it.itemId){
                 R.id.home -> {
-                    currentFragment= HomeFragment()
+//                    currentFragment= HomeFragment()
+                    navController?.navigate(R.id.homeFragment)
 
                 }
                 R.id.prayer -> {
-                    currentFragment = PrayerFragment()
+//                    currentFragment = PrayerFragment()
+                    navController?.navigate(R.id.prayerFragment)
                 }
-//                R.id.quran -> {
-//                    currentFragment = SettingsFragment()
-//                }
+                R.id.quran -> {
+                    navController?.navigate(R.id.quranFragment)
+                }
 //                R.id.dua -> {
 //                    currentFragment = ProfileFragment()
 //                }
                 R.id.settings -> {
-                    currentFragment = SettingsFragment()
+//                    currentFragment = SettingsFragment()
+                    navController?.navigate(R.id.settingsFragment)
                 }
             }
-            supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment_activity_main,currentFragment, "mytag").commit()
+//            supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment_activity_main,currentFragment, "mytag").commit()
+//            navController.navigate()
             true
+        }
+        navController?.addOnDestinationChangedListener { _, nd: NavDestination, _ ->
+            // the IDs of fragments as defined in the `navigation_graph`
+            if (nd.id == R.id.homeFragment || nd.id == R.id.prayerFragment
+                || nd.id == R.id.settingsFragment || nd.id == R.id.quranFragment
+            ) {
+                bottomNavView.visibility = View.VISIBLE
+            } else {
+                bottomNavView.visibility = View.GONE
+            }
         }
 
     }
 
-    override fun settingsLocationOnClick() {
-        val navHost: FragmentContainerView = findViewById(R.id.nav_host_fragment_settings)
-        navHost.visibility = View.VISIBLE
-        supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment_settings,LocationsFragment()).commit()
+    override fun checkAllBtnOnClick() {
+        bottomNavView.selectedItemId = R.id.prayer
+    }
+
+    override fun onBackPressed() {
+
+        if (navController.currentDestination?.id == R.id.prayerFragment ||
+            navController.currentDestination?.id == R.id.settingsFragment ||
+            navController.currentDestination?.id == R.id.quranFragment) {
+            bottomNavView.selectedItemId = R.id.home
+        } else if(navController.currentDestination?.id == R.id.homeFragment){
+            finish()
+        }else {
+            super.onBackPressed()
+        }
+
+//        if (bottomNavView.selectedItemId == R.id.prayer || bottomNavView.selectedItemId == R.id.settings) {
+//            bottomNavView.selectedItemId = R.id.home
+//        } else {
+//            super.onBackPressed()
+//        }
 
     }
 

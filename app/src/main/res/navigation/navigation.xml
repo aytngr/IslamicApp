@@ -9,7 +9,10 @@
         android:name="gr.aytn.islamicapp.ui.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
-        </fragment>
+        <action
+            android:id="@+id/action_homeFragment_to_prayerFragment"
+            app:destination="@id/prayerFragment" />
+    </fragment>
     <fragment
         android:id="@+id/prayerFragment"
         android:name="gr.aytn.islamicapp.ui.PrayerFragment"
@@ -20,4 +23,14 @@
         android:name="gr.aytn.islamicapp.ui.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/locationFragment"
+        android:name="gr.aytn.islamicapp.ui.LocationsFragment"
+        android:label="fragment_locations"
+        tools:layout="@layout/fragment_locations"/>
+    <fragment
+        android:id="@+id/quranFragment"
+        android:name="gr.aytn.islamicapp.ui.QuranFragment"
+        android:label="fragment_quran"
+        tools:layout="@layout/fragment_quran"/>
 </navigation>

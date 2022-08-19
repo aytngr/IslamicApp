@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import gr.aytn.islamicapp.R
 import gr.aytn.islamicapp.databinding.FragmentHomeBinding
 import gr.aytn.islamicapp.databinding.FragmentSettingsBinding
@@ -27,17 +28,12 @@ class SettingsFragment : Fragment() {
 
         val settingsLocation = binding.locationSettings
 
-        val listener: settingsLocationOnClickListener = activity as settingsLocationOnClickListener
+
         settingsLocation.setOnClickListener {
-            val intent = Intent(activity!!,LocationsActivity::class.java)
-            startActivity(intent)
+            findNavController().navigate(R.id.locationFragment)
         }
 
         return root
-    }
-
-    interface settingsLocationOnClickListener{
-        fun settingsLocationOnClick()
     }
 
 }

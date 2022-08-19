@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import gr.aytn.islamicapp.R
 import gr.aytn.islamicapp.databinding.FragmentHomeBinding
 import gr.aytn.islamicapp.prefs
@@ -73,14 +74,13 @@ class HomeFragment : Fragment() {
         tvRemainingTimeSec = binding.remainingTimeSec
         layout = binding.homeLinearLayout
 
-
-
         tvDate.text = "$day ${MONTHS[month]} $year"
-        tvCheckAll?.setOnClickListener {
-            activity!!.supportFragmentManager.beginTransaction()
-                .replace(R.id.nav_host_fragment_activity_main, PrayerFragment()).commit()
-            }
 
+        val listener: checkAllBtnOnClickListener = activity as checkAllBtnOnClickListener
+        tvCheckAll?.setOnClickListener {
+//            findNavController().navigate(R.id.prayerFragment)
+            listener.checkAllBtnOnClick()
+        }
         setPrayerTimes()
 
         return root
@@ -90,7 +90,7 @@ class HomeFragment : Fragment() {
         val currentTime: String = formatter2.format(myCalendar.getTime())
         val currentTimeDate: Date = formatter2.parse(currentTime) as Date
 
-        Log.i("home", "$currentTime")
+        Log.i("home", currentTime)
 
         if(currentTimeDate.compareTo(fajrTime)>=0 && currentTimeDate.compareTo(sunriseTime)<0){
             tvCurrentPrayer?.text = "Sübh Namazı"
@@ -171,6 +171,10 @@ class HomeFragment : Fragment() {
     }
     fun setBg(bg: Int){
         layout?.setBackgroundResource(bg)
+    }
+
+    interface checkAllBtnOnClickListener{
+        fun checkAllBtnOnClick()
     }
 
 }
