@@ -23,7 +23,7 @@ class AyatAdapter(private val mList: List<Ayat>) : RecyclerView.Adapter<AyatAdap
     // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val ayat = mList[position]
-        holder.tvAyat.text = ayat.text
+        holder.tvAyat.text = "${ayat.verse}. ${ayat.text}"
 
     }
 

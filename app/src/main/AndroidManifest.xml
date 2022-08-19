@@ -17,9 +17,6 @@
         android:theme="@style/Theme.IslamicApp"
         tools:targetApi="31">
         <activity
-            android:name=".ui.LocationsActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>

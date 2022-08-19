@@ -15,12 +15,11 @@ import javax.inject.Inject
 
 class QuranRepository @Inject constructor(private val quranDao: QuranDao) {
 
-    private var APIService: APIService? = APIUtils().getAPIServiceForQuran()
-
-    fun getQuran() = APIService?.getQuran()
-
-    fun addAyat(ayat: Ayat) = quranDao.addAyat(ayat)
-
     fun searchByChapterNo(chapterNo: Int): LiveData<List<Ayat>> = quranDao.searchByChapterNo(chapterNo)
+    fun getAllQuran(): LiveData<List<Ayat>> = quranDao.getAllQuran()
+
+    //    fun getQuran() = APIService?.getQuran()
+    //    fun addAyat(ayat: Ayat) = quranDao.addAyat(ayat)
+    //    private var APIService: APIService? = APIUtils().getAPIServiceForQuran()
 
 }

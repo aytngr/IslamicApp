@@ -33,4 +33,9 @@
         android:name="gr.aytn.islamicapp.ui.QuranFragment"
         android:label="fragment_quran"
         tools:layout="@layout/fragment_quran"/>
+    <fragment
+        android:id="@+id/chapterFragment"
+        android:name="gr.aytn.islamicapp.ui.ChapterFragment"
+        android:label="fragment_chapter"
+        tools:layout="@layout/fragment_chapter"/>
 </navigation>

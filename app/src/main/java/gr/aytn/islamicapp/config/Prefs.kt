@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 
 class Prefs (context: Context){
+    private var CHAPTER_NO = "CHAPTER_NO"
 
     private var FAJR = "FAJR"
     private var SUNRISE = "SUNRISE"
@@ -28,6 +29,10 @@ class Prefs (context: Context){
     private var MAGHRIB_YESTERDAY = "MAGHRIB_YESTERDAY"
     private var ISHA_YESTERDAY = "ISHA_YESTERDAY"
     private val preferences: SharedPreferences = context.getSharedPreferences("SharedPref",Context.MODE_PRIVATE)
+
+    var chapter_no: Int
+        get() = preferences.getInt(CHAPTER_NO,-1)
+        set(value) = preferences.edit().putInt(CHAPTER_NO, value).apply()
 
     var warning_message: String
         get() = preferences.getString(WARNING_MESSAGE,"").toString()

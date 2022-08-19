@@ -2,6 +2,7 @@ package gr.aytn.islamicapp.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -12,6 +13,8 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import gr.aytn.islamicapp.R
+import gr.aytn.islamicapp.adapters.ChapterAdapter
+import gr.aytn.islamicapp.model.Chapter
 import gr.aytn.islamicapp.prefs
 import java.util.*
 
@@ -21,6 +24,8 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
     private lateinit var currentFragment : Fragment
     private lateinit var bottomNavView: BottomNavigationView
     private lateinit var navController: NavController
+    val quranViewModel: QuranViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +40,8 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
         val year = myCalendar.get(Calendar.YEAR)
         val day = myCalendar.get(Calendar.DAY_OF_MONTH) - 1
         val month = myCalendar.get(Calendar.MONTH) + 1
+
+        quranViewModel.getAllQuran()
 
         prayerViewModel.getPrayerTimes("Azerbaijan","Baku","13",month.toString(),year.toString()).observe(this, Observer {
             if(day != 0){
@@ -142,7 +149,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
 //        } else {
 //            super.onBackPressed()
 //        }
-
     }
+
 
 }

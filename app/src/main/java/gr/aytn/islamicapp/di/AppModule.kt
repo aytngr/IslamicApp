@@ -1,10 +1,13 @@
 package gr.aytn.islamicapp.di
 
 import android.app.Application
+import android.content.Context
+import android.content.res.Resources
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import gr.aytn.islamicapp.data.AppDatabase
 import gr.aytn.islamicapp.data.QuranDao
@@ -16,12 +19,19 @@ import javax.inject.Singleton
 object AppModule {
     @Provides
     @Singleton
-    fun provideDatabase(app: Application) = Room.databaseBuilder(app, AppDatabase::class.java,"quran_database")
+    fun provideDatabase(app: Application,callback: AppDatabase.Callback)
+    = Room.databaseBuilder(app, AppDatabase::class.java,"quran_database")
         .fallbackToDestructiveMigration()
+        .addCallback(callback)
         .build()
     
     @Provides
-    fun providAyatDao(db: AppDatabase) = db.ayatDao()
+    fun provideAyatDao(db: AppDatabase) = db.ayatDao()
+
+    @Provides
+    @Singleton
+    fun resourcesProvider(@ApplicationContext context: Context): Resources = context.resources
+
 
     @Provides
     fun provideRepository(dao: QuranDao) = QuranRepository(dao)
