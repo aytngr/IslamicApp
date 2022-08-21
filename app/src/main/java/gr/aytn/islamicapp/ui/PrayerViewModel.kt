@@ -1,5 +1,8 @@
 package gr.aytn.islamicapp.ui
 
+import android.content.Context
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import gr.aytn.islamicapp.model.PrayerResponse
@@ -19,7 +22,7 @@ class PrayerViewModel : ViewModel() {
     val day = myCalendar.get(Calendar.DAY_OF_MONTH)
     val month = myCalendar.get(Calendar.MONTH)
 
-    fun getPrayerTimes(country:String,city:String,method:String,month:String,year:String): MutableLiveData<PrayerResponse> {
+    fun getPrayerTimes(country:String,city:String,method:String,month:String,year:String,context: Context): MutableLiveData<PrayerResponse> {
         mAPIService = APIUtils().getAPIService()!!
 
         val response = mAPIService.getPrayerTimes(city, country, method, month, year)
@@ -31,7 +34,7 @@ class PrayerViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<PrayerResponse>, t: Throwable) {
-//                    tvResult?.text = "Unable to submit post to API."
+                    Toast.makeText(context,"Internet bağlantısı yoxdur",Toast.LENGTH_SHORT).show()
             }
 
         })

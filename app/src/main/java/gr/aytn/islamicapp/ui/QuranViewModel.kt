@@ -3,6 +3,7 @@ package gr.aytn.islamicapp.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import gr.aytn.islamicapp.config.Constants
 import gr.aytn.islamicapp.model.Ayat
@@ -10,6 +11,8 @@ import gr.aytn.islamicapp.model.Chapter
 import gr.aytn.islamicapp.model.QuranResponse
 import gr.aytn.islamicapp.network.APIService
 import gr.aytn.islamicapp.repository.QuranRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -21,7 +24,13 @@ class QuranViewModel @Inject constructor(private val repo: QuranRepository) : Vi
     val constants = Constants()
 
     fun searchByChapterNo(chapterNo: Int): LiveData<List<Ayat>> = repo.searchByChapterNo(chapterNo)
-    fun getAllQuran(): LiveData<List<Ayat>> = repo.getAllQuran()
+    fun getAllQuran() = repo.getAllQuran()
+    fun getAllChapters() = repo.getAllChapters()
+
+    fun getRandomAyah(): LiveData<Ayat> = repo.getRandomAyah()
+    fun searchChapterByName(name:String): LiveData<Chapter> = repo.searchChapterByName(name)
+
+
 
 //    fun getVerseList(): MutableLiveData<ArrayList<Chapter>>{
 //        verseNamesList.postValue(constants.getChapterList())

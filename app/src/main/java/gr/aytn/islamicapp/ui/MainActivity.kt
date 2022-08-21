@@ -1,5 +1,6 @@
 package gr.aytn.islamicapp.ui
 
+
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -13,15 +14,14 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import gr.aytn.islamicapp.R
-import gr.aytn.islamicapp.adapters.ChapterAdapter
-import gr.aytn.islamicapp.model.Chapter
 import gr.aytn.islamicapp.prefs
 import java.util.*
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListener {
 
-    private lateinit var currentFragment : Fragment
+    private lateinit var currentFragment: Fragment
     private lateinit var bottomNavView: BottomNavigationView
     private lateinit var navController: NavController
     val quranViewModel: QuranViewModel by viewModels()
@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
         setContentView(R.layout.activity_main)
 
         bottomNavView = findViewById(R.id.bottomNavigationView)
-        bottomNavView.background = null
 
         val prayerViewModel = ViewModelProvider(this).get(PrayerViewModel::class.java)
 
@@ -43,15 +42,26 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
 
         quranViewModel.getAllQuran()
 
-        prayerViewModel.getPrayerTimes("Azerbaijan","Baku","13",month.toString(),year.toString()).observe(this, Observer {
-            if(day != 0){
-                prefs.fajr_time_yesterday = it.data[day-1].timings!!.Fajr!!.substringBefore(" ")
-                prefs.sunrise_time_yesterday = it.data[day-1].timings!!.Sunrise!!.substringBefore(" ")
-                prefs.dhuhr_time_yesterday = it.data[day-1].timings!!.Dhuhr!!.substringBefore(" ")
-                prefs.asr_time_yesterday = it.data[day-1].timings!!.Asr!!.substringBefore(" ")
-                prefs.maghrib_time_yesterday = it.data[day-1].timings!!.Maghrib!!.substringBefore(" ")
-                prefs.isha_time_yesterday = it.data[day-1].timings!!.Isha!!.substringBefore(" ")
-            }else{
+
+
+        prayerViewModel.getPrayerTimes(
+            "Azerbaijan",
+            "Baku",
+            "13",
+            month.toString(),
+            year.toString(),
+            this
+        ).observe(this, Observer {
+            if (day != 0) {
+                prefs.fajr_time_yesterday = it.data[day - 1].timings!!.Fajr!!.substringBefore(" ")
+                prefs.sunrise_time_yesterday =
+                    it.data[day - 1].timings!!.Sunrise!!.substringBefore(" ")
+                prefs.dhuhr_time_yesterday = it.data[day - 1].timings!!.Dhuhr!!.substringBefore(" ")
+                prefs.asr_time_yesterday = it.data[day - 1].timings!!.Asr!!.substringBefore(" ")
+                prefs.maghrib_time_yesterday =
+                    it.data[day - 1].timings!!.Maghrib!!.substringBefore(" ")
+                prefs.isha_time_yesterday = it.data[day - 1].timings!!.Isha!!.substringBefore(" ")
+            } else {
                 prefs.warning_message = "Öncəki ay vaxtları üçün təqvimə baxın"
                 prefs.fajr_time_yesterday = "00:00"
                 prefs.sunrise_time_yesterday = "00:00"
@@ -68,14 +78,16 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
             prefs.maghrib_time = it.data[day].timings!!.Maghrib!!.substringBefore(" ")
             prefs.isha_time = it.data[day].timings!!.Isha!!.substringBefore(" ")
 
-            try{
-                prefs.fajr_time_tomorrow = it.data[day+1].timings!!.Fajr!!.substringBefore(" ")
-                prefs.sunrise_time_tomorrow = it.data[day+1].timings!!.Sunrise!!.substringBefore(" ")
-                prefs.dhuhr_time_tomorrow = it.data[day+1].timings!!.Dhuhr!!.substringBefore(" ")
-                prefs.asr_time_tomorrow = it.data[day+1].timings!!.Asr!!.substringBefore(" ")
-                prefs.maghrib_time_tomorrow = it.data[day+1].timings!!.Maghrib!!.substringBefore(" ")
-                prefs.isha_time_tomorrow = it.data[day+1].timings!!.Isha!!.substringBefore(" ")
-            }catch (e: IndexOutOfBoundsException){
+            try {
+                prefs.fajr_time_tomorrow = it.data[day + 1].timings!!.Fajr!!.substringBefore(" ")
+                prefs.sunrise_time_tomorrow =
+                    it.data[day + 1].timings!!.Sunrise!!.substringBefore(" ")
+                prefs.dhuhr_time_tomorrow = it.data[day + 1].timings!!.Dhuhr!!.substringBefore(" ")
+                prefs.asr_time_tomorrow = it.data[day + 1].timings!!.Asr!!.substringBefore(" ")
+                prefs.maghrib_time_tomorrow =
+                    it.data[day + 1].timings!!.Maghrib!!.substringBefore(" ")
+                prefs.isha_time_tomorrow = it.data[day + 1].timings!!.Isha!!.substringBefore(" ")
+            } catch (e: IndexOutOfBoundsException) {
                 prefs.warning_message = "Sonrakı ay vaxtları üçün təqvimə baxın"
                 prefs.fajr_time_tomorrow = "00:00"
                 prefs.sunrise_time_tomorrow = "00:00"
@@ -85,12 +97,13 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
                 prefs.isha_time_tomorrow = "00:00"
             }
         })
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main)
         navController = navHostFragment?.findNavController()!!
 
 
-        bottomNavView.setOnItemSelectedListener{
-            when(it.itemId){
+        bottomNavView.setOnItemSelectedListener {
+            when (it.itemId) {
                 R.id.home -> {
 //                    currentFragment= HomeFragment()
                     navController?.navigate(R.id.homeFragment)
@@ -136,11 +149,14 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
 
         if (navController.currentDestination?.id == R.id.prayerFragment ||
             navController.currentDestination?.id == R.id.settingsFragment ||
-            navController.currentDestination?.id == R.id.quranFragment) {
+            navController.currentDestination?.id == R.id.quranFragment
+        ) {
             bottomNavView.selectedItemId = R.id.home
-        } else if(navController.currentDestination?.id == R.id.homeFragment){
+        } else if (navController.currentDestination?.id == R.id.chapterFragment) {
+            bottomNavView.selectedItemId = R.id.quran
+        } else if (navController.currentDestination?.id == R.id.homeFragment) {
             finish()
-        }else {
+        } else {
             super.onBackPressed()
         }
 

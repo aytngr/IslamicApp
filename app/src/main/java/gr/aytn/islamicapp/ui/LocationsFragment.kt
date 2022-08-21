@@ -30,7 +30,7 @@ class LocationsFragment : Fragment() {
 
         val locationRecyclerView: RecyclerView = binding.locationRecyclerview
         locationRecyclerView.layoutManager = LinearLayoutManager(context)
-        locationRecyclerView.adapter = LocationAdapter(locationsList)
+//        locationRecyclerView.adapter = LocationAdapter(locationsList)
 
         return root
     }

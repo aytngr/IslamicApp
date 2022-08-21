@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".ui.PrayerFragment"
     android:orientation="vertical"
-    android:background="@drawable/prayer_bg_drawable">
+    android:paddingBottom="60dp"
+    android:background="@drawable/gragient">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 
 class Prefs (context: Context){
     private var CHAPTER_NO = "CHAPTER_NO"
+    private var CHAPTER_VERSE_COUNT = "CHAPTER_VERSE_COUNT"
 
     private var FAJR = "FAJR"
     private var SUNRISE = "SUNRISE"
@@ -33,6 +34,10 @@ class Prefs (context: Context){
     var chapter_no: Int
         get() = preferences.getInt(CHAPTER_NO,-1)
         set(value) = preferences.edit().putInt(CHAPTER_NO, value).apply()
+
+    var chapter_verse_count: Int
+        get() = preferences.getInt(CHAPTER_VERSE_COUNT,-1)
+        set(value) = preferences.edit().putInt(CHAPTER_VERSE_COUNT, value).apply()
 
     var warning_message: String
         get() = preferences.getString(WARNING_MESSAGE,"").toString()

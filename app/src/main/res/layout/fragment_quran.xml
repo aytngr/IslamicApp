@@ -4,18 +4,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.QuranFragment"
-    android:orientation="vertical">
-    <TextView
+    android:orientation="vertical"
+    android:paddingBottom="60dp">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Surələr"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:layout_margin="10dp"/>
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:background="@drawable/gragient">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Surələr"
+            android:textColor="@color/black"
+            android:textSize="20sp"/>
+        <SearchView
+            android:id="@+id/search_chapter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:animateLayoutChanges="true"
+            android:layoutDirection="rtl"
+            android:queryHint="1-7"
+            android:searchHintIcon="@null"/>
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/verse_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="5dp" />
+        android:padding="10dp" />
 
 </LinearLayout>

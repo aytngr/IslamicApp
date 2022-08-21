@@ -8,6 +8,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import gr.aytn.islamicapp.R
 import gr.aytn.islamicapp.model.Ayat
+import gr.aytn.islamicapp.model.Chapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,7 +18,7 @@ import java.io.BufferedReader
 import javax.inject.Inject
 import javax.inject.Provider
 
-@Database(entities = [Ayat::class],version = 3)
+@Database(entities = [Ayat::class, Chapter::class],version = 4)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun ayatDao(): QuranDao
 
@@ -35,23 +36,41 @@ abstract class AppDatabase : RoomDatabase() {
             try {
                 //creating variable that holds the loaded data
                 val quran = loadJSONArray()
-                Log.i("database", "${quran.length()}")
+                val quran_arabic = loadJSONArrayArabic()
+                val chapters = loadJSONArrayChapters()
+                for (i in 0 until chapters.length()){
+                    val chapter = chapters.getJSONObject(i)
+
+                    val number = chapter.getString("number").toInt()
+                    val name = chapter.getString("name")
+                    val classification = chapter.getString("classification")
+                    val verses = chapter.getString("verses").toInt()
+
+                    val chapterEntity = Chapter(
+                        number,name,classification,verses
+                    )
+
+                    dao.addChapter(chapterEntity)
+                }
                 for (i in 0 until quran.length()){
                     //variable to obtain the JSON object
                     val ayat = quran.getJSONObject(i)
+                    val ayat_arabic = quran_arabic.getJSONObject(i)
 
                     //Using the JSON object to assign data
                     val chapter = ayat.getString("chapter").toInt()
                     val verse = ayat.getString("verse").toInt()
+                    val arabic = ayat_arabic.getString("text")
                     val text = ayat.getString("text")
 
                     //data loaded to the entity
                     val ayatEntity = Ayat(
-                        chapter,verse,text
+                        chapter,verse,arabic,text
                     )
 
                     //using dao to insert data to the database
                     dao.addAyat(ayatEntity)
+
                 }
             }
             //error when exception occurs
@@ -63,6 +82,22 @@ abstract class AppDatabase : RoomDatabase() {
         private fun loadJSONArray(): JSONArray {
             //obtain input byte
             val inputStream = resources.openRawResource(R.raw.quran)
+            //using Buffered reader to read the inputstream byte
+            BufferedReader(inputStream.reader()).use {
+                return JSONArray(it.readText())
+            }
+        }
+        private fun loadJSONArrayArabic(): JSONArray {
+            //obtain input byte
+            val inputStream = resources.openRawResource(R.raw.quran_arabic)
+            //using Buffered reader to read the inputstream byte
+            BufferedReader(inputStream.reader()).use {
+                return JSONArray(it.readText())
+            }
+        }
+        private fun loadJSONArrayChapters(): JSONArray {
+            //obtain input byte
+            val inputStream = resources.openRawResource(R.raw.chapters)
             //using Buffered reader to read the inputstream byte
             BufferedReader(inputStream.reader()).use {
                 return JSONArray(it.readText())

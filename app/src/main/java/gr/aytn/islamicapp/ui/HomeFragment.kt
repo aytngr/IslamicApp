@@ -1,5 +1,6 @@
 package gr.aytn.islamicapp.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
@@ -8,17 +9,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import gr.aytn.islamicapp.R
+import gr.aytn.islamicapp.config.Constants
 import gr.aytn.islamicapp.databinding.FragmentHomeBinding
 import gr.aytn.islamicapp.prefs
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
+
+    val quranViewModel: QuranViewModel by viewModels()
 
     private lateinit var homeViewModel: HomeViewModel
     var millis: Long = 0
@@ -33,8 +40,6 @@ class HomeFragment : Fragment() {
     val formatter = SimpleDateFormat("HH:mm")
     val formatter2 = SimpleDateFormat("HH:mm:ss")
 
-
-
     val fajrTime: Date = formatter.parse(prefs.fajr_time) as Date
     val sunriseTime: Date = formatter.parse(prefs.sunrise_time) as Date
     val dhuhrTime: Date = formatter.parse(prefs.dhuhr_time) as Date
@@ -47,6 +52,7 @@ class HomeFragment : Fragment() {
     var tvCurrentPrayer: TextView?=null
     var tvCurrentPrayerTime: TextView? =null
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -65,6 +71,7 @@ class HomeFragment : Fragment() {
         val day = myCalendar1.get(Calendar.DAY_OF_MONTH)
         val MONTHS: ArrayList<String> = arrayListOf("Yanvar","Fevral","Mart","Aprel","May","İyun","İyul","Avqust","Sentyabr","Oktyabr","Noyabr","Dekabr")
 
+        val tvRandomAyat = binding.randomAyat
 
         tvCurrentPrayer = binding.currentPrayer
         tvCurrentPrayerTime = binding.currentPrayerTime
@@ -75,6 +82,13 @@ class HomeFragment : Fragment() {
         layout = binding.homeLinearLayout
 
         tvDate.text = "$day ${MONTHS[month]} $year"
+
+        quranViewModel.getRandomAyah().observe(viewLifecycleOwner, androidx.lifecycle.Observer{
+            if(it != null){
+                tvRandomAyat.text = "${it.verse}. ${it.text}. (${Constants.getChapterList().get(it.chapter!!).name} surəsi)"
+
+            }
+        })
 
         val listener: checkAllBtnOnClickListener = activity as checkAllBtnOnClickListener
         tvCheckAll?.setOnClickListener {

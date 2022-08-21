@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName
 data class Ayat(
     @ColumnInfo(name = "chapter") var chapter: Int? = null,
     @ColumnInfo(name = "verse") var verse: Int? = null,
+    @ColumnInfo(name = "arabic") var arabic: String? = null,
     @ColumnInfo(name = "text") var text: String? = null,
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") val id: Int = 0

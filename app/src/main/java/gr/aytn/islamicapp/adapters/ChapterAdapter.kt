@@ -34,6 +34,7 @@ class ChapterAdapter(private val mList: List<Chapter>,private val listener: OnIt
         holder.itemView.setOnClickListener {
             if (position != RecyclerView.NO_POSITION) {
                 listener?.onChapterClick(chapter)
+
             }
         }
 

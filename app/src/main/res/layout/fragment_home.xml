@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.HomeFragment">
+    tools:context=".ui.HomeFragment"
+    android:paddingBottom="60dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,7 +54,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="10dp"
-                android:background="@drawable/isha_bg_drawable"
+                android:background="@drawable/maghrib_bg"
 
                 >
                 <LinearLayout
@@ -102,13 +103,14 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:id="@+id/remaining_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="-02:24:"
+                        android:text="-00:00:"
                         android:textColor="@color/white"
-                        android:textSize="25sp"/>
+                        android:textSize="25sp" />
 
                     <TextView
                         android:id="@+id/remaining_time_sec"
@@ -117,7 +119,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_marginTop="5dp"
                         android:layout_toEndOf="@+id/remaining_time"
-                        android:text="24"
+                        android:text="00"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
                 </RelativeLayout>
@@ -136,7 +138,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Günün ayəti:"
+            android:text="Bir ayət:"
             android:textSize="20sp"
             android:layout_marginStart="10dp"
             android:textColor="@color/black"/>
@@ -147,9 +149,9 @@
             app:cardElevation="7dp"
             app:cardCornerRadius="10dp">
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/daily_quran"
+                android:id="@+id/random_ayat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:textSize="17sp"
                 android:textColor="@color/black"
                 android:background="@drawable/ayah_bg"

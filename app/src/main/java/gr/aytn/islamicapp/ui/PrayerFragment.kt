@@ -97,12 +97,13 @@ class PrayerFragment : Fragment() {
                 tvDay.text = dayList[pos]
                 if (pos == 1){
                     setPrayerTimes("today")
+                    leftBtn.visibility = View.VISIBLE
                     tvDate.text = todayDateString
                     setViews("green")
                     warningMessage.visibility = View.GONE
                 }else{
                     setPrayerTimes("yesterday")
-                    Log.i("wa", prefs.warning_message)
+                    leftBtn.visibility = View.GONE
                     if (prefs.warning_message == "no_yesterday"){
                         Log.i("wa", "no yesterday")
                         setWarning()
@@ -122,11 +123,13 @@ class PrayerFragment : Fragment() {
                 tvDay.text = dayList[pos]
                 if (pos == 1){
                     setPrayerTimes("today")
+                    rightBtn.visibility = View.VISIBLE
                     tvDate.text = todayDateString
                     setViews("green")
                     warningMessage.visibility = View.GONE
                 }else{
                     setPrayerTimes("tomorrow")
+                    rightBtn.visibility = View.GONE
                     if (prefs.warning_message == "no_tomorrow"){
                         setWarning()
                     }else{
