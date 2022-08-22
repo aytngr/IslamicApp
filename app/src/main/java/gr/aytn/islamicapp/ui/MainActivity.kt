@@ -2,104 +2,114 @@ package gr.aytn.islamicapp.ui
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import gr.aytn.islamicapp.R
+import gr.aytn.islamicapp.adapters.LocationAdapter
 import gr.aytn.islamicapp.prefs
+import java.text.SimpleDateFormat
 import java.util.*
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListener {
+class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListener,
+    LocationAdapter.OnLocationItemClickListener {
 
     private lateinit var currentFragment: Fragment
     private lateinit var bottomNavView: BottomNavigationView
     private lateinit var navController: NavController
     val quranViewModel: QuranViewModel by viewModels()
-
+    val prayerViewModel: PrayerViewModel by viewModels()
+    var currentMonth = -1
+    val formatterDate = SimpleDateFormat("dd-MM-yyyy")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
         bottomNavView = findViewById(R.id.bottomNavigationView)
 
-        val prayerViewModel = ViewModelProvider(this).get(PrayerViewModel::class.java)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main)
+        navController = navHostFragment?.findNavController()!!
 
         val myCalendar: Calendar = Calendar.getInstance()
         val year = myCalendar.get(Calendar.YEAR)
         val day = myCalendar.get(Calendar.DAY_OF_MONTH) - 1
         val month = myCalendar.get(Calendar.MONTH) + 1
 
+        navController.navigate(R.id.homeFragment)
+
         quranViewModel.getAllQuran()
 
-
-
-        prayerViewModel.getPrayerTimes(
-            "Azerbaijan",
-            "Baku",
-            "13",
-            month.toString(),
-            year.toString(),
-            this
-        ).observe(this, Observer {
-            if (day != 0) {
-                prefs.fajr_time_yesterday = it.data[day - 1].timings!!.Fajr!!.substringBefore(" ")
-                prefs.sunrise_time_yesterday =
-                    it.data[day - 1].timings!!.Sunrise!!.substringBefore(" ")
-                prefs.dhuhr_time_yesterday = it.data[day - 1].timings!!.Dhuhr!!.substringBefore(" ")
-                prefs.asr_time_yesterday = it.data[day - 1].timings!!.Asr!!.substringBefore(" ")
-                prefs.maghrib_time_yesterday =
-                    it.data[day - 1].timings!!.Maghrib!!.substringBefore(" ")
-                prefs.isha_time_yesterday = it.data[day - 1].timings!!.Isha!!.substringBefore(" ")
-            } else {
-                prefs.warning_message = "Öncəki ay vaxtları üçün təqvimə baxın"
-                prefs.fajr_time_yesterday = "00:00"
-                prefs.sunrise_time_yesterday = "00:00"
-                prefs.dhuhr_time_yesterday = "00:00"
-                prefs.asr_time_yesterday = "00:00"
-                prefs.maghrib_time_yesterday = "00:00"
-                prefs.isha_time_yesterday = "00:00"
-            }
-
-            prefs.fajr_time = it.data[day].timings!!.Fajr!!.substringBefore(" ")
-            prefs.sunrise_time = it.data[day].timings!!.Sunrise!!.substringBefore(" ")
-            prefs.dhuhr_time = it.data[day].timings!!.Dhuhr!!.substringBefore(" ")
-            prefs.asr_time = it.data[day].timings!!.Asr!!.substringBefore(" ")
-            prefs.maghrib_time = it.data[day].timings!!.Maghrib!!.substringBefore(" ")
-            prefs.isha_time = it.data[day].timings!!.Isha!!.substringBefore(" ")
-
-            try {
-                prefs.fajr_time_tomorrow = it.data[day + 1].timings!!.Fajr!!.substringBefore(" ")
-                prefs.sunrise_time_tomorrow =
-                    it.data[day + 1].timings!!.Sunrise!!.substringBefore(" ")
-                prefs.dhuhr_time_tomorrow = it.data[day + 1].timings!!.Dhuhr!!.substringBefore(" ")
-                prefs.asr_time_tomorrow = it.data[day + 1].timings!!.Asr!!.substringBefore(" ")
-                prefs.maghrib_time_tomorrow =
-                    it.data[day + 1].timings!!.Maghrib!!.substringBefore(" ")
-                prefs.isha_time_tomorrow = it.data[day + 1].timings!!.Isha!!.substringBefore(" ")
-            } catch (e: IndexOutOfBoundsException) {
-                prefs.warning_message = "Sonrakı ay vaxtları üçün təqvimə baxın"
-                prefs.fajr_time_tomorrow = "00:00"
-                prefs.sunrise_time_tomorrow = "00:00"
-                prefs.dhuhr_time_tomorrow = "00:00"
-                prefs.asr_time_tomorrow = "00:00"
-                prefs.maghrib_time_tomorrow = "00:00"
-                prefs.isha_time_tomorrow = "00:00"
-            }
+        prayerViewModel.getCount().observe(this, Observer {
+            Log.i("main", "$it")
         })
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main)
-        navController = navHostFragment?.findNavController()!!
+        Log.i("main", "")
+
+
+        var todaysDate = formatterDate.format(myCalendar.time)
+
+        if(currentMonth != month){
+            Log.i("main","monht is diff")
+            currentMonth = month
+            prayerViewModel.getPrayerTimes(
+                "Azerbaijan",
+                "Baku",
+                "13",
+                month.toString(),
+                year.toString(),
+                this
+            ).observe(this, Observer {
+                todaysDate = formatterDate.format(myCalendar.time)
+                prayerViewModel.getPrayerTimesByDate(todaysDate).observe(this, Observer {
+                    if(it!=null){
+                        prefs.fajr_time = it.fajr!!
+                        prefs.sunrise_time = it.sunrise!!
+                        prefs.dhuhr_time = it.dhuhr!!
+                        prefs.asr_time = it.asr!!
+                        prefs.maghrib_time = it.maghrib!!
+                        prefs.isha_time = it.isha!!
+                    }else{
+                        prefs.fajr_time = "00:00"
+                        prefs.sunrise_time = "00:00"
+                        prefs.dhuhr_time = "00:00"
+                        prefs.asr_time = "00:00"
+                        prefs.maghrib_time = "00:00"
+                        prefs.isha_time = "00:00"
+                    }
+
+                })
+            })
+        }
+
+        prayerViewModel.getPrayerTimesByDate(todaysDate).observe(this, Observer {
+            if(it != null){
+                prefs.fajr_time = it.fajr!!
+                prefs.sunrise_time = it.sunrise!!
+                prefs.dhuhr_time = it.dhuhr!!
+                prefs.asr_time = it.asr!!
+                prefs.maghrib_time = it.maghrib!!
+                prefs.isha_time = it.isha!!
+            }
+
+        })
+
+
 
 
         bottomNavView.setOnItemSelectedListener {
@@ -165,6 +175,44 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
 //        } else {
 //            super.onBackPressed()
 //        }
+    }
+
+    override fun onLocationClick(location: String) {
+        val myCalendar: Calendar = Calendar.getInstance()
+        val year = myCalendar.get(Calendar.YEAR)
+        val month = myCalendar.get(Calendar.MONTH) + 1
+
+        val todaysDate = formatterDate.format(myCalendar.time)
+
+        prayerViewModel.getPrayerTimes(
+            "Azerbaijan",
+            location,
+            "13",
+            month.toString(),
+            year.toString(),
+            this
+        ).observe(this, Observer {
+            prayerViewModel.getPrayerTimesByDate(todaysDate).observe(this, Observer {
+                if(it!=null){
+                    prefs.fajr_time = it.fajr!!
+                    prefs.sunrise_time = it.sunrise!!
+                    prefs.dhuhr_time = it.dhuhr!!
+                    prefs.asr_time = it.asr!!
+                    prefs.maghrib_time = it.maghrib!!
+                    prefs.isha_time = it.isha!!
+                }else{
+                    prefs.fajr_time = "00:00"
+                    prefs.sunrise_time = "00:00"
+                    prefs.dhuhr_time = "00:00"
+                    prefs.asr_time = "00:00"
+                    prefs.maghrib_time = "00:00"
+                    prefs.isha_time = "00:00"
+                }
+
+            })
+        })
+        navController.navigate(R.id.settingsFragment)
+        prefs.selected_location = location
     }
 
 

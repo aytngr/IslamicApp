@@ -9,6 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import gr.aytn.islamicapp.R
 import gr.aytn.islamicapp.model.Ayat
 import gr.aytn.islamicapp.model.Chapter
+import gr.aytn.islamicapp.model.PrayerTime
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,9 +19,10 @@ import java.io.BufferedReader
 import javax.inject.Inject
 import javax.inject.Provider
 
-@Database(entities = [Ayat::class, Chapter::class],version = 4)
+@Database(entities = [Ayat::class, Chapter::class,PrayerTime::class],version = 5)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun ayatDao(): QuranDao
+    abstract fun prayerDao(): PrayerDao
 
     class Callback @Inject constructor(private val resources: Resources,
                                        private val database: Provider<AppDatabase>): RoomDatabase.Callback() {

@@ -80,6 +80,9 @@ class HomeFragment : Fragment() {
         tvRemainingTime = binding.remainingTime
         tvRemainingTimeSec = binding.remainingTimeSec
         layout = binding.homeLinearLayout
+         val selectedLocation = binding.homeSelectedLocation
+
+        selectedLocation.text = prefs.selected_location
 
         tvDate.text = "$day ${MONTHS[month]} $year"
 

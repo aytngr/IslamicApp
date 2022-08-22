@@ -8,6 +8,7 @@
     android:paddingBottom="60dp"
     android:background="@drawable/gragient">
     <TextView
+        android:id="@+id/prayer_frag_selected_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Bakı"

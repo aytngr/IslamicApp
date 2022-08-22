@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import gr.aytn.islamicapp.R
 import gr.aytn.islamicapp.databinding.FragmentHomeBinding
 import gr.aytn.islamicapp.databinding.FragmentSettingsBinding
+import gr.aytn.islamicapp.prefs
 
 class SettingsFragment : Fragment() {
 
@@ -27,6 +28,9 @@ class SettingsFragment : Fragment() {
         val root: View = binding.root
 
         val settingsLocation = binding.locationSettings
+        val selectedLocation = binding.selectedLocation
+
+        selectedLocation.text = prefs.selected_location
 
 
         settingsLocation.setOnClickListener {

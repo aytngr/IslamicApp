@@ -10,7 +10,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import gr.aytn.islamicapp.data.AppDatabase
+import gr.aytn.islamicapp.data.PrayerDao
 import gr.aytn.islamicapp.data.QuranDao
+import gr.aytn.islamicapp.repository.PrayerRepository
 import gr.aytn.islamicapp.repository.QuranRepository
 import javax.inject.Singleton
 
@@ -29,10 +31,15 @@ object AppModule {
     fun provideAyatDao(db: AppDatabase) = db.ayatDao()
 
     @Provides
+    fun providePrayerDao(db: AppDatabase) = db.prayerDao()
+
+    @Provides
     @Singleton
     fun resourcesProvider(@ApplicationContext context: Context): Resources = context.resources
 
+    @Provides
+    fun provideQuranRepository(dao: QuranDao) = QuranRepository(dao)
 
     @Provides
-    fun provideRepository(dao: QuranDao) = QuranRepository(dao)
+    fun providePrayerRepository(dao: PrayerDao) = PrayerRepository(dao)
 }

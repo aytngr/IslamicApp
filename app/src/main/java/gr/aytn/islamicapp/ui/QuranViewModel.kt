@@ -21,7 +21,6 @@ class QuranViewModel @Inject constructor(private val repo: QuranRepository) : Vi
     private lateinit var mAPIService: APIService
     private lateinit var myResponse : QuranResponse
     private lateinit var verseNamesList : MutableLiveData<ArrayList<Chapter>>
-    val constants = Constants()
 
     fun searchByChapterNo(chapterNo: Int): LiveData<List<Ayat>> = repo.searchByChapterNo(chapterNo)
     fun getAllQuran() = repo.getAllQuran()
