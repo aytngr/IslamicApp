@@ -52,6 +52,8 @@ class HomeFragment : Fragment() {
     var tvCurrentPrayer: TextView?=null
     var tvCurrentPrayerTime: TextView? =null
 
+    var cardTopTextViews: LinearLayout? =null
+
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,6 +67,8 @@ class HomeFragment : Fragment() {
 
         val tz = TimeZone.getDefault()
         myCalendar1.timeZone = tz
+
+        cardTopTextViews = binding.cardTop
 
         val year = myCalendar1.get(Calendar.YEAR)
         val month = myCalendar1.get(Calendar.MONTH)
@@ -88,7 +92,7 @@ class HomeFragment : Fragment() {
 
         quranViewModel.getRandomAyah().observe(viewLifecycleOwner, androidx.lifecycle.Observer{
             if(it != null){
-                tvRandomAyat.text = "${it.verse}. ${it.text}. (${Constants.getChapterList().get(it.chapter!!).name} surəsi)"
+                tvRandomAyat.text = "${it.verse}. ${it.text}. (${Constants.getChapterList().get(it.chapter!!-1).name} surəsi)"
 
             }
         })

@@ -15,9 +15,16 @@
     </style>
     <style name="TextViewTheme" parent="android:Widget.TextView">
         <!-- Set the default global color for TextViews to Holo Blue Dark -->
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:textColorSecondary">@color/white</item>
-        <item name="android:textColorTertiary">@color/white</item>
-        <item name="android:textColorHint">@color/white</item>
+        <item name="android:textColorPrimary">#D6D6D6</item>
+        <item name="android:textColorSecondary">#D6D6D6</item>
+        <item name="android:textColorTertiary">#D6D6D6</item>
+        <item name="android:textColorHint">#D6D6D6</item>
+    </style>
+    <style name="CardTextViewTheme" parent="android:Widget.TextView">
+        <!-- Set the default global color for TextViews to Holo Blue Dark -->
+        <item name="android:textColorPrimary">@color/card_text_color</item>
+        <item name="android:textColorSecondary">@color/card_text_color</item>
+        <item name="android:textColorTertiary">@color/card_text_color</item>
+        <item name="android:textColorHint">@color/card_text_color</item>
     </style>
 </resources>

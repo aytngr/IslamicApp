@@ -6,83 +6,96 @@
     tools:context=".ui.PrayerFragment"
     android:orientation="vertical"
     android:paddingBottom="60dp"
-    android:background="@drawable/gragient">
-    <TextView
-        android:id="@+id/prayer_frag_selected_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bakı"
-        android:textSize="20sp"
-        android:layout_gravity="center"
-        android:layout_margin="20dp"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:id="@+id/left"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_alignParentStart="true"
-            android:layout_gravity="center"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/left"
-            android:padding="10dp" />
-
-        <TextView
-            android:id="@+id/prayerFragmentDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@+id/right"
-            android:layout_toEndOf="@+id/left"
-            android:gravity="center"
-            android:text="Şənbə, 13 avqust 2022"
-            android:textSize="20sp" />
-
-        <ImageButton
-            android:id="@+id/right"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_alignParentEnd="true"
-            android:layout_gravity="center"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/right" />
-    </RelativeLayout>
-
+    android:background="@color/background"
+    android:theme="@style/TextViewTheme">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_margin="10dp">
-        <View
-            android:id="@+id/view1"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:background="@drawable/line_bg_green"
-            android:layout_weight="3"/>
+        android:orientation="vertical"
+        android:background="@drawable/prayer_top_drawable"
+        android:paddingBottom="10dp">
         <TextView
-            android:id="@+id/tv_day"
+            android:id="@+id/prayer_frag_selected_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bakı"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"/>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Bugün"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_weight="4" />
-        <View
-            android:id="@+id/view2"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/left"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentStart="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/left"
+                android:padding="10dp" />
+
+            <TextView
+                android:id="@+id/prayerFragmentDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@+id/right"
+                android:layout_toEndOf="@+id/left"
+                android:gravity="center"
+                android:text="Şənbə, 13 avqust 2022"
+                android:textSize="20sp" />
+
+            <ImageButton
+                android:id="@+id/right"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/right" />
+        </RelativeLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:background="@drawable/line_bg_green"
-            android:layout_weight="3"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            >
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@drawable/line_bg_green"
+                android:layout_weight="3"/>
+            <TextView
+                android:id="@+id/tv_day"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bugün"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_weight="4" />
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@drawable/line_bg_green"
+                android:layout_weight="3"/>
+        </LinearLayout>
     </LinearLayout>
+
 
     <TextView
         android:id="@+id/warning"

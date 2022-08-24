@@ -56,10 +56,12 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="10dp"
-                android:background="@drawable/maghrib_bg"
+                android:theme="@style/CardTextViewTheme"
+                android:background="@drawable/fajr_bg"
 
                 >
                 <LinearLayout
+                    android:id="@+id/card_top"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -74,15 +76,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Namaz"
+                        android:textColor="@color/white"
                         android:textSize="23sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"/>
+                        android:textStyle="bold"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/white"
                         android:text=" vaxtıdır!"
-                        android:textSize="20sp"
-                        android:textColor="@color/white"/>
+                        android:textSize="20sp"/>
                 </LinearLayout>
 
 
@@ -91,8 +93,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="00:00"
-                    android:textSize="25sp"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/white"
+                    android:textSize="25sp"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

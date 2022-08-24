@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:background="@color/background"
+    android:theme="@style/TextViewTheme">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,5 +15,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/location_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@color/background"/>
 </LinearLayout>

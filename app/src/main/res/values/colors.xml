@@ -9,5 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="app_blue">#c2e2ea</color>
     <color name="background">#FFFFFF</color>
+    <color name="card_text_color">#FFFFFF</color>
 
 </resources>

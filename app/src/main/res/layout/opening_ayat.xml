@@ -4,16 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:padding="5dp"
+    android:background="@color/background"
+    android:theme="@style/TextViewTheme">
     <TextView
         android:id="@+id/tv_opening_arabic"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="بِسۡمِ اللّٰهِ الرَّحۡمٰنِ الرَّحِيۡم"
-        android:textSize="20sp"
+        android:textSize="22sp"
         android:layout_marginStart="10dp"
         android:textDirection="rtl"
-        android:textColor="@color/black"
         android:fontFamily="@font/arabic_font"
         android:gravity="center"/>
     <TextView

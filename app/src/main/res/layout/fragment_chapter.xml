@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@drawable/gragient">
+        android:background="@drawable/gragient"
+        android:theme="@style/TextViewTheme">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,7 +21,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Fatihə Surəsi"
-                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp" />

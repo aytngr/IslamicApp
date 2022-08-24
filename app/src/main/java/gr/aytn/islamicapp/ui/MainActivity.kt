@@ -61,6 +61,8 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
         })
         Log.i("main", "")
 
+    var currentMonth: Int = -1
+
 
         var todaysDate = formatterDate.format(myCalendar.time)
 
@@ -109,7 +111,11 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
 
         })
 
+        if(currentMonth != month){
+            
+        }
 
+        Log.i("main","$currentMonth")
 
 
         bottomNavView.setOnItemSelectedListener {
