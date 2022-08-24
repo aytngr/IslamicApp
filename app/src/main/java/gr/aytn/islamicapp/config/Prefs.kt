@@ -19,6 +19,8 @@ class Prefs (context: Context){
     private var CURRENT_MONTH = "CURRENT_MONTH"
 
     private var SELECTED_LOCATION = "SELECTED_LOCATION"
+    private var RANDOM_AYAH = "RANDOM_AYAH"
+    private var THEME = "THEME"
 
     private val preferences: SharedPreferences = context.getSharedPreferences("SharedPref",Context.MODE_PRIVATE)
 
@@ -29,6 +31,14 @@ class Prefs (context: Context){
     var selected_location: String
         get() = preferences.getString(SELECTED_LOCATION,"Baku").toString()
         set(value) = preferences.edit().putString(SELECTED_LOCATION, value).apply()
+
+    var theme: String
+        get() = preferences.getString(THEME,"Light").toString()
+        set(value) = preferences.edit().putString(THEME, value).apply()
+
+    var random_ayah: String
+        get() = preferences.getString(RANDOM_AYAH,"").toString()
+        set(value) = preferences.edit().putString(RANDOM_AYAH, value).apply()
 
     var chapter_no: Int
         get() = preferences.getInt(CHAPTER_NO,-1)

@@ -156,6 +156,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textSize="17sp"
+                android:text="5. Biz yalnız Sənə ibadət edirik və yalnız Səndən kömək diləyirik(Fatihə surəsi)"
                 android:background="@drawable/ayah_bg"
                 android:padding="5dp"/>
 

@@ -50,10 +50,9 @@ class PrayerViewModel @Inject constructor(private val resources: Resources, priv
             override fun onResponse(call: Call<PrayerResponse>, response: Response<PrayerResponse>) {
                 if (response.isSuccessful){
                     val prayerResponse = response.body()!!
-
-                        viewModelScope.launch(Dispatchers.IO) {
-                            repo.deleteAllPrayerTimes()
-                        }
+                    viewModelScope.launch(Dispatchers.IO) {
+                        repo.deleteAllPrayerTimes()
+                    }
                     for(i in 0 until prayerResponse.data.size){
                         val date = prayerResponse.data[i].date!!.gregorian!!.date
                         val fajr = prayerResponse.data[i].timings!!.Imsak!!.substringBefore(" ")

@@ -18,6 +18,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import gr.aytn.islamicapp.R
 import gr.aytn.islamicapp.adapters.LocationAdapter
+import gr.aytn.islamicapp.config.Constants
 import gr.aytn.islamicapp.prefs
 import java.text.SimpleDateFormat
 import java.util.*
@@ -39,7 +40,12 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        if (prefs.theme == "Light"){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }else if (prefs.theme == "Dark"){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
+
 
         bottomNavView = findViewById(R.id.bottomNavigationView)
 
@@ -52,22 +58,17 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
         val day = myCalendar.get(Calendar.DAY_OF_MONTH) - 1
         val month = myCalendar.get(Calendar.MONTH) + 1
 
-        navController.navigate(R.id.homeFragment)
-
         quranViewModel.getAllQuran()
 
-        prayerViewModel.getCount().observe(this, Observer {
-            Log.i("main", "$it")
+        quranViewModel.getRandomAyah().observe(this, androidx.lifecycle.Observer{
+            if(it != null){
+                prefs.random_ayah = "${it.verse}. ${it.text}. (${Constants.getChapterList().get(it.chapter!!-1).name} surəsi)"
+            }
         })
-        Log.i("main", "")
-
-    var currentMonth: Int = -1
-
 
         var todaysDate = formatterDate.format(myCalendar.time)
 
         if(currentMonth != month){
-            Log.i("main","monht is diff")
             currentMonth = month
             prayerViewModel.getPrayerTimes(
                 "Azerbaijan",
@@ -111,22 +112,13 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
 
         })
 
-        if(currentMonth != month){
-            
-        }
-
-        Log.i("main","$currentMonth")
-
-
         bottomNavView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> {
-//                    currentFragment= HomeFragment()
                     navController?.navigate(R.id.homeFragment)
 
                 }
                 R.id.prayer -> {
-//                    currentFragment = PrayerFragment()
                     navController?.navigate(R.id.prayerFragment)
                 }
                 R.id.quran -> {
@@ -136,12 +128,9 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
 //                    currentFragment = ProfileFragment()
 //                }
                 R.id.settings -> {
-//                    currentFragment = SettingsFragment()
                     navController?.navigate(R.id.settingsFragment)
                 }
             }
-//            supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment_activity_main,currentFragment, "mytag").commit()
-//            navController.navigate()
             true
         }
         navController?.addOnDestinationChangedListener { _, nd: NavDestination, _ ->
@@ -206,6 +195,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
                     prefs.asr_time = it.asr!!
                     prefs.maghrib_time = it.maghrib!!
                     prefs.isha_time = it.isha!!
+                    prefs.selected_location = location
                 }else{
                     prefs.fajr_time = "00:00"
                     prefs.sunrise_time = "00:00"
@@ -218,7 +208,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
             })
         })
         navController.navigate(R.id.settingsFragment)
-        prefs.selected_location = location
+
     }
 
 

@@ -90,12 +90,7 @@ class HomeFragment : Fragment() {
 
         tvDate.text = "$day ${MONTHS[month]} $year"
 
-        quranViewModel.getRandomAyah().observe(viewLifecycleOwner, androidx.lifecycle.Observer{
-            if(it != null){
-                tvRandomAyat.text = "${it.verse}. ${it.text}. (${Constants.getChapterList().get(it.chapter!!-1).name} surəsi)"
-
-            }
-        })
+        tvRandomAyat.text = prefs.random_ayah
 
         val listener: checkAllBtnOnClickListener = activity as checkAllBtnOnClickListener
         tvCheckAll?.setOnClickListener {
@@ -197,5 +192,7 @@ class HomeFragment : Fragment() {
     interface checkAllBtnOnClickListener{
         fun checkAllBtnOnClick()
     }
+
+
 
 }

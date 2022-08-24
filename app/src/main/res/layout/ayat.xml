@@ -11,7 +11,7 @@
         android:id="@+id/tv_ayat_arabic"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="فَمَنِ افۡتَرٰي عَلَي اللّٰهِ الۡكَذِبَ مِنۣۡ بَعۡدِ ذٰلِكَ فَاُولٰٓئِكَ هُمُ الظّٰلِمُوۡنَ ٩٤ﶓ"
+        android:text="مِن شَرِّ ٱلۡوَسۡوَاسِ ٱلۡخَنَّاسِ"
         android:textSize="25sp"
         android:layout_marginStart="10dp"
         android:textDirection="rtl"

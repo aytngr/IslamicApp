@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_margin="5dp"
     android:padding="5dp"
-    android:theme="@style/TextViewTheme">
+    android:theme="@style/WhiteTextViewTheme">
 
     <TextView
             android:id="@+id/horizontal_chapter_name"
