@@ -29,5 +29,13 @@
         <item name="android:textColorTertiary">@color/white</item>
         <item name="android:textColorHint">@color/white</item>
     </style>
+    <style name="SmallTextViewTheme" parent="android:Widget.TextView">
+        <!-- Set the default global color for TextViews to Holo Blue Dark -->
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:textColorTertiary">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+    </style>
 
 </resources>

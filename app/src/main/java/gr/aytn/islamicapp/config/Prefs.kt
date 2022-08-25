@@ -21,8 +21,13 @@ class Prefs (context: Context){
     private var SELECTED_LOCATION = "SELECTED_LOCATION"
     private var RANDOM_AYAH = "RANDOM_AYAH"
     private var THEME = "THEME"
+    private var REMAINING_TIME = "REMAINING_TIME"
 
     private val preferences: SharedPreferences = context.getSharedPreferences("SharedPref",Context.MODE_PRIVATE)
+
+    var remaining_time: String
+        get() = preferences.getString(REMAINING_TIME,"").toString()
+        set(value) = preferences.edit().putString(REMAINING_TIME, value).apply()
 
     var current_month: Int
         get() = preferences.getInt(CURRENT_MONTH,-1)

@@ -1,6 +1,9 @@
 package gr.aytn.islamicapp.ui
 
 import android.annotation.SuppressLint
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
@@ -8,15 +11,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.RemoteViews
 import android.widget.TextView
-import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import gr.aytn.islamicapp.R
-import gr.aytn.islamicapp.config.Constants
 import gr.aytn.islamicapp.databinding.FragmentHomeBinding
 import gr.aytn.islamicapp.prefs
 import java.text.SimpleDateFormat
@@ -26,6 +29,8 @@ import java.util.*
 class HomeFragment : Fragment() {
 
     val quranViewModel: QuranViewModel by viewModels()
+    val prayerViewModel: PrayerViewModel by viewModels()
+    val formatterDate = SimpleDateFormat("dd-MM-yyyy")
 
     private lateinit var homeViewModel: HomeViewModel
     var millis: Long = 0
@@ -70,10 +75,20 @@ class HomeFragment : Fragment() {
 
         cardTopTextViews = binding.cardTop
 
+
+
         val year = myCalendar1.get(Calendar.YEAR)
         val month = myCalendar1.get(Calendar.MONTH)
         val day = myCalendar1.get(Calendar.DAY_OF_MONTH)
         val MONTHS: ArrayList<String> = arrayListOf("Yanvar","Fevral","Mart","Aprel","May","İyun","İyul","Avqust","Sentyabr","Oktyabr","Noyabr","Dekabr")
+
+
+
+
+
+
+//        createNotification()
+
 
         val tvRandomAyat = binding.randomAyat
 
@@ -177,6 +192,7 @@ class HomeFragment : Fragment() {
                 val min = (millisUntilFinished / 60000).toInt() % 60
                 val sec = (millisUntilFinished / 1000).toInt() % 60
                 tvRemainingTime?.text = String.format("- %02d:%02d:", hour, min);
+                prefs.remaining_time = String.format("- %02d:%02d", hour, min);
                 tvRemainingTimeSec?.text = sec.toString();
             }
             override fun onFinish() {
@@ -191,6 +207,58 @@ class HomeFragment : Fragment() {
 
     interface checkAllBtnOnClickListener{
         fun checkAllBtnOnClick()
+    }
+
+    fun createNotification() {
+        updateTimes()
+        val notificationManager =
+            requireContext().getSystemService(AppCompatActivity.NOTIFICATION_SERVICE) as NotificationManager
+
+        val contentView = RemoteViews(requireActivity().packageName, R.layout.notification)
+        contentView.setTextViewText(R.id.notf_fajr, prefs.fajr_time)
+        contentView.setTextViewText(R.id.notf_sunrise, prefs.sunrise_time)
+        contentView.setTextViewText(R.id.notf_dhuhr, prefs.dhuhr_time)
+        contentView.setTextViewText(R.id.notf_asr, prefs.asr_time)
+        contentView.setTextViewText(R.id.notf_maghrib, prefs.maghrib_time)
+        contentView.setTextViewText(R.id.notf_isha, prefs.isha_time)
+        contentView.setTextViewText(R.id.notf_location, prefs.selected_location)
+
+        val builder: NotificationCompat.Builder = NotificationCompat.Builder(requireContext(),"sticky_notification")
+            .setContent(contentView)
+            .setSmallIcon(R.drawable.asr_icon)
+            .setOngoing(true)
+            .setAutoCancel(false)
+        val intent = Intent(requireContext(), MainActivity::class.java)
+        intent.action = Intent.ACTION_MAIN
+        intent.addCategory(Intent.CATEGORY_LAUNCHER)
+        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        val pendingIntent =
+            PendingIntent.getActivity(requireContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        builder.setContentIntent(pendingIntent)
+        /*Notification noti = builder.build();
+    noti.flags = Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;*/
+        notificationManager.notify(
+            10,
+            builder.build()
+        )
+    }
+    fun updateTimes(){
+        val todaysDate = formatterDate.format(myCalendar1.time)
+        prayerViewModel.getPrayerTimesByDate(todaysDate).observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if(it != null){
+                prefs.fajr_time = it.fajr!!
+                prefs.sunrise_time = it.sunrise!!
+                prefs.dhuhr_time = it.dhuhr!!
+                prefs.asr_time = it.asr!!
+                prefs.maghrib_time = it.maghrib!!
+                prefs.isha_time = it.isha!!
+            }
+
+        })
     }
 
 
