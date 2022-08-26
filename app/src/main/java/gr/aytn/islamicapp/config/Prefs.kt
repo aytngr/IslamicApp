@@ -22,17 +22,22 @@ class Prefs (context: Context){
     private var RANDOM_AYAH = "RANDOM_AYAH"
     private var THEME = "THEME"
     private var REMAINING_TIME = "REMAINING_TIME"
-    private var SELECTED_TRANSLATİON = "SELECTED_TRANSLATİON"
+    private var SELECTED_TRANSLATION = "SELECTED_TRANSLATION"
+    private var STICKY_NOTF = "STICKY_NOTF"
 
     private val preferences: SharedPreferences = context.getSharedPreferences("SharedPref",Context.MODE_PRIVATE)
 
     var selected_translation: String
-        get() = preferences.getString(SELECTED_TRANSLATİON,"").toString()
-        set(value) = preferences.edit().putString(SELECTED_TRANSLATİON, value).apply()
+        get() = preferences.getString(SELECTED_TRANSLATION,"Əlixan Musayev").toString()
+        set(value) = preferences.edit().putString(SELECTED_TRANSLATION, value).apply()
 
     var remaining_time: String
         get() = preferences.getString(REMAINING_TIME,"").toString()
         set(value) = preferences.edit().putString(REMAINING_TIME, value).apply()
+
+    var sticky_notf: Boolean
+        get() = preferences.getBoolean(STICKY_NOTF,true)
+        set(value) = preferences.edit().putBoolean(STICKY_NOTF, value).apply()
 
     var current_month: Int
         get() = preferences.getInt(CURRENT_MONTH,-1)

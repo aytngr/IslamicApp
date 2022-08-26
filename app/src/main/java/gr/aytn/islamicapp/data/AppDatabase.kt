@@ -19,7 +19,7 @@ import java.io.BufferedReader
 import javax.inject.Inject
 import javax.inject.Provider
 
-@Database(entities = [Ayat::class, Chapter::class,PrayerTime::class],version = 5)
+@Database(entities = [Ayat::class, Chapter::class,PrayerTime::class],version = 6)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun ayatDao(): QuranDao
     abstract fun prayerDao(): PrayerDao
@@ -38,6 +38,7 @@ abstract class AppDatabase : RoomDatabase() {
             try {
                 //creating variable that holds the loaded data
                 val quran = loadJSONArray()
+                val quran_alikhan_musayev = loadJSONArrayAzAlikhan()
                 val quran_arabic = loadJSONArrayArabic()
                 val chapters = loadJSONArrayChapters()
                 for (i in 0 until chapters.length()){
@@ -57,6 +58,7 @@ abstract class AppDatabase : RoomDatabase() {
                 for (i in 0 until quran.length()){
                     //variable to obtain the JSON object
                     val ayat = quran.getJSONObject(i)
+                    val ayat_alikhan_musayev = quran_alikhan_musayev.getJSONObject(i)
                     val ayat_arabic = quran_arabic.getJSONObject(i)
 
                     //Using the JSON object to assign data
@@ -64,10 +66,11 @@ abstract class AppDatabase : RoomDatabase() {
                     val verse = ayat.getString("verse").toInt()
                     val arabic = ayat_arabic.getString("text")
                     val text = ayat.getString("text")
+                    val text_alikhan_musayev = ayat_alikhan_musayev.getString("text")
 
                     //data loaded to the entity
                     val ayatEntity = Ayat(
-                        chapter,verse,arabic,text
+                        chapter,verse,arabic,text,text_alikhan_musayev
                     )
 
                     //using dao to insert data to the database
@@ -89,9 +92,17 @@ abstract class AppDatabase : RoomDatabase() {
                 return JSONArray(it.readText())
             }
         }
+        private fun loadJSONArrayAzAlikhan(): JSONArray {
+            //obtain input byte
+            val inputStream = resources.openRawResource(R.raw.quran_alikhan_musayev)
+            //using Buffered reader to read the inputstream byte
+            BufferedReader(inputStream.reader()).use {
+                return JSONArray(it.readText())
+            }
+        }
         private fun loadJSONArrayArabic(): JSONArray {
             //obtain input byte
-            val inputStream = resources.openRawResource(R.raw.quran_arabic)
+            val inputStream = resources.openRawResource(R.raw.quran_arabic_simple)
             //using Buffered reader to read the inputstream byte
             BufferedReader(inputStream.reader()).use {
                 return JSONArray(it.readText())

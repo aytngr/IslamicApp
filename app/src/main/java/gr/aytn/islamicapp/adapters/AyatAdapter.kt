@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import gr.aytn.islamicapp.R
 import gr.aytn.islamicapp.model.Ayat
+import gr.aytn.islamicapp.prefs
 
 
 class AyatAdapter(private val mList: List<Ayat>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -51,7 +52,12 @@ class AyatAdapter(private val mList: List<Ayat>) : RecyclerView.Adapter<Recycler
             val viewHolder2 = holder as ViewHolder2
             val ayat = mList[position]
             viewHolder2.tvAyatArabic.text = "${ayat.arabic}"
-            viewHolder2.tvAyat.text = "${ayat.text}"
+            if(prefs.selected_translation == "Alikhan"){
+                viewHolder2.tvAyat.text = "${ayat.text_alikhan_musayev}"
+            }else if(prefs.selected_translation == "Vasim"){
+                viewHolder2.tvAyat.text = "${ayat.text}"
+            }
+
             viewHolder2.tvAyatNumber.text = "${ayat.verse}. "
         }
     }

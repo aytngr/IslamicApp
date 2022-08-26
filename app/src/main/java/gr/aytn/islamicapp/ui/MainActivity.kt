@@ -118,13 +118,18 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
             })
         }
 /////////////////////////////////////////////////
-        val intent = Intent(this, NotificationService::class.java)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(intent);
-        } else {
-            startService(intent);
+        val notificationManager =
+            this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        if(prefs.sticky_notf){
+            val intent = Intent(this, NotificationService::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(intent);
+            } else {
+                startService(intent);
+            }
+        }else{
+            notificationManager.cancel(10)
         }
-
 //////////////////////////////////////////
         prayerViewModel.getPrayerTimesByDate(todaysDate).observe(this, Observer {
             if(it != null){
@@ -191,11 +196,6 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
             super.onBackPressed()
         }
 
-//        if (bottomNavView.selectedItemId == R.id.prayer || bottomNavView.selectedItemId == R.id.settings) {
-//            bottomNavView.selectedItemId = R.id.home
-//        } else {
-//            super.onBackPressed()
-//        }
     }
 
     override fun onLocationClick(location: String) {
@@ -237,96 +237,8 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
 
     }
 
-    fun createNotification() {
-        val notificationManager =
-            this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
-        val contentView = RemoteViews(packageName, R.layout.notification)
-        contentView.setTextViewText(R.id.notf_fajr, prefs.fajr_time)
-        contentView.setTextViewText(R.id.notf_sunrise, prefs.sunrise_time)
-        contentView.setTextViewText(R.id.notf_dhuhr, prefs.dhuhr_time)
-        contentView.setTextViewText(R.id.notf_asr, prefs.asr_time)
-        contentView.setTextViewText(R.id.notf_maghrib, prefs.maghrib_time)
-        contentView.setTextViewText(R.id.notf_isha, prefs.isha_time)
-        contentView.setTextViewText(R.id.notf_location, prefs.selected_location)
 
-        val builder: NotificationCompat.Builder = NotificationCompat.Builder(this,"sticky_notification")
-            .setContent(contentView)
-            .setSmallIcon(R.drawable.asr_icon)
-            .setOngoing(true)
-            .setAutoCancel(false)
-        val intent = Intent(this, MainActivity::class.java)
-        intent.action = Intent.ACTION_MAIN
-        intent.addCategory(Intent.CATEGORY_LAUNCHER)
-        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        val pendingIntent =
-            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-        builder.setContentIntent(pendingIntent)
-        /*Notification noti = builder.build();
-    noti.flags = Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;*/
-        notificationManager.notify(
-            10,
-            builder.build()
-        )
-    }
-
-    fun updateNotificationText(inString: String?) {
-        val notificationManager =
-            this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val contentView = RemoteViews(packageName, R.layout.notification)
-        contentView.setTextViewText(R.id.notf_fajr, prefs.fajr_time)
-        contentView.setTextViewText(R.id.notf_sunrise, prefs.sunrise_time)
-        contentView.setTextViewText(R.id.notf_dhuhr, prefs.dhuhr_time)
-        contentView.setTextViewText(R.id.notf_asr, prefs.asr_time)
-        contentView.setTextViewText(R.id.notf_maghrib, prefs.maghrib_time)
-        contentView.setTextViewText(R.id.notf_isha, prefs.isha_time)
-        contentView.setTextViewText(R.id.notf_location, prefs.selected_location)
-        val builder: NotificationCompat.Builder = NotificationCompat.Builder(this,"sticky_notification")
-            .setContent(contentView)
-            .setSmallIcon(R.drawable.asr_icon)
-            .setOngoing(true)
-            .setAutoCancel(false)
-        val intent = Intent(this, MainActivity::class.java)
-        intent.action = Intent.ACTION_MAIN
-        intent.addCategory(Intent.CATEGORY_LAUNCHER)
-        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        val pendingIntent =
-            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-        builder.setContentIntent(pendingIntent)
-
-        /*Notification noti = builder.build();
-    noti.flags = Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;*/
-        notificationManager.notify(
-            10,
-            builder.build()
-        )
-    }
-
-    fun cancelNotification() {
-
-    }
-
-//    override fun onResume() {
-//        super.onResume()
-//        val myCalendar: Calendar = Calendar.getInstance()
-//        var todaysDate = formatterDate.format(myCalendar.time)
-//        prayerViewModel.getPrayerTimesByDate(todaysDate).observe(this, Observer {
-//            if(it != null){
-//                prefs.fajr_time = it.fajr!!
-//                prefs.sunrise_time = it.sunrise!!
-//                prefs.dhuhr_time = it.dhuhr!!
-//                prefs.asr_time = it.asr!!
-//                prefs.maghrib_time = it.maghrib!!
-//                prefs.isha_time = it.isha!!
-//            }
-//
-//        })
-//        createNotification()
-//    }
 
 
 }

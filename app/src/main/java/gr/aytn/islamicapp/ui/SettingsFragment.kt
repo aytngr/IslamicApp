@@ -1,6 +1,8 @@
 package gr.aytn.islamicapp.ui
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.fragment.findNavController
+import gr.aytn.islamicapp.NotificationService
 import gr.aytn.islamicapp.R
 import gr.aytn.islamicapp.databinding.FragmentSettingsBinding
 import gr.aytn.islamicapp.prefs
@@ -40,13 +43,31 @@ class SettingsFragment : Fragment() {
         val settingsTheme = binding.themeSettings
         val tvSelectedTheme = binding.selectedTheme
 
-        tvSelectedTheme.text = prefs.theme
+        val switchNotf = binding.switchStickyNotfSettings
 
+        tvSelectedTheme.text = prefs.theme
+        tvSelectedTranslation.text= prefs.selected_translation
         tvSelectedLocation.text = prefs.selected_location
 
         settingsLocation.setOnClickListener {
             findNavController().navigate(R.id.locationFragment)
         }
+
+        switchNotf.isChecked = prefs.sticky_notf
+        val intent = Intent(requireActivity(), NotificationService::class.java)
+        switchNotf.setOnClickListener {
+            if (switchNotf.isChecked){
+                prefs.sticky_notf = true
+                Log.i("frag","swithc on")
+                requireActivity().startService(intent)
+            }
+            else{
+                prefs.sticky_notf = false
+                Log.i("frag","swithc off")
+                requireActivity().stopService(intent)
+            }
+        }
+
         settingsTranslation.setOnClickListener {
             val builder = android.app.AlertDialog.Builder(context)
                 .create()
@@ -56,25 +77,25 @@ class SettingsFragment : Fragment() {
             val vasimRadioBtn : RadioButton = view.findViewById(R.id.vasim)
             var selectedTranslation = ""
 
-            if(prefs.selected_translation == "Alikhan"){
+            if(prefs.selected_translation == "Əlixan Musayev"){
                 alikhanRadioBtn.isChecked = true
-            }else if(prefs.selected_translation == "Vasim") {
+            }else if(prefs.selected_translation == "Vasim Məmmədəliyev və Ziya Bünyadov") {
                 vasimRadioBtn.isChecked = true
             }
             radioGroup.setOnCheckedChangeListener { _, i ->
                 if (i == R.id.alikhan) {
-                    selectedTranslation = "Alikhan"
+                    selectedTranslation = "Əlixan Musayev"
                 } else if (i == R.id.vasim) {
-                    selectedTranslation = "Vasim"
+                    selectedTranslation = "Vasim Məmmədəliyev və Ziya Bünyadov"
                 }
             }
             val okBtn: Button = view.findViewById(R.id.ok_button)
             val cancelBtn: Button = view.findViewById(R.id.cancel_button)
             okBtn.setOnClickListener {
-                prefs.theme = selectedTranslation
-                if (prefs.theme == "Alikhan"){
+                prefs.selected_translation = selectedTranslation
+                if (prefs.selected_translation == "Əlixan Musayev"){
                     tvSelectedTranslation.text = "Əlixan Musayev"
-                }else if (prefs.theme == "Vasim"){
+                }else if (prefs.selected_translation == "Vasim Məmmədəliyev və Ziya Bünyadov"){
                     tvSelectedTranslation.text = "Vasim Məmmədəliyev və Ziya Bünyadov"
                 }
                 builder.dismiss()

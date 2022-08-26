@@ -209,43 +209,6 @@ class HomeFragment : Fragment() {
         fun checkAllBtnOnClick()
     }
 
-    fun createNotification() {
-        updateTimes()
-        val notificationManager =
-            requireContext().getSystemService(AppCompatActivity.NOTIFICATION_SERVICE) as NotificationManager
-
-        val contentView = RemoteViews(requireActivity().packageName, R.layout.notification)
-        contentView.setTextViewText(R.id.notf_fajr, prefs.fajr_time)
-        contentView.setTextViewText(R.id.notf_sunrise, prefs.sunrise_time)
-        contentView.setTextViewText(R.id.notf_dhuhr, prefs.dhuhr_time)
-        contentView.setTextViewText(R.id.notf_asr, prefs.asr_time)
-        contentView.setTextViewText(R.id.notf_maghrib, prefs.maghrib_time)
-        contentView.setTextViewText(R.id.notf_isha, prefs.isha_time)
-        contentView.setTextViewText(R.id.notf_location, prefs.selected_location)
-
-        val builder: NotificationCompat.Builder = NotificationCompat.Builder(requireContext(),"sticky_notification")
-            .setContent(contentView)
-            .setSmallIcon(R.drawable.asr_icon)
-            .setOngoing(true)
-            .setAutoCancel(false)
-        val intent = Intent(requireContext(), MainActivity::class.java)
-        intent.action = Intent.ACTION_MAIN
-        intent.addCategory(Intent.CATEGORY_LAUNCHER)
-        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        val pendingIntent =
-            PendingIntent.getActivity(requireContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-        builder.setContentIntent(pendingIntent)
-        /*Notification noti = builder.build();
-    noti.flags = Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;*/
-        notificationManager.notify(
-            10,
-            builder.build()
-        )
-    }
     fun updateTimes(){
         val todaysDate = formatterDate.format(myCalendar1.time)
         prayerViewModel.getPrayerTimesByDate(todaysDate).observe(viewLifecycleOwner, androidx.lifecycle.Observer {

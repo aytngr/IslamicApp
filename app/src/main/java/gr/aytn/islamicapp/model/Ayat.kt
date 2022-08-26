@@ -11,6 +11,7 @@ data class Ayat(
     @ColumnInfo(name = "verse") var verse: Int? = null,
     @ColumnInfo(name = "arabic") var arabic: String? = null,
     @ColumnInfo(name = "text") var text: String? = null,
+    @ColumnInfo(name = "text_alikhan_musayev") var text_alikhan_musayev: String? = null,
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") val id: Int = 0
 )
