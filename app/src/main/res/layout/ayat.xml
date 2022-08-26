@@ -11,11 +11,11 @@
         android:id="@+id/tv_ayat_arabic"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="مِن شَرِّ ٱلۡوَسۡوَاسِ ٱلۡخَنَّاسِ"
+        android:text="بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ"
         android:textSize="25sp"
         android:layout_marginStart="10dp"
         android:textDirection="rtl"
-        android:fontFamily="@font/arabic_font"/>
+        android:fontFamily="@font/q"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

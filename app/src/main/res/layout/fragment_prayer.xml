@@ -185,7 +185,7 @@
                 android:id="@+id/dhuhr_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Zöhr namazı"
+                android:text="Günorta namazı"
                 android:layout_weight="1"
                 android:textSize="20sp"/>
 
@@ -213,7 +213,7 @@
                 android:id="@+id/asr_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Əsr namazı"
+                android:text="İkindi namazı"
                 android:layout_weight="1"
                 android:textSize="20sp"/>
 
@@ -241,7 +241,7 @@
                 android:id="@+id/maghrib_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Məğrib namazı"
+                android:text="Axşam namazı"
                 android:layout_weight="1"
                 android:textSize="20sp"/>
 
@@ -269,7 +269,7 @@
                 android:id="@+id/isha_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="İşa namazı"
+                android:text="Yatsı namazı"
 
                 android:layout_weight="1"
                 android:textSize="20sp"/>

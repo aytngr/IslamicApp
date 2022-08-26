@@ -22,8 +22,13 @@ class Prefs (context: Context){
     private var RANDOM_AYAH = "RANDOM_AYAH"
     private var THEME = "THEME"
     private var REMAINING_TIME = "REMAINING_TIME"
+    private var SELECTED_TRANSLATİON = "SELECTED_TRANSLATİON"
 
     private val preferences: SharedPreferences = context.getSharedPreferences("SharedPref",Context.MODE_PRIVATE)
+
+    var selected_translation: String
+        get() = preferences.getString(SELECTED_TRANSLATİON,"").toString()
+        set(value) = preferences.edit().putString(SELECTED_TRANSLATİON, value).apply()
 
     var remaining_time: String
         get() = preferences.getString(REMAINING_TIME,"").toString()
