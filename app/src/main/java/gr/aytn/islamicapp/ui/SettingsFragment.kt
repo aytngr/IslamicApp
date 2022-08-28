@@ -43,6 +43,12 @@ class SettingsFragment : Fragment() {
         val settingsTheme = binding.themeSettings
         val tvSelectedTheme = binding.selectedTheme
 
+        val settingsTranslationFontSize = binding.translationFontSizeSettings
+        val tvSelectedTranslationFontSize = binding.selectedTranslationFontSize
+
+        val settingsArabicFontSize = binding.arabicFontSizeSettings
+        val tvSelectedArabicFontSize = binding.selectedArabicFontSize
+
         val switchNotf = binding.switchStickyNotfSettings
 
         tvSelectedTheme.text = prefs.theme
@@ -52,6 +58,151 @@ class SettingsFragment : Fragment() {
         settingsLocation.setOnClickListener {
             findNavController().navigate(R.id.locationFragment)
         }
+
+        tvSelectedArabicFontSize.text = prefs.arabic_font_size.toString() + "sp"
+        tvSelectedTranslationFontSize.text = prefs.translation_font_size.toString() + "sp"
+
+        val langRadioGroup: RadioGroup = binding.LangRGroup
+        val langAr = binding.ar
+        val langAz = binding.az
+        val langArAz = binding.araz
+
+        when(prefs.selected_text_language){
+            "ar" -> langAr.isChecked = true
+            "az" -> langAz.isChecked = true
+            "araz" -> langArAz.isChecked = true
+        }
+
+        langRadioGroup.setOnCheckedChangeListener { _, i ->
+            when(i){
+                R.id.ar -> prefs.selected_text_language = "ar"
+                R.id.az -> prefs.selected_text_language = "az"
+                R.id.araz -> prefs.selected_text_language = "araz"
+            }
+        }
+
+        settingsArabicFontSize.setOnClickListener {
+            val builder = android.app.AlertDialog.Builder(context)
+                .create()
+            val view = layoutInflater.inflate(R.layout.arabic_font_checkbox_dialog, null)
+            val radioGroup: RadioGroup = view.findViewById(R.id.RGroup)
+            val s26RadioBtn : RadioButton = view.findViewById(R.id.s26)
+            val s28RadioBtn : RadioButton = view.findViewById(R.id.s28)
+            val s30RadioBtn : RadioButton = view.findViewById(R.id.s30)
+            val s32RadioBtn : RadioButton = view.findViewById(R.id.s32)
+            var selectedSize = 0
+
+            when(prefs.arabic_font_size){
+                26 -> s26RadioBtn.isChecked = true
+                28 -> s28RadioBtn.isChecked = true
+                30 -> s30RadioBtn.isChecked = true
+                32 -> s32RadioBtn.isChecked = true
+            }
+            radioGroup.setOnCheckedChangeListener { _, i ->
+                when(i){
+                    R.id.s26 -> selectedSize = 26
+                    R.id.s28 -> selectedSize = 28
+                    R.id.s30 -> selectedSize = 30
+                    R.id.s32 -> selectedSize = 32
+                }
+            }
+            val okBtn: Button = view.findViewById(R.id.ok_button)
+            val cancelBtn: Button = view.findViewById(R.id.cancel_button)
+            okBtn.setOnClickListener {
+                prefs.arabic_font_size = selectedSize
+                tvSelectedArabicFontSize.text = prefs.arabic_font_size.toString() + "sp"
+                builder.dismiss()
+            }
+            cancelBtn.setOnClickListener {
+                builder.dismiss()
+            }
+            builder.setView(view)
+            builder.setCanceledOnTouchOutside(true)
+            builder.show()
+        }
+
+        settingsTranslationFontSize.setOnClickListener {
+            val builder = android.app.AlertDialog.Builder(context)
+                .create()
+            val view = layoutInflater.inflate(R.layout.translation_font_checkbox_dialog, null)
+            val radioGroup: RadioGroup = view.findViewById(R.id.RGroup)
+            val s16RadioBtn : RadioButton = view.findViewById(R.id.s16)
+            val s18RadioBtn : RadioButton = view.findViewById(R.id.s18)
+            val s20RadioBtn : RadioButton = view.findViewById(R.id.s20)
+            val s22RadioBtn : RadioButton = view.findViewById(R.id.s22)
+            val s24RadioBtn : RadioButton = view.findViewById(R.id.s24)
+            var selectedSize = 0
+
+            when(prefs.translation_font_size){
+                16 -> s16RadioBtn.isChecked = true
+                18 -> s18RadioBtn.isChecked = true
+                20 -> s20RadioBtn.isChecked = true
+                22 -> s22RadioBtn.isChecked = true
+                24 -> s24RadioBtn.isChecked = true
+            }
+            radioGroup.setOnCheckedChangeListener { _, i ->
+                when(i){
+                    R.id.s16 -> selectedSize = 16
+                    R.id.s18 -> selectedSize = 18
+                    R.id.s20 -> selectedSize = 20
+                    R.id.s22 -> selectedSize = 22
+                    R.id.s24 -> selectedSize = 24
+                }
+            }
+            val okBtn: Button = view.findViewById(R.id.ok_button)
+            val cancelBtn: Button = view.findViewById(R.id.cancel_button)
+            okBtn.setOnClickListener {
+                prefs.translation_font_size = selectedSize
+                tvSelectedTranslationFontSize.text = prefs.translation_font_size.toString() + "sp"
+                builder.dismiss()
+            }
+            cancelBtn.setOnClickListener {
+                builder.dismiss()
+            }
+            builder.setView(view)
+            builder.setCanceledOnTouchOutside(true)
+            builder.show()
+        }
+
+//        settingsTranslationFontSize.setOnClickListener {
+//            val builder = android.app.AlertDialog.Builder(context)
+//                .create()
+//            val view = layoutInflater.inflate(R.layout.translation_checkbox_dialog, null)
+//            val radioGroup: RadioGroup = view.findViewById(R.id.RGroup)
+//            val s20RadioBtn : RadioButton = view.findViewById(R.id.s20)
+//            val s22RadioBtn : RadioButton = view.findViewById(R.id.s22)
+//            val s24RadioBtn : RadioButton = view.findViewById(R.id.s24)
+//            val s26RadioBtn : RadioButton = view.findViewById(R.id.s26)
+//            var selectedSize = 0
+//
+//            when(prefs.arabic_font_size){
+//                20 -> s20RadioBtn.isChecked = true
+//                22 -> s22RadioBtn.isChecked = true
+//                24 -> s24RadioBtn.isChecked = true
+//                26 -> s26RadioBtn.isChecked = true
+//            }
+//            radioGroup.setOnCheckedChangeListener { _, i ->
+//                when(i){
+//                    R.id.s20 -> selectedSize = 20
+//                    R.id.s22 -> selectedSize = 22
+//                    R.id.s24 -> selectedSize = 24
+//                    R.id.s26 -> selectedSize = 26
+//                }
+//            }
+//            val okBtn: Button = view.findViewById(R.id.ok_button)
+//            val cancelBtn: Button = view.findViewById(R.id.cancel_button)
+//            okBtn.setOnClickListener {
+//                prefs.arabic_font_size = selectedSize
+//                tvSelectedArabicFontSize.text = prefs.arabic_font_size.toString() + "sp"
+//                builder.dismiss()
+//            }
+//            cancelBtn.setOnClickListener {
+//                builder.dismiss()
+//            }
+//            builder.setView(view)
+//            builder.setCanceledOnTouchOutside(true)
+//            builder.show()
+//        }
 
         switchNotf.isChecked = prefs.sticky_notf
         val intent = Intent(requireActivity(), NotificationService::class.java)

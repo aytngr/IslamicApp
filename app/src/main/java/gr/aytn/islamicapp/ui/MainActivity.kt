@@ -120,16 +120,14 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
 /////////////////////////////////////////////////
         val notificationManager =
             this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        if(prefs.sticky_notf){
-            val intent = Intent(this, NotificationService::class.java)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                startForegroundService(intent);
-            } else {
-                startService(intent);
-            }
-        }else{
-            notificationManager.cancel(10)
-        }
+//        if(prefs.sticky_notf){
+//            val intent = Intent(this, NotificationService::class.java)
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                startForegroundService(intent);
+//            } else {
+//                startService(intent);
+//            }
+//        }
 //////////////////////////////////////////
         prayerViewModel.getPrayerTimesByDate(todaysDate).observe(this, Observer {
             if(it != null){
@@ -191,6 +189,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
         } else if (navController.currentDestination?.id == R.id.chapterFragment) {
             bottomNavView.selectedItemId = R.id.quran
         } else if (navController.currentDestination?.id == R.id.homeFragment) {
+            prefs.chapter_no = 0
             finish()
         } else {
             super.onBackPressed()
@@ -233,6 +232,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
 
             })
         })
+        prefs.selected_location = location
         navController.navigate(R.id.settingsFragment)
 
     }

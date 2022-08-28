@@ -3,6 +3,7 @@ package gr.aytn.islamicapp
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 import gr.aytn.islamicapp.config.Prefs
+import com.gu.toolargetool.TooLargeTool;
 
 val prefs: Prefs by lazy {
     BaseApplication.prefs!!
@@ -18,6 +19,7 @@ class BaseApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
+        TooLargeTool.startLogging(this);
 
         instance = this
         prefs = Prefs(applicationContext)

@@ -37,6 +37,9 @@ class QuranFragment : Fragment(), ChapterAdapter.OnItemClickListener{
         val recyclerView = binding.verseRecyclerview
         recyclerView.layoutManager = LinearLayoutManager(context)
 
+        (recyclerView.layoutManager as LinearLayoutManager).scrollToPosition(
+            prefs.chapter_no-3);
+
         quranViewModel.getAllChapters().observe(viewLifecycleOwner, Observer {
             val chapterAdapter = ChapterAdapter(it,this)
             recyclerView.adapter = chapterAdapter

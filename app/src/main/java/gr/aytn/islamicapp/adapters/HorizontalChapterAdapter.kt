@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import gr.aytn.islamicapp.R
 import gr.aytn.islamicapp.model.Chapter
+import gr.aytn.islamicapp.prefs
 import gr.aytn.islamicapp.ui.ChapterFragment
 import gr.aytn.islamicapp.ui.QuranFragment
 
@@ -27,7 +28,13 @@ class HorizontalChapterAdapter(private val mList: List<Chapter>, private val lis
     // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val chapter = mList[position]
-        holder.chapterName.text = chapter.name
+        holder.chapterName.text = "${chapter.number}/${chapter.name}"
+
+        if(chapter.number!! == prefs.chapter_no){
+            holder.underline.visibility = View.VISIBLE
+        }else{
+            holder.underline.visibility = View.GONE
+        }
 
         holder.itemView.setOnClickListener {
             if (position != RecyclerView.NO_POSITION) {
@@ -40,6 +47,7 @@ class HorizontalChapterAdapter(private val mList: List<Chapter>, private val lis
     // Holds the views for adding it to image and text
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         val chapterName = itemView.findViewById<TextView>(R.id.horizontal_chapter_name)
+        val underline = itemView.findViewById<View>(R.id.underline)
     }
 
 

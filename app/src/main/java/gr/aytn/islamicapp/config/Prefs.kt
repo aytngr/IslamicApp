@@ -24,19 +24,34 @@ class Prefs (context: Context){
     private var REMAINING_TIME = "REMAINING_TIME"
     private var SELECTED_TRANSLATION = "SELECTED_TRANSLATION"
     private var STICKY_NOTF = "STICKY_NOTF"
+    private var ARABIC_FONT_SIZE = "ARABIC_FONT_SIZE"
+    private var TRANSLATION_FONT_SIZE = "TRANSLATION_FONT_SIZE"
+    private var SELECTED_TEXT_LANGUAGE = "SELECTED_TEXT_LANGUAGE"
 
     private val preferences: SharedPreferences = context.getSharedPreferences("SharedPref",Context.MODE_PRIVATE)
+
+    var arabic_font_size: Int
+        get() = preferences.getInt(ARABIC_FONT_SIZE,20)
+        set(value) = preferences.edit().putInt(ARABIC_FONT_SIZE, value).apply()
+
+    var translation_font_size: Int
+        get() = preferences.getInt(TRANSLATION_FONT_SIZE,20)
+        set(value) = preferences.edit().putInt(TRANSLATION_FONT_SIZE, value).apply()
 
     var selected_translation: String
         get() = preferences.getString(SELECTED_TRANSLATION,"Əlixan Musayev").toString()
         set(value) = preferences.edit().putString(SELECTED_TRANSLATION, value).apply()
+
+    var selected_text_language: String
+        get() = preferences.getString(SELECTED_TEXT_LANGUAGE,"araz").toString()
+        set(value) = preferences.edit().putString(SELECTED_TEXT_LANGUAGE, value).apply()
 
     var remaining_time: String
         get() = preferences.getString(REMAINING_TIME,"").toString()
         set(value) = preferences.edit().putString(REMAINING_TIME, value).apply()
 
     var sticky_notf: Boolean
-        get() = preferences.getBoolean(STICKY_NOTF,true)
+        get() = preferences.getBoolean(STICKY_NOTF,false)
         set(value) = preferences.edit().putBoolean(STICKY_NOTF, value).apply()
 
     var current_month: Int
@@ -56,7 +71,7 @@ class Prefs (context: Context){
         set(value) = preferences.edit().putString(RANDOM_AYAH, value).apply()
 
     var chapter_no: Int
-        get() = preferences.getInt(CHAPTER_NO,-1)
+        get() = preferences.getInt(CHAPTER_NO,0)
         set(value) = preferences.edit().putInt(CHAPTER_NO, value).apply()
 
     var chapter_verse_count: Int

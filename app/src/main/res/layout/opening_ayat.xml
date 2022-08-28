@@ -25,7 +25,7 @@
         android:textSize="15sp"
         android:gravity="center"
         android:layout_marginStart="10dp"
-        android:fontFamily="@font/arabic_font"/>
+        android:fontFamily="@font/app_font"/>
 
     <View
         android:id="@+id/view1"

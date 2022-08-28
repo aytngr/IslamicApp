@@ -8,6 +8,7 @@ import android.content.Intent
 import android.os.CountDownTimer
 import android.os.Handler
 import android.os.IBinder
+import android.os.TransactionTooLargeException
 import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
@@ -41,98 +42,103 @@ class NotificationService : Service() {
     @Inject
     lateinit var repo: PrayerRepository
 
-    // execution of service will start
-    // on calling this method
+    val handler = Handler()
+    private lateinit var runnable: Runnable
+
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-
         val notificationManager =
-            this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-
-        Log.i("notf","in the start")
-        if(prefs.sticky_notf){
-            Log.i("notf","in the iff")
-            val handler = Handler()
-            val delay: Long = 1000 // 1000 milliseconds == 1 second
-
-            val contentView = RemoteViews(packageName, R.layout.notification)
-
-            contentView.setTextViewText(R.id.notf_location, prefs.selected_location)
-            val builder: NotificationCompat.Builder = NotificationCompat.Builder(this@NotificationService,"sticky_notification")
-                .setContent(contentView)
-                .setSmallIcon(R.drawable.asr_icon)
-                .setOnlyAlertOnce(true)
-                .setOngoing(true)
-                .setAutoCancel(false)
-
-            val myintent = Intent(this@NotificationService, MainActivity::class.java)
-            myintent.action = Intent.ACTION_MAIN
-            myintent.addCategory(Intent.CATEGORY_LAUNCHER)
-            val pendingIntent =
-                PendingIntent.getActivity(this@NotificationService, 0, myintent, PendingIntent.FLAG_UPDATE_CURRENT)
-
-            builder.setContentIntent(pendingIntent)
-
-            handler.postDelayed(object : Runnable {
-                override fun run() {
-//
+            this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        Log.i("notf","in the onstart")
 
 
-                    val myCalendar: Calendar = Calendar.getInstance()
-                    val todaysDate = formatterDate.format(myCalendar.time)
-                    repo.getPrayerTimesByDate(todaysDate).observeForever {
-                        if(it != null){
-                            contentView.setTextViewText(R.id.notf_fajr, it.fajr)
-                            contentView.setTextViewText(R.id.notf_sunrise, it.sunrise)
-                            contentView.setTextViewText(R.id.notf_dhuhr, it.dhuhr)
-                            contentView.setTextViewText(R.id.notf_asr, it.asr)
-                            contentView.setTextViewText(R.id.notf_maghrib, it.maghrib)
-                            contentView.setTextViewText(R.id.notf_isha, it.isha)
+        val delay: Long = 1000*5 // 1000 milliseconds == 1 second
 
-                            fajrTime = formatter.parse(it.fajr!!) as Date
-                            sunriseTime = formatter.parse(it.sunrise!!) as Date
-                            dhuhrTime = formatter.parse(it.dhuhr!!) as Date
-                            asrTime = formatter.parse(it.asr!!) as Date
-                            maghribTime = formatter.parse(it.maghrib!!) as Date
-                            ishaTime = formatter.parse(it.isha!!) as Date
-                            midnightTime = formatter.parse("24:00") as Date
-                            midnightTime2 = formatter.parse("00:00") as Date
-                            contentView.setTextViewText(R.id.notf_remaining_time, remaining_time)
-                            setPrayerTimes()
-                        }
+        val contentView = RemoteViews(packageName, R.layout.notification)
+
+        contentView.setTextViewText(R.id.notf_location, prefs.selected_location)
+        val builder: NotificationCompat.Builder = NotificationCompat.Builder(this@NotificationService,"sticky_notification")
+            .setContent(contentView)
+            .setSmallIcon(R.mipmap.isha_icon)
+            .setOngoing(true)
+            .setAutoCancel(false)
+
+        val myintent = Intent(this@NotificationService, MainActivity::class.java)
+        myintent.action = Intent.ACTION_MAIN
+        myintent.addCategory(Intent.CATEGORY_LAUNCHER)
+        val pendingIntent =
+            PendingIntent.getActivity(this@NotificationService, 0, myintent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+
+        builder.setContentIntent(pendingIntent)
+
+        runnable = object : Runnable {
+            override fun run() {
+
+                val myCalendar: Calendar = Calendar.getInstance()
+                val todaysDate = formatterDate.format(myCalendar.time)
+                repo.getPrayerTimesByDate(todaysDate).observeForever {
+                    if(it != null){
+                        contentView.setTextViewText(R.id.notf_fajr, it.fajr)
+                        contentView.setTextViewText(R.id.notf_sunrise, it.sunrise)
+                        contentView.setTextViewText(R.id.notf_dhuhr, it.dhuhr)
+                        contentView.setTextViewText(R.id.notf_asr, it.asr)
+                        contentView.setTextViewText(R.id.notf_maghrib, it.maghrib)
+                        contentView.setTextViewText(R.id.notf_isha, it.isha)
+
+                        fajrTime = formatter.parse(it.fajr!!) as Date
+                        sunriseTime = formatter.parse(it.sunrise!!) as Date
+                        dhuhrTime = formatter.parse(it.dhuhr!!) as Date
+                        asrTime = formatter.parse(it.asr!!) as Date
+                        maghribTime = formatter.parse(it.maghrib!!) as Date
+                        ishaTime = formatter.parse(it.isha!!) as Date
+                        midnightTime = formatter.parse("24:00") as Date
+                        midnightTime2 = formatter.parse("00:00") as Date
+                        contentView.setTextViewText(R.id.notf_remaining_time, remaining_time)
+
                     }
-                    notificationManager.notify(
-                        10,
-                        builder.build()
-                    )
-
-                    handler.postDelayed(this, delay)
                 }
-            }, delay)
-        }else{
-            Log.i("notf","in the else")
-            stopSelf(startId)
-            notificationManager.cancel(10)
+                notificationManager.notify(
+                    10,
+                    builder.build()
+                )
 
+
+                handler.postDelayed(this, delay)
+            }
         }
+
+        handler.postDelayed(runnable, 0)
+        handler.postDelayed(object:Runnable{
+            override fun run() {
+                setPrayerTimes()
+            }
+        }, 3000)
+
+
         return START_REDELIVER_INTENT
     }
 
-    // execution of the service will
-    // stop on calling this method
     override fun onDestroy() {
         Log.i("frag","on destroy")
         Log.i("frag","${prefs.sticky_notf}")
-        val notificationManager =
-            this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.cancel(10)
+        if(!prefs.sticky_notf){
+            val notificationManager =
+                this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            handler.removeCallbacks(runnable)
+            notificationManager.cancel(10)
+            stopSelf()
+        }
+
         super.onDestroy()
     }
-//    override fun onTaskRemoved(rootIntent: Intent?) {
-//        println("onTaskRemoved called")
-//        super.onTaskRemoved(rootIntent)
-//        //do something you want
-//        //stop service
-//    }
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        println("onTaskRemoved called")
+        super.onTaskRemoved(rootIntent)
+        //do something you want
+        //stop service
+    }
+
+    
 
     override fun onBind(intent: Intent): IBinder? {
         return null

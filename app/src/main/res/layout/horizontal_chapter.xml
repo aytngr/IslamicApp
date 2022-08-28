@@ -10,9 +10,14 @@
 
     <TextView
             android:id="@+id/horizontal_chapter_name"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Fatihə"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
+    <View
+        android:id="@+id/underline"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white"/>
 
 </LinearLayout>

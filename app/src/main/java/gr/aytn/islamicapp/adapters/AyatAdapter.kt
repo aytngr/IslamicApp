@@ -51,14 +51,28 @@ class AyatAdapter(private val mList: List<Ayat>) : RecyclerView.Adapter<Recycler
         } else {
             val viewHolder2 = holder as ViewHolder2
             val ayat = mList[position]
+
             viewHolder2.tvAyatArabic.text = "${ayat.arabic}"
-            if(prefs.selected_translation == "Alikhan"){
+            viewHolder2.tvAyatArabic.textSize = prefs.arabic_font_size.toFloat()
+            viewHolder2.tvAyat.textSize = prefs.translation_font_size.toFloat()
+            if(prefs.selected_translation == "Əlixan Musayev"){
                 viewHolder2.tvAyat.text = "${ayat.text_alikhan_musayev}"
-            }else if(prefs.selected_translation == "Vasim"){
+            }else if(prefs.selected_translation == "Vasim Məmmədəliyev və Ziya Bünyadov"){
                 viewHolder2.tvAyat.text = "${ayat.text}"
             }
 
             viewHolder2.tvAyatNumber.text = "${ayat.verse}. "
+
+            if (prefs.selected_text_language == "az"){
+                viewHolder2.tvAyatArabic.visibility = View.GONE
+                viewHolder2.tvAyat.visibility = View.VISIBLE
+            }else if(prefs.selected_text_language == "ar"){
+                viewHolder2.tvAyat.visibility = View.GONE
+                viewHolder2.tvAyatArabic.visibility = View.VISIBLE
+            }else if(prefs.selected_text_language == "araz"){
+                viewHolder2.tvAyat.visibility = View.VISIBLE
+                viewHolder2.tvAyatArabic.visibility = View.VISIBLE
+            }
         }
     }
     // return the number of the items in the list

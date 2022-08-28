@@ -42,8 +42,18 @@
             android:layoutDirection="rtl"
             android:queryHint="1-7"
             android:searchHintIcon="@null"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"/>
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"/>
+        <ImageButton
+            android:id="@+id/chapter_settings"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="5dp"
+            android:padding="5dp"
+            android:background="@drawable/settings2"/>
+
 
     </LinearLayout>
 
