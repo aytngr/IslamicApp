@@ -51,7 +51,7 @@ class ChapterFragment : Fragment(), HorizontalChapterAdapter.OnHorizontalItemCli
         )
 
         (recyclerViewBottomChapters.layoutManager as LinearLayoutManager).scrollToPosition(
-            prefs.chapter_no-3);
+            prefs.chapter_no-2);
 
         quranViewModel.getAllChapters().observe(viewLifecycleOwner, Observer {
             val horizontalChapterAdapter = HorizontalChapterAdapter(it,this)
@@ -72,12 +72,13 @@ class ChapterFragment : Fragment(), HorizontalChapterAdapter.OnHorizontalItemCli
         tvClassication.text = "${currentChapterIndex.classification}də endirilib ${currentChapterIndex.verses} ayədir."
 
         settings.setOnClickListener {
-            findNavController().navigate(R.id.settingsFragment)
+            prefs.settings_from_chapter = true
+            findNavController().navigate(R.id.chapterSettingsFragment)
         }
 
         searchView.inputType = InputType.TYPE_CLASS_NUMBER;
         searchView.queryHint = "1-${prefs.chapter_verse_count}"
-        searchView.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener{
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query!!.toInt()>=1 && query.toInt()<= prefs.chapter_verse_count){
                     (recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(

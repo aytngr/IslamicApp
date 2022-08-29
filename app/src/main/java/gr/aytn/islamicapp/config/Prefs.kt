@@ -27,11 +27,12 @@ class Prefs (context: Context){
     private var ARABIC_FONT_SIZE = "ARABIC_FONT_SIZE"
     private var TRANSLATION_FONT_SIZE = "TRANSLATION_FONT_SIZE"
     private var SELECTED_TEXT_LANGUAGE = "SELECTED_TEXT_LANGUAGE"
+    private var SETTINGS_FROM_CHAPTER = "SETTINGS_FROM_CHAPTER"
 
     private val preferences: SharedPreferences = context.getSharedPreferences("SharedPref",Context.MODE_PRIVATE)
 
     var arabic_font_size: Int
-        get() = preferences.getInt(ARABIC_FONT_SIZE,20)
+        get() = preferences.getInt(ARABIC_FONT_SIZE,28)
         set(value) = preferences.edit().putInt(ARABIC_FONT_SIZE, value).apply()
 
     var translation_font_size: Int
@@ -53,6 +54,10 @@ class Prefs (context: Context){
     var sticky_notf: Boolean
         get() = preferences.getBoolean(STICKY_NOTF,false)
         set(value) = preferences.edit().putBoolean(STICKY_NOTF, value).apply()
+
+    var settings_from_chapter: Boolean
+        get() = preferences.getBoolean(SETTINGS_FROM_CHAPTER,false)
+        set(value) = preferences.edit().putBoolean(SETTINGS_FROM_CHAPTER, value).apply()
 
     var current_month: Int
         get() = preferences.getInt(CURRENT_MONTH,-1)

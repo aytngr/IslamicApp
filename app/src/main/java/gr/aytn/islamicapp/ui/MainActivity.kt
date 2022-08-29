@@ -191,7 +191,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
         } else if (navController.currentDestination?.id == R.id.homeFragment) {
             prefs.chapter_no = 0
             finish()
-        } else {
+        }else {
             super.onBackPressed()
         }
 

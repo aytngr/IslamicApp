@@ -38,4 +38,9 @@
         android:name="gr.aytn.islamicapp.ui.ChapterFragment"
         android:label="fragment_chapter"
         tools:layout="@layout/fragment_chapter"/>
+<fragment
+        android:id="@+id/chapterSettingsFragment"
+        android:name="gr.aytn.islamicapp.ui.ChapterSettingsFragment"
+        android:label="fragment_chapter_settings"
+        tools:layout="@layout/fragment_chapter_settings"/>
 </navigation>

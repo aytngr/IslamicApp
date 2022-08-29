@@ -1,8 +1,7 @@
 package gr.aytn.islamicapp.ui
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,32 +9,20 @@ import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainerView
-import androidx.navigation.fragment.findNavController
-import gr.aytn.islamicapp.NotificationService
 import gr.aytn.islamicapp.R
-import gr.aytn.islamicapp.databinding.FragmentSettingsBinding
+import gr.aytn.islamicapp.databinding.FragmentChapterSettingsBinding
 import gr.aytn.islamicapp.prefs
 
 
-class SettingsFragment : Fragment() {
+class ChapterSettingsFragment : Fragment() {
 
-    private lateinit var settingsViewModel: SettingsViewModel
-    private lateinit var navHost: FragmentContainerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentSettingsBinding.inflate(inflater,container,false)
-        val root: View = binding.root
-
-        val settingsLocation = binding.locationSettings
-        val tvSelectedLocation = binding.selectedLocation
-
-//        val settingsAsrCalculation = binding.asrCalculationSettings
-//        val tvSelectedAsrCalculation = binding.selectedAsrLocation
+        val binding = FragmentChapterSettingsBinding.inflate(inflater,container,false)
+        val root = binding.root
 
         val settingsTranslation = binding.translationSettings
         val tvSelectedTranslation = binding.selectedTranslation
@@ -48,16 +35,8 @@ class SettingsFragment : Fragment() {
 
         val settingsArabicFontSize = binding.arabicFontSizeSettings
         val tvSelectedArabicFontSize = binding.selectedArabicFontSize
-
-        val switchNotf = binding.switchStickyNotfSettings
-
         tvSelectedTheme.text = prefs.theme
         tvSelectedTranslation.text= prefs.selected_translation
-        tvSelectedLocation.text = prefs.selected_location
-
-        settingsLocation.setOnClickListener {
-            findNavController().navigate(R.id.locationFragment)
-        }
 
         tvSelectedArabicFontSize.text = prefs.arabic_font_size.toString() + "sp"
         tvSelectedTranslationFontSize.text = prefs.translation_font_size.toString() + "sp"
@@ -90,7 +69,7 @@ class SettingsFragment : Fragment() {
             val s28RadioBtn : RadioButton = view.findViewById(R.id.s28)
             val s30RadioBtn : RadioButton = view.findViewById(R.id.s30)
             val s32RadioBtn : RadioButton = view.findViewById(R.id.s32)
-            var selectedSize = 20
+            var selectedSize = 0
 
             when(prefs.arabic_font_size){
                 26 -> s26RadioBtn.isChecked = true
@@ -163,62 +142,6 @@ class SettingsFragment : Fragment() {
             builder.setCanceledOnTouchOutside(true)
             builder.show()
         }
-
-//        settingsTranslationFontSize.setOnClickListener {
-//            val builder = android.app.AlertDialog.Builder(context)
-//                .create()
-//            val view = layoutInflater.inflate(R.layout.translation_checkbox_dialog, null)
-//            val radioGroup: RadioGroup = view.findViewById(R.id.RGroup)
-//            val s20RadioBtn : RadioButton = view.findViewById(R.id.s20)
-//            val s22RadioBtn : RadioButton = view.findViewById(R.id.s22)
-//            val s24RadioBtn : RadioButton = view.findViewById(R.id.s24)
-//            val s26RadioBtn : RadioButton = view.findViewById(R.id.s26)
-//            var selectedSize = 0
-//
-//            when(prefs.arabic_font_size){
-//                20 -> s20RadioBtn.isChecked = true
-//                22 -> s22RadioBtn.isChecked = true
-//                24 -> s24RadioBtn.isChecked = true
-//                26 -> s26RadioBtn.isChecked = true
-//            }
-//            radioGroup.setOnCheckedChangeListener { _, i ->
-//                when(i){
-//                    R.id.s20 -> selectedSize = 20
-//                    R.id.s22 -> selectedSize = 22
-//                    R.id.s24 -> selectedSize = 24
-//                    R.id.s26 -> selectedSize = 26
-//                }
-//            }
-//            val okBtn: Button = view.findViewById(R.id.ok_button)
-//            val cancelBtn: Button = view.findViewById(R.id.cancel_button)
-//            okBtn.setOnClickListener {
-//                prefs.arabic_font_size = selectedSize
-//                tvSelectedArabicFontSize.text = prefs.arabic_font_size.toString() + "sp"
-//                builder.dismiss()
-//            }
-//            cancelBtn.setOnClickListener {
-//                builder.dismiss()
-//            }
-//            builder.setView(view)
-//            builder.setCanceledOnTouchOutside(true)
-//            builder.show()
-//        }
-
-        switchNotf.isChecked = prefs.sticky_notf
-        val intent = Intent(requireActivity(), NotificationService::class.java)
-        switchNotf.setOnClickListener {
-            if (switchNotf.isChecked){
-                prefs.sticky_notf = true
-                Log.i("frag","swithc on")
-                requireActivity().startService(intent)
-            }
-            else{
-                prefs.sticky_notf = false
-                Log.i("frag","swithc off")
-                requireActivity().stopService(intent)
-            }
-        }
-
         settingsTranslation.setOnClickListener {
             val builder = android.app.AlertDialog.Builder(context)
                 .create()
@@ -258,32 +181,6 @@ class SettingsFragment : Fragment() {
             builder.setCanceledOnTouchOutside(true)
             builder.show()
         }
-//        settingsAsrCalculation.setOnClickListener {
-//            val builder = android.app.AlertDialog.Builder(context)
-//                .create()
-//            val view = layoutInflater.inflate(R.layout.method_checkbox_dialog, null)
-//            val radioGroup: RadioGroup = view.findViewById(R.id.RGroup)
-//            var selectedAsrCalculation = ""
-//            radioGroup.setOnCheckedChangeListener { _, i ->
-//                if (i == R.id.standard) {
-//                    selectedAsrCalculation = "standart"
-//                } else if (i == R.id.hanafi) {
-//                    selectedAsrCalculation = "hanafi"
-//                }
-//            }
-//            val okBtn: Button = view.findViewById(R.id.ok_button)
-//            val cancelBtn: Button = view.findViewById(R.id.cancel_button)
-//            okBtn.setOnClickListener {
-//                builder.dismiss()
-//            }
-//            cancelBtn.setOnClickListener {
-//                builder.dismiss()
-//            }
-//            builder.setView(view)
-//            builder.setCanceledOnTouchOutside(false)
-//            builder.show()
-//        }
-
         settingsTheme.setOnClickListener {
             val builder = android.app.AlertDialog.Builder(context)
                 .create()
@@ -326,6 +223,8 @@ class SettingsFragment : Fragment() {
             builder.setCanceledOnTouchOutside(false)
             builder.show()
         }
+
+
 
         return root
     }

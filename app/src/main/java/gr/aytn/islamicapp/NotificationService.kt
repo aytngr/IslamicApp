@@ -22,32 +22,37 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class NotificationService : Service() {
 
-    private lateinit var fajrTime: Date
-    private lateinit var sunriseTime: Date
-    private lateinit var dhuhrTime: Date
-    private lateinit var asrTime: Date
-    private lateinit var maghribTime: Date
-    private lateinit var ishaTime: Date
-    private lateinit var midnightTime: Date
-    private lateinit var midnightTime2: Date
-
-    var millis: Long = 0
-
-    var remaining_time: String = ""
-
     val formatterDate = SimpleDateFormat("dd-MM-yyyy")
     val formatter = SimpleDateFormat("HH:mm")
     val formatter2 = SimpleDateFormat("HH:mm:ss")
+
+    var fajrTime = formatter.parse("00:00") as Date
+    var sunriseTime = formatter.parse("00:00") as Date
+    var dhuhrTime = formatter.parse("00:00") as Date
+    var asrTime = formatter.parse("00:00") as Date
+    var maghribTime = formatter.parse("00:00") as Date
+    var ishaTime = formatter.parse("00:00") as Date
+    var midnightTime = formatter.parse("00:00") as Date
+    var midnightTime2 = formatter.parse("00:00") as Date
+
+    var millis: Long = 1000
+
+    var remaining_time: String = ""
 
     @Inject
     lateinit var repo: PrayerRepository
 
     val handler = Handler()
     private lateinit var runnable: Runnable
+    private lateinit var notificationManager :NotificationManager
+
+    override fun onCreate() {
+        super.onCreate()
+        notificationManager =
+            this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        val notificationManager =
-            this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         Log.i("notf","in the onstart")
 
 
@@ -97,40 +102,37 @@ class NotificationService : Service() {
 
                     }
                 }
-                notificationManager.notify(
-                    10,
-                    builder.build()
-                )
+                startForeground(10, builder.build())
 
-
+//                notificationManager.notify(
+//                    10,
+//                    builder.build()
+//                )
+                setPrayerTimes()
                 handler.postDelayed(this, delay)
             }
         }
 
         handler.postDelayed(runnable, 0)
-        handler.postDelayed(object:Runnable{
-            override fun run() {
-                setPrayerTimes()
-            }
-        }, 3000)
+
 
 
         return START_REDELIVER_INTENT
     }
 
     override fun onDestroy() {
-        Log.i("frag","on destroy")
-        Log.i("frag","${prefs.sticky_notf}")
-        if(!prefs.sticky_notf){
-            val notificationManager =
-                this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            handler.removeCallbacks(runnable)
-            notificationManager.cancel(10)
-            stopSelf()
-        }
-
+        Log.i("servc","on destroy")
+//        if(!prefs.sticky_notf){
+//            handler.removeCallbacks(runnable)
+//            stopSelf()
+//        }
+        prefs.sticky_notf = false
+        handler.removeCallbacks(runnable)
+        stopSelf()
+        notificationManager.cancel(10)
         super.onDestroy()
     }
+
     override fun onTaskRemoved(rootIntent: Intent?) {
         println("onTaskRemoved called")
         super.onTaskRemoved(rootIntent)
@@ -138,7 +140,6 @@ class NotificationService : Service() {
         //stop service
     }
 
-    
 
     override fun onBind(intent: Intent): IBinder? {
         return null
@@ -190,7 +191,7 @@ class NotificationService : Service() {
             override fun onTick(millisUntilFinished: Long) {
                 val hour = (millisUntilFinished / 3600000).toInt();
                 val min = (millisUntilFinished / 60000).toInt() % 60
-                val sec = (millisUntilFinished / 1000).toInt() % 60
+//                val sec = (millisUntilFinished / 1000).toInt() % 60
                 remaining_time = String.format("- %02d:%02d", hour, min);
             }
             override fun onFinish() {

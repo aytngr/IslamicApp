@@ -12,10 +12,10 @@
         android:id="@+id/quran"
         android:title="Quran"
         android:icon="@drawable/quran"/>
-    <item
-        android:id="@+id/dua"
-        android:title="Dua/Zikr"
-        android:icon="@drawable/dua"/>
+<!--    <item-->
+<!--        android:id="@+id/dua"-->
+<!--        android:title="Dua/Zikr"-->
+<!--        android:icon="@drawable/dua"/>-->
     <item
         android:id="@+id/settings"
         android:title="Tənzimlə"

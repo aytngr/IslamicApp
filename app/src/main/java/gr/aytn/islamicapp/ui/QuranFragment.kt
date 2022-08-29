@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -38,7 +39,7 @@ class QuranFragment : Fragment(), ChapterAdapter.OnItemClickListener{
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         (recyclerView.layoutManager as LinearLayoutManager).scrollToPosition(
-            prefs.chapter_no-3);
+            prefs.chapter_no-4);
 
         quranViewModel.getAllChapters().observe(viewLifecycleOwner, Observer {
             val chapterAdapter = ChapterAdapter(it,this)
@@ -50,7 +51,7 @@ class QuranFragment : Fragment(), ChapterAdapter.OnItemClickListener{
         searchView.queryHint = "məs. Bəqərə"
 
 
-        searchView.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 quranViewModel.searchChapterByName(query.toString().trim()).observe(viewLifecycleOwner,
                     Observer {
