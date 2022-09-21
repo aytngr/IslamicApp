@@ -3,15 +3,15 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@drawable/dialog_bg"
-    android:theme="@style/TextViewTheme"
-    android:paddingStart="20dp"
-    android:paddingTop="15dp"
-    android:paddingEnd="10dp">
+        android:background="@drawable/dialog_bg"
+        android:theme="@style/TextViewTheme"
+        android:paddingStart="20dp"
+        android:paddingTop="15dp"
+        android:paddingEnd="10dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ölçü seçin:"
+            android:text="Stil seçin:"
             android:textSize="20sp"
             android:layout_marginBottom="5dp"/>
         <ScrollView
@@ -25,23 +25,13 @@
                 <RadioButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="26"
-                    android:id="@+id/s26"/>
+                    android:text="Stil 1"
+                    android:id="@+id/style1"/>
                 <RadioButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="28"
-                    android:id="@+id/s28"/>
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="30"
-                    android:id="@+id/s30"/>
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="32"
-                    android:id="@+id/s32"/>
+                    android:text="Stil 2"
+                    android:id="@+id/style2"/>
             </RadioGroup>
         </ScrollView>
 

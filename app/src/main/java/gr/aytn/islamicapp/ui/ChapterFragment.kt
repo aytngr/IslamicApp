@@ -23,6 +23,7 @@ import gr.aytn.islamicapp.adapters.ChapterAdapter
 import gr.aytn.islamicapp.adapters.HorizontalChapterAdapter
 import gr.aytn.islamicapp.config.Constants
 import gr.aytn.islamicapp.databinding.FragmentChapterBinding
+import gr.aytn.islamicapp.databinding.FragmentHomeBinding
 import gr.aytn.islamicapp.model.Ayat
 import gr.aytn.islamicapp.model.Chapter
 import gr.aytn.islamicapp.prefs
@@ -30,32 +31,37 @@ import gr.aytn.islamicapp.prefs
 @AndroidEntryPoint
 class ChapterFragment : Fragment(), HorizontalChapterAdapter.OnHorizontalItemClickListener {
 
+    private var _binding: FragmentChapterBinding? = null
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
+
     val quranViewModel: QuranViewModel by viewModels()
-    lateinit var recyclerView: RecyclerView
-    lateinit var recyclerViewBottomChapters: RecyclerView
+    var recyclerView: RecyclerView? = null
+    var recyclerViewBottomChapters: RecyclerView? = null
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentChapterBinding.inflate(inflater,container,false)
+        _binding = FragmentChapterBinding.inflate(inflater,container,false)
         val root = binding.root
 
         recyclerView = binding.ayatRecyclerview
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView?.layoutManager = LinearLayoutManager(context)
 
         recyclerViewBottomChapters = binding.bottomChaptersRecyclerview
-        recyclerViewBottomChapters.layoutManager = LinearLayoutManager(
+        recyclerViewBottomChapters?.layoutManager = LinearLayoutManager(
             context, LinearLayoutManager.HORIZONTAL, false
         )
 
-        (recyclerViewBottomChapters.layoutManager as LinearLayoutManager).scrollToPosition(
+        (recyclerViewBottomChapters?.layoutManager as LinearLayoutManager).scrollToPosition(
             prefs.chapter_no-2);
 
         quranViewModel.getAllChapters().observe(viewLifecycleOwner, Observer {
             val horizontalChapterAdapter = HorizontalChapterAdapter(it,this)
-            recyclerViewBottomChapters.adapter = horizontalChapterAdapter
+            recyclerViewBottomChapters?.adapter = horizontalChapterAdapter
         })
 
 
@@ -81,7 +87,7 @@ class ChapterFragment : Fragment(), HorizontalChapterAdapter.OnHorizontalItemCli
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query!!.toInt()>=1 && query.toInt()<= prefs.chapter_verse_count){
-                    (recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
+                    (recyclerView?.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
                         query.toInt(), 20);
                     searchView.setQuery("",false)
                     searchView.isIconified = true
@@ -100,7 +106,7 @@ class ChapterFragment : Fragment(), HorizontalChapterAdapter.OnHorizontalItemCli
         quranViewModel.searchByChapterNo(prefs.chapter_no).observe(viewLifecycleOwner, Observer {
             (it as ArrayList).add(0,Ayat())
             val ayatAdapter = AyatAdapter(it)
-            recyclerView.adapter = ayatAdapter
+            recyclerView?.adapter = ayatAdapter
         })
 
         return root
@@ -111,6 +117,13 @@ class ChapterFragment : Fragment(), HorizontalChapterAdapter.OnHorizontalItemCli
         prefs.chapter_no = chapter.number!!
         prefs.chapter_verse_count = chapter.verses!!
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        recyclerView = null
+        recyclerViewBottomChapters = null
     }
 
 }

@@ -7,11 +7,6 @@ import gr.aytn.islamicapp.prefs
 
 class HomeViewModel : ViewModel() {
 
-    private var diff = MutableLiveData<String>()
 
-    fun remainingTime(): MutableLiveData<String> {
-        diff.postValue(prefs.remaining_time)
-        return diff
-    }
 
 }

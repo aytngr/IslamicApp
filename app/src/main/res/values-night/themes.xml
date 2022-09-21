@@ -13,6 +13,25 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/appbar_color</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+    </style>
+
+    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="AlertDialogStyle" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColorPrimary">#D6D6D6</item>
+        <item name="android:textColorSecondary">#D6D6D6</item>
+        <item name="android:textColorTertiary">#D6D6D6</item>
+        <item name="android:textColorHint">#D6D6D6</item>
+    </style>
+
     <style name="TextViewTheme" parent="">
         <!-- Set the default global color for TextViews to Holo Blue Dark -->
         <item name="android:textColorPrimary">#D6D6D6</item>

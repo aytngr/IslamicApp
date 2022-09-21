@@ -1,23 +1,12 @@
 package gr.aytn.islamicapp.ui
 
 
-import android.app.Notification
 import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.preference.PreferenceManager
-import android.util.Log
 import android.view.View
-import android.widget.RemoteViews
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.app.NotificationCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -25,7 +14,6 @@ import androidx.navigation.NavDestination
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import gr.aytn.islamicapp.NotificationService
 import gr.aytn.islamicapp.R
 import gr.aytn.islamicapp.adapters.LocationAdapter
 import gr.aytn.islamicapp.config.Constants
@@ -38,7 +26,6 @@ import java.util.*
 class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListener,
     LocationAdapter.OnLocationItemClickListener {
 
-    private lateinit var currentFragment: Fragment
     private lateinit var bottomNavView: BottomNavigationView
     private lateinit var navController: NavController
     val quranViewModel: QuranViewModel by viewModels()
@@ -52,17 +39,14 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (prefs.theme == "Light"){
+        if (prefs.theme == "Light") {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }else if (prefs.theme == "Dark"){
+        } else if (prefs.theme == "Dark") {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
 //        createNotification()
-
-
-
 
 
         bottomNavView = findViewById(R.id.bottomNavigationView)
@@ -73,20 +57,21 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
 
         val myCalendar: Calendar = Calendar.getInstance()
         val year = myCalendar.get(Calendar.YEAR)
-        val day = myCalendar.get(Calendar.DAY_OF_MONTH) - 1
         val month = myCalendar.get(Calendar.MONTH) + 1
 
         quranViewModel.getAllQuran()
 
-        quranViewModel.getRandomAyah().observe(this, androidx.lifecycle.Observer{
-            if(it != null){
-                prefs.random_ayah = "${it.verse}. ${it.text}. (${Constants.getChapterList().get(it.chapter!!-1).name} surəsi)"
+        quranViewModel.getRandomAyah().observe(this, Observer{
+            if (it != null) {
+                prefs.random_ayah = "${it.verse}. ${it.text}. (${
+                    Constants.getChapterList().get(it.chapter!! - 1).name
+                } surəsi)"
             }
         })
 
         var todaysDate = formatterDate.format(myCalendar.time)
 
-        if(currentMonth != month){
+        if (currentMonth != month) {
             currentMonth = month
             prayerViewModel.getPrayerTimes(
                 "Azerbaijan",
@@ -98,14 +83,14 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
             ).observe(this, Observer {
                 todaysDate = formatterDate.format(myCalendar.time)
                 prayerViewModel.getPrayerTimesByDate(todaysDate).observe(this, Observer {
-                    if(it!=null){
+                    if (it != null) {
                         prefs.fajr_time = it.fajr!!
                         prefs.sunrise_time = it.sunrise!!
                         prefs.dhuhr_time = it.dhuhr!!
                         prefs.asr_time = it.asr!!
                         prefs.maghrib_time = it.maghrib!!
                         prefs.isha_time = it.isha!!
-                    }else{
+                    } else {
                         prefs.fajr_time = "00:00"
                         prefs.sunrise_time = "00:00"
                         prefs.dhuhr_time = "00:00"
@@ -118,8 +103,8 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
             })
         }
 /////////////////////////////////////////////////
-        val notificationManager =
-            this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+//        val notificationManager =
+//            this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 //        if(prefs.sticky_notf){
 //            val intent = Intent(this, NotificationService::class.java)
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -130,7 +115,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
 //        }
 //////////////////////////////////////////
         prayerViewModel.getPrayerTimesByDate(todaysDate).observe(this, Observer {
-            if(it != null){
+            if (it != null) {
                 prefs.fajr_time = it.fajr!!
                 prefs.sunrise_time = it.sunrise!!
                 prefs.dhuhr_time = it.dhuhr!!
@@ -144,25 +129,25 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
         bottomNavView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> {
-                    navController?.navigate(R.id.homeFragment)
+                    navController.navigate(R.id.homeFragment)
 
                 }
                 R.id.prayer -> {
-                    navController?.navigate(R.id.prayerFragment)
+                    navController.navigate(R.id.prayerFragment)
                 }
                 R.id.quran -> {
-                    navController?.navigate(R.id.quranFragment)
+                    navController.navigate(R.id.quranFragment)
                 }
 //                R.id.dua -> {
 //                    currentFragment = ProfileFragment()
 //                }
                 R.id.settings -> {
-                    navController?.navigate(R.id.settingsFragment)
+                    navController.navigate(R.id.settingsFragment)
                 }
             }
             true
         }
-        navController?.addOnDestinationChangedListener { _, nd: NavDestination, _ ->
+        navController.addOnDestinationChangedListener { _, nd: NavDestination, _ ->
             // the IDs of fragments as defined in the `navigation_graph`
             if (nd.id == R.id.homeFragment || nd.id == R.id.prayerFragment
                 || nd.id == R.id.settingsFragment || nd.id == R.id.quranFragment
@@ -191,7 +176,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
         } else if (navController.currentDestination?.id == R.id.homeFragment) {
             prefs.chapter_no = 0
             finish()
-        }else {
+        } else {
             super.onBackPressed()
         }
 
@@ -213,7 +198,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
             this
         ).observe(this, Observer {
             prayerViewModel.getPrayerTimesByDate(todaysDate).observe(this, Observer {
-                if(it!=null){
+                if (it != null) {
                     prefs.fajr_time = it.fajr!!
                     prefs.sunrise_time = it.sunrise!!
                     prefs.dhuhr_time = it.dhuhr!!
@@ -221,7 +206,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
                     prefs.maghrib_time = it.maghrib!!
                     prefs.isha_time = it.isha!!
                     prefs.selected_location = location
-                }else{
+                } else {
                     prefs.fajr_time = "00:00"
                     prefs.sunrise_time = "00:00"
                     prefs.dhuhr_time = "00:00"
@@ -236,9 +221,6 @@ class MainActivity : AppCompatActivity(), HomeFragment.checkAllBtnOnClickListene
         navController.navigate(R.id.settingsFragment)
 
     }
-
-
-
 
 
 }

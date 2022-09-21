@@ -7,14 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import gr.aytn.islamicapp.R
+import gr.aytn.islamicapp.databinding.FragmentHomeBinding
 import gr.aytn.islamicapp.databinding.FragmentPrayerBinding
-import gr.aytn.islamicapp.model.PrayerResponse
 import gr.aytn.islamicapp.prefs
 import java.text.SimpleDateFormat
 import java.util.*
@@ -22,6 +20,8 @@ import java.util.*
 @AndroidEntryPoint
 class PrayerFragment : Fragment() {
 
+    private var _binding: FragmentPrayerBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var fajrTime: TextView
     private lateinit var sunriseTime: TextView
@@ -29,7 +29,6 @@ class PrayerFragment : Fragment() {
     private lateinit var asrTime: TextView
     private lateinit var maghribTime: TextView
     private lateinit var ishaTime: TextView
-    private var myResponseList = ArrayList<PrayerResponse>()
 
     val myCalendarYesterday: Calendar = Calendar.getInstance()
     val myCalendar: Calendar = Calendar.getInstance()
@@ -46,10 +45,10 @@ class PrayerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val year = myCalendar.get(Calendar.YEAR)
-        val month = myCalendar.get(Calendar.MONTH)
-        val day = myCalendar.get(Calendar.DAY_OF_MONTH)
-        val MONTHS: ArrayList<String> = arrayListOf("Yanvar","Fevral","Mart","Aprel","May","İyun","İyul","Avqust","Sentyabr","Oktyabr","Noyabr","Dekabr")
+//        val year = myCalendar.get(Calendar.YEAR)
+//        val month = myCalendar.get(Calendar.MONTH)
+//        val day = myCalendar.get(Calendar.DAY_OF_MONTH)
+//        val MONTHS: ArrayList<String> = arrayListOf("Yanvar","Fevral","Mart","Aprel","May","İyun","İyul","Avqust","Sentyabr","Oktyabr","Noyabr","Dekabr")
 
         val formatterDayMonth = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale("az"))
 
@@ -69,7 +68,7 @@ class PrayerFragment : Fragment() {
 //        val yesterdayMonthDate: Date = formatterMonth.parse(yesterdayMonthString) as Date
 
 
-        val binding = FragmentPrayerBinding.inflate(inflater, container, false)
+        _binding = FragmentPrayerBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         fajrTime = binding.fajrTime
@@ -220,20 +219,10 @@ class PrayerFragment : Fragment() {
         }
     }
 
-//    fun weekday(weekday: String):String{
-//        var weekdayInAzeri: String = ""
-//        when(weekday){
-//            "Monday" -> weekdayInAzeri =  "Bazar ertəsi"
-//            "Tuesday" -> weekdayInAzeri =  "Çərşənbə axşamı"
-//            "Wednesday" -> weekdayInAzeri =  "Çərşənbə"
-//            "Thursday" -> weekdayInAzeri =  "Cümə axşamı"
-//            "Friday" -> weekdayInAzeri =  "Cümə"
-//            "Saturday" -> weekdayInAzeri =  "Şənbə"
-//            "Sunday" -> weekdayInAzeri =  "Bazar"
-//        }
-//        return  weekdayInAzeri
-//    }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }

@@ -13,5 +13,6 @@
     <color name="card_text_color">#15202b</color>
     <color name="button_text_color">#FFFFFF</color>
     <color name="divider_color">#17FFFFFF</color>
+    <color name="dialog_color">#15202b</color>
 
 </resources>

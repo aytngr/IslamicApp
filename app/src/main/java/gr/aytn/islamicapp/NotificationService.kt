@@ -11,6 +11,7 @@ import android.os.IBinder
 import android.os.TransactionTooLargeException
 import android.util.Log
 import android.widget.RemoteViews
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import dagger.hilt.android.AndroidEntryPoint
 import gr.aytn.islamicapp.repository.PrayerRepository
@@ -56,6 +57,9 @@ class NotificationService : Service() {
         Log.i("notf","in the onstart")
 
 
+        var currentDate = "00-00-0000"
+        var currentLocation = prefs.selected_location
+
         val delay: Long = 1000*5 // 1000 milliseconds == 1 second
 
         val contentView = RemoteViews(packageName, R.layout.notification)
@@ -78,37 +82,47 @@ class NotificationService : Service() {
 
         runnable = object : Runnable {
             override fun run() {
-
+                Log.i("notfservie","in the run")
                 val myCalendar: Calendar = Calendar.getInstance()
                 val todaysDate = formatterDate.format(myCalendar.time)
-                repo.getPrayerTimesByDate(todaysDate).observeForever {
-                    if(it != null){
-                        contentView.setTextViewText(R.id.notf_fajr, it.fajr)
-                        contentView.setTextViewText(R.id.notf_sunrise, it.sunrise)
-                        contentView.setTextViewText(R.id.notf_dhuhr, it.dhuhr)
-                        contentView.setTextViewText(R.id.notf_asr, it.asr)
-                        contentView.setTextViewText(R.id.notf_maghrib, it.maghrib)
-                        contentView.setTextViewText(R.id.notf_isha, it.isha)
+                if(currentDate != todaysDate || currentLocation != prefs.selected_location){
+                    Log.i("notfservie","date loc changed")
 
-                        fajrTime = formatter.parse(it.fajr!!) as Date
-                        sunriseTime = formatter.parse(it.sunrise!!) as Date
-                        dhuhrTime = formatter.parse(it.dhuhr!!) as Date
-                        asrTime = formatter.parse(it.asr!!) as Date
-                        maghribTime = formatter.parse(it.maghrib!!) as Date
-                        ishaTime = formatter.parse(it.isha!!) as Date
-                        midnightTime = formatter.parse("24:00") as Date
-                        midnightTime2 = formatter.parse("00:00") as Date
-                        contentView.setTextViewText(R.id.notf_remaining_time, remaining_time)
+                    repo.getPrayerTimesByDate(todaysDate).observeForever {
+                        if(it != null){
+                            Log.i("notfservie","observing")
+                            contentView.setTextViewText(R.id.notf_fajr, it.fajr)
+                            contentView.setTextViewText(R.id.notf_sunrise, it.sunrise)
+                            contentView.setTextViewText(R.id.notf_dhuhr, it.dhuhr)
+                            contentView.setTextViewText(R.id.notf_asr, it.asr)
+                            contentView.setTextViewText(R.id.notf_maghrib, it.maghrib)
+                            contentView.setTextViewText(R.id.notf_isha, it.isha)
 
+                            fajrTime = formatter.parse(it.fajr!!) as Date
+                            sunriseTime = formatter.parse(it.sunrise!!) as Date
+                            dhuhrTime = formatter.parse(it.dhuhr!!) as Date
+                            asrTime = formatter.parse(it.asr!!) as Date
+                            maghribTime = formatter.parse(it.maghrib!!) as Date
+                            ishaTime = formatter.parse(it.isha!!) as Date
+                            midnightTime = formatter.parse("24:00") as Date
+                            midnightTime2 = formatter.parse("00:00") as Date
+                            contentView.setTextViewText(R.id.notf_remaining_time, remaining_time)
+
+                            currentDate = todaysDate
+                            currentLocation = prefs.selected_location
+                        }
                     }
-                }
-                startForeground(10, builder.build())
+
 
 //                notificationManager.notify(
 //                    10,
 //                    builder.build()
 //                )
+
+                }
                 setPrayerTimes()
+                contentView.setTextViewText(R.id.notf_remaining_time, remaining_time)
+                startForeground(10, builder.build())
                 handler.postDelayed(this, delay)
             }
         }
@@ -117,7 +131,9 @@ class NotificationService : Service() {
 
 
 
-        return START_REDELIVER_INTENT
+//        return super.onStartCommand(intent, flags, startId);
+//        return START_REDELIVER_INTENT
+        return START_STICKY
     }
 
     override fun onDestroy() {
@@ -130,24 +146,27 @@ class NotificationService : Service() {
         handler.removeCallbacks(runnable)
         stopSelf()
         notificationManager.cancel(10)
+        stopForeground(true)
         super.onDestroy()
     }
 
     override fun onTaskRemoved(rootIntent: Intent?) {
         println("onTaskRemoved called")
+//        if (!prefs.sticky_notf){
+//            println("onTaskRemoved service starting again")
+//            val intent = Intent(applicationContext, NotificationService::class.java)
+//            startService(intent)
+//        }
         super.onTaskRemoved(rootIntent)
-        //do something you want
-        //stop service
+
     }
-
-
     override fun onBind(intent: Intent): IBinder? {
         return null
     }
     fun setPrayerTimes(){
         val myCalendar: Calendar = Calendar.getInstance()
-        val currentTime: String = formatter2.format(myCalendar.getTime())
-        val currentTimeDate: Date = formatter2.parse(currentTime) as Date
+        val currentTime2: String = formatter2.format(myCalendar.getTime())
+        val currentTimeDate: Date = formatter2.parse(currentTime2) as Date
 
         if(currentTimeDate.compareTo(fajrTime)>=0 && currentTimeDate.compareTo(sunriseTime)<0){
             millis = sunriseTime.time - currentTimeDate.time

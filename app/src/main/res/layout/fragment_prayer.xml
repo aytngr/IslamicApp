@@ -29,20 +29,18 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/left"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignParentStart="true"
                 android:layout_gravity="center"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/left"
-                android:padding="10dp" />
+                android:padding="5dp"
+                android:src="@drawable/left" />
 
             <TextView
                 android:id="@+id/prayerFragmentDate"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="10dp"
@@ -53,15 +51,14 @@
                 android:text="Şənbə, 13 avqust 2022"
                 android:textSize="20sp" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/right"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="center"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/right" />
+                android:padding="5dp"
+                android:src="@drawable/right" />
         </RelativeLayout>
 
         <LinearLayout
@@ -106,185 +103,190 @@
         android:gravity="center"
         android:textColor="#F44336"
         android:visibility="gone"/>
-    <LinearLayout
-        android:id="@+id/prayer_times_layout"
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
         <LinearLayout
+            android:id="@+id/prayer_times_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="15dp">
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/fajr_icon"
-                android:layout_marginEnd="10dp"/>
-            <TextView
-                android:id="@+id/fajr_name"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Sübh namazı"
-                android:layout_weight="1"
-                android:textSize="20sp"/>
-
-            <TextView
-                android:id="@+id/fajr_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="04:08"
-
+                android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_weight="1"
-                android:textSize="20sp" />
+                android:padding="15dp">
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/fajr_icon"
+                    android:layout_marginEnd="10dp"/>
+                <TextView
+                    android:id="@+id/fajr_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sübh namazı"
+                    android:layout_weight="1"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/fajr_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="04:08"
+
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:textSize="20sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="15dp">
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/sunrise_icon"
+                    android:layout_marginEnd="10dp"
+                    android:layout_gravity="center"
+                    />
+                <TextView
+                    android:id="@+id/sunrise_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Gün çıxır"
+                    android:layout_weight="1"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/sunrise_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="05:49"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:textSize="20sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="15dp">
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/dhuhr_icon"/>
+                <TextView
+                    android:id="@+id/dhuhr_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Günorta namazı"
+                    android:layout_weight="1"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/dhuhr_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="12:46"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="20sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="15dp">
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/asr_icon"/>
+                <TextView
+                    android:id="@+id/asr_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="İkindi namazı"
+                    android:layout_weight="1"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/asr_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="16:36"
+                    android:layout_weight="1"
+                    android:textSize="20sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="15dp">
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/maghrib_icon"/>
+                <TextView
+                    android:id="@+id/maghrib_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Axşam namazı"
+                    android:layout_weight="1"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/maghrib_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="19:41"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="20sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="15dp">
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/isha_icon"/>
+                <TextView
+                    android:id="@+id/isha_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Yatsı namazı"
+
+                    android:layout_weight="1"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/isha_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="21:17"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="15dp">
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/sunrise_icon"
-                android:layout_marginEnd="10dp"
-                android:layout_gravity="center"
-                />
-            <TextView
-                android:id="@+id/sunrise_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Gün çıxır"
-                android:layout_weight="1"
-                android:textSize="20sp"/>
-
-            <TextView
-                android:id="@+id/sunrise_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="05:49"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:textSize="20sp" />
-    </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="15dp">
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginEnd="10dp"
-                android:src="@drawable/dhuhr_icon"/>
-            <TextView
-                android:id="@+id/dhuhr_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Günorta namazı"
-                android:layout_weight="1"
-                android:textSize="20sp"/>
-
-            <TextView
-                android:id="@+id/dhuhr_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="12:46"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textSize="20sp" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="15dp">
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginEnd="10dp"
-                android:src="@drawable/asr_icon"/>
-            <TextView
-                android:id="@+id/asr_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="İkindi namazı"
-                android:layout_weight="1"
-                android:textSize="20sp"/>
-
-            <TextView
-                android:id="@+id/asr_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="16:36"
-                android:layout_weight="1"
-                android:textSize="20sp" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="15dp">
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginEnd="10dp"
-                android:src="@drawable/maghrib_icon"/>
-            <TextView
-                android:id="@+id/maghrib_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Axşam namazı"
-                android:layout_weight="1"
-                android:textSize="20sp"/>
-
-            <TextView
-                android:id="@+id/maghrib_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="19:41"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textSize="20sp" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="15dp">
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginEnd="10dp"
-                android:src="@drawable/isha_icon"/>
-            <TextView
-                android:id="@+id/isha_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Yatsı namazı"
-
-                android:layout_weight="1"
-                android:textSize="20sp"/>
-
-            <TextView
-                android:id="@+id/isha_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="21:17"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textSize="20sp" />
-        </LinearLayout>
-
-    </LinearLayout>
+    </ScrollView>
 
 
 

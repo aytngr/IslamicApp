@@ -18,6 +18,7 @@ import gr.aytn.islamicapp.adapters.AyatAdapter
 import gr.aytn.islamicapp.adapters.ChapterAdapter
 import gr.aytn.islamicapp.config.Constants
 import gr.aytn.islamicapp.databinding.FragmentQuranBinding
+import gr.aytn.islamicapp.databinding.FragmentSettingsBinding
 import gr.aytn.islamicapp.model.Chapter
 import gr.aytn.islamicapp.prefs
 
@@ -25,12 +26,14 @@ import gr.aytn.islamicapp.prefs
 class QuranFragment : Fragment(), ChapterAdapter.OnItemClickListener{
 
     val quranViewModel: QuranViewModel by viewModels()
+    private var _binding: FragmentQuranBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentQuranBinding.inflate(inflater,container,false)
+        _binding = FragmentQuranBinding.inflate(inflater,container,false)
         val root = binding.root
 
         val searchView = binding.searchChapter
@@ -89,6 +92,9 @@ class QuranFragment : Fragment(), ChapterAdapter.OnItemClickListener{
     }
 
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }

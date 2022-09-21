@@ -28,14 +28,20 @@ import java.util.*
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    val quranViewModel: QuranViewModel by viewModels()
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+
     val prayerViewModel: PrayerViewModel by viewModels()
     val formatterDate = SimpleDateFormat("dd-MM-yyyy")
+
+    var timer: CountDownTimer? = null
 
     private lateinit var homeViewModel: HomeViewModel
     var millis: Long = 0
     var tvRemainingTime: TextView? = null
     var tvRemainingTimeSec: TextView? = null
+    var tvIndi: TextView? = null
+    var tvVaxtidir: TextView? = null
     var layout: LinearLayout? = null
     var tvCheckAll: TextView? = null
     var currentPrayer: String = ""
@@ -47,6 +53,7 @@ class HomeFragment : Fragment() {
 
     val fajrTime: Date = formatter.parse(prefs.fajr_time) as Date
     val sunriseTime: Date = formatter.parse(prefs.sunrise_time) as Date
+    val duhaTime: Date = formatter.parse(prefs.duha_time) as Date
     val dhuhrTime: Date = formatter.parse(prefs.dhuhr_time) as Date
     val asrTime: Date = formatter.parse(prefs.asr_time) as Date
     val maghribTime: Date = formatter.parse(prefs.maghrib_time) as Date
@@ -67,7 +74,7 @@ class HomeFragment : Fragment() {
 
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
-        val binding = FragmentHomeBinding.inflate(inflater,container,false)
+        _binding = FragmentHomeBinding.inflate(inflater,container,false)
         val root: View = binding.root
 
         val tz = TimeZone.getDefault()
@@ -75,20 +82,15 @@ class HomeFragment : Fragment() {
 
         cardTopTextViews = binding.cardTop
 
-
+        tvIndi = binding.tvIndi
+        tvVaxtidir = binding.tvVaxtidir
 
         val year = myCalendar1.get(Calendar.YEAR)
         val month = myCalendar1.get(Calendar.MONTH)
         val day = myCalendar1.get(Calendar.DAY_OF_MONTH)
         val MONTHS: ArrayList<String> = arrayListOf("Yanvar","Fevral","Mart","Aprel","May","İyun","İyul","Avqust","Sentyabr","Oktyabr","Noyabr","Dekabr")
 
-
-
-
-
-
 //        createNotification()
-
 
         val tvRandomAyat = binding.randomAyat
 
@@ -129,6 +131,15 @@ class HomeFragment : Fragment() {
             tvCurrentPrayerTime?.text = prefs.fajr_time
             millis = sunriseTime.time - currentTimeDate.time
             setBg(R.drawable.fajr_bg_drawable)
+            countdown(millis)
+
+        }
+        else if(currentTimeDate.compareTo(sunriseTime)>=0 && currentTimeDate.time - sunriseTime.time<40*60000){
+            tvCurrentPrayer?.text = "Gün çıxır"
+            currentPrayer = "sunrise"
+            tvCurrentPrayerTime?.text = prefs.sunrise_time
+            millis = dhuhrTime.time - currentTimeDate.time
+            setBg(R.drawable.dhuhr_bg_drawable)
             countdown(millis)
 
         }
@@ -185,21 +196,32 @@ class HomeFragment : Fragment() {
         }
     }
     fun countdown(millis: Long){
-        val timer = object: CountDownTimer(millis, 1000) {
+        timer = object: CountDownTimer(millis, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
                 val hour = (millisUntilFinished / 3600000).toInt();
                 val min = (millisUntilFinished / 60000).toInt() % 60
                 val sec = (millisUntilFinished / 1000).toInt() % 60
-                tvRemainingTime?.text = String.format("- %02d:%02d:", hour, min);
-                prefs.remaining_time = String.format("- %02d:%02d", hour, min);
-                tvRemainingTimeSec?.text = sec.toString();
+                if(currentPrayer == "sunrise"){
+                    tvRemainingTime?.visibility = View.GONE
+                    tvRemainingTimeSec?.visibility = View.GONE
+                    tvIndi?.visibility = View.GONE
+                    tvVaxtidir?.visibility = View.GONE
+                }else{
+                    tvRemainingTime?.visibility = View.VISIBLE
+                    tvRemainingTimeSec?.visibility = View.VISIBLE
+                    tvIndi?.visibility = View.VISIBLE
+                    tvVaxtidir?.visibility = View.VISIBLE
+                    tvRemainingTime?.text = String.format("- %02d:%02d:", hour, min);
+                    tvRemainingTimeSec?.text = sec.toString();
+                }
             }
             override fun onFinish() {
                 setPrayerTimes()
             }
         }
-        timer.start()
+        timer?.start()
+
     }
     fun setBg(bg: Int){
         layout?.setBackgroundResource(bg)
@@ -224,6 +246,15 @@ class HomeFragment : Fragment() {
         })
     }
 
-
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        tvCheckAll = null
+        layout = null
+        cardTopTextViews = null
+        tvRemainingTime = null
+        tvRemainingTimeSec = null
+        timer?.cancel()
+        timer = null
+    }
 }

@@ -9,6 +9,7 @@ class Prefs (context: Context){
 
     private var FAJR = "FAJR"
     private var SUNRISE = "SUNRISE"
+    private var DUHA = "DUHA"
     private var DHUHR = "DHUHR"
     private var ASR = "ASR"
     private var MAGHRIB = "MAGHRIB"
@@ -28,8 +29,49 @@ class Prefs (context: Context){
     private var TRANSLATION_FONT_SIZE = "TRANSLATION_FONT_SIZE"
     private var SELECTED_TEXT_LANGUAGE = "SELECTED_TEXT_LANGUAGE"
     private var SETTINGS_FROM_CHAPTER = "SETTINGS_FROM_CHAPTER"
+    private var SELECTED_ASR_CALCULATION = "SELECTED_ASR_CALCULATION"
+    private var SELECTED_NOTF_STYLE = "SELECTED_NOTF_STYLE"
+    private var SELECTED_NOTF_ICON = "SELECTED_NOTF_ICON"
+
+    private var FAJR_MANUAL = "FAJR_MANUAL"
+    private var DHUHR_MANUAL = "DHUHR_MANUAL"
+    private var ASR_MANUAL = "ASR_MANUAL"
+    private var MAGHRIB_MANUAL = "MAGHRIB_MANUAL"
+    private var ISHA_MANUAL = "ISHA_MANUAL"
 
     private val preferences: SharedPreferences = context.getSharedPreferences("SharedPref",Context.MODE_PRIVATE)
+
+    var fajr_manual: Int
+        get() = preferences.getInt(FAJR_MANUAL,0)
+        set(value) = preferences.edit().putInt(FAJR_MANUAL, value).apply()
+
+    var dhuhr_manual: Int
+        get() = preferences.getInt(DHUHR_MANUAL,0)
+        set(value) = preferences.edit().putInt(DHUHR_MANUAL, value).apply()
+
+    var asr_manual: Int
+        get() = preferences.getInt(ASR_MANUAL,0)
+        set(value) = preferences.edit().putInt(ASR_MANUAL, value).apply()
+
+    var maghrib_manual: Int
+        get() = preferences.getInt(MAGHRIB_MANUAL,0)
+        set(value) = preferences.edit().putInt(MAGHRIB_MANUAL, value).apply()
+
+    var isha_manual: Int
+        get() = preferences.getInt(ISHA_MANUAL,0)
+        set(value) = preferences.edit().putInt(ISHA_MANUAL, value).apply()
+
+    var selected_notf_style: String
+        get() = preferences.getString(SELECTED_NOTF_STYLE,"Stil 1").toString()
+        set(value) = preferences.edit().putString(SELECTED_NOTF_STYLE, value).apply()
+
+    var selected_notf_icon: String
+        get() = preferences.getString(SELECTED_NOTF_ICON,"Tətbiq nişanı").toString()
+        set(value) = preferences.edit().putString(SELECTED_NOTF_ICON, value).apply()
+
+    var selected_asr_calculation: String
+        get() = preferences.getString(SELECTED_ASR_CALCULATION,"Standart (Şafi, Maliki, Hənbəli)").toString()
+        set(value) = preferences.edit().putString(SELECTED_ASR_CALCULATION, value).apply()
 
     var arabic_font_size: Int
         get() = preferences.getInt(ARABIC_FONT_SIZE,28)
@@ -47,9 +89,6 @@ class Prefs (context: Context){
         get() = preferences.getString(SELECTED_TEXT_LANGUAGE,"araz").toString()
         set(value) = preferences.edit().putString(SELECTED_TEXT_LANGUAGE, value).apply()
 
-    var remaining_time: String
-        get() = preferences.getString(REMAINING_TIME,"").toString()
-        set(value) = preferences.edit().putString(REMAINING_TIME, value).apply()
 
     var sticky_notf: Boolean
         get() = preferences.getBoolean(STICKY_NOTF,false)
@@ -95,6 +134,10 @@ class Prefs (context: Context){
     var sunrise_time: String
         get() = preferences.getString(SUNRISE,"00:00").toString()
         set(value) = preferences.edit().putString(SUNRISE, value).apply()
+
+    var duha_time: String
+        get() = preferences.getString(DUHA,"00:00").toString()
+        set(value) = preferences.edit().putString(DUHA, value).apply()
 
     var dhuhr_time: String
         get() = preferences.getString(DHUHR,"00:00").toString()
