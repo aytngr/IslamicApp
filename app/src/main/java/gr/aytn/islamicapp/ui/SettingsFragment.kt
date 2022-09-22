@@ -69,6 +69,8 @@ class SettingsFragment : Fragment(), View.OnClickListener {
             val selected_asr = calcSettBottomSheet.findViewById<TextView>(R.id.selected_asr)
             val adjustments = calcSettBottomSheet.findViewById<LinearLayout>(R.id.adjustment_settings)
 
+            val tvLocation = calcSettBottomSheet.findViewById<TextView>(R.id.selected_location)
+            tvLocation!!.text = prefs.selected_location
             selected_asr!!.text = prefs.selected_asr_calculation
 
             location!!.setOnClickListener {
@@ -80,7 +82,15 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                     .create()
                 val view = layoutInflater.inflate(R.layout.asr_calculation_settings_dialog, null)
                 val radioGroup: RadioGroup = view.findViewById(R.id.RGroup)
+                val standard: RadioButton = view.findViewById(R.id.standard)
+                val hanafi: RadioButton = view.findViewById(R.id.hanafi)
+
                 var selectedAsrCalculation = ""
+
+                when (prefs.selected_asr_calculation) {
+                    "Standart (Şafi, Maliki, Hənbəli)" -> standard.isChecked = true
+                    "Hənəfi" -> hanafi.isChecked = true
+                }
                 radioGroup.setOnCheckedChangeListener { _, i ->
                     if (i == R.id.standard) {
                         selectedAsrCalculation = "Standart (Şafi, Maliki, Hənbəli)"
@@ -92,6 +102,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 val cancelBtn: Button = view.findViewById(R.id.cancel_button)
                 okBtn.setOnClickListener {
                     prefs.selected_asr_calculation = selectedAsrCalculation
+                    selected_asr.text = selectedAsrCalculation
                     builder.dismiss()
                 }
                 cancelBtn.setOnClickListener {
@@ -137,7 +148,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
             tvSelectedIcon?.text = prefs.selected_notf_icon
             tvSelectedStyle?.text = prefs.selected_notf_style
-//            tvSelectedNotfBg = prefs.sel
 
             switch!!.isChecked = prefs.sticky_notf
             val intent = Intent(requireActivity(), NotificationService::class.java)
@@ -163,7 +173,13 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                     .create()
                 val view = layoutInflater.inflate(R.layout.notf_icon_checkbox_dialog, null)
                 val radioGroup: RadioGroup = view.findViewById(R.id.RGroup)
+                val appIconBtn: RadioButton = view.findViewById(R.id.app_icon)
+                val moonPhasesBtn: RadioButton = view.findViewById(R.id.moon_phases)
                 var selectedIcon = ""
+                when (prefs.selected_notf_icon) {
+                    "Tətbiq nişanı" -> appIconBtn.isChecked = true
+                    "Ay fazaları" -> moonPhasesBtn.isChecked = true
+                }
                 radioGroup.setOnCheckedChangeListener { _, i ->
                     if (i == R.id.app_icon) {
                         selectedIcon = "Tətbiq nişanı"
@@ -175,6 +191,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 val cancelBtn: Button = view.findViewById(R.id.cancel_button)
                 okBtn.setOnClickListener {
                     prefs.selected_notf_icon = selectedIcon
+                    tvSelectedIcon!!.text = selectedIcon
                     builder.dismiss()
                 }
                 cancelBtn.setOnClickListener {
@@ -189,7 +206,13 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                     .create()
                 val view = layoutInflater.inflate(R.layout.notf_style_checkbox_dialog, null)
                 val radioGroup: RadioGroup = view.findViewById(R.id.RGroup)
+                val style1btn: RadioButton = view.findViewById(R.id.style1)
+                val style2btn: RadioButton = view.findViewById(R.id.style2)
                 var selectedStyle = ""
+                when (prefs.selected_notf_style) {
+                    "Stil 1" -> style1btn.isChecked = true
+                    "Stil 2" -> style2btn.isChecked = true
+                }
                 radioGroup.setOnCheckedChangeListener { _, i ->
                     if (i == R.id.style1) {
                         selectedStyle = "Stil 1"
@@ -201,6 +224,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 val cancelBtn: Button = view.findViewById(R.id.cancel_button)
                 okBtn.setOnClickListener {
                     prefs.selected_notf_style = selectedStyle
+                    tvSelectedStyle!!.text = selectedStyle
                     builder.dismiss()
                 }
                 cancelBtn.setOnClickListener {

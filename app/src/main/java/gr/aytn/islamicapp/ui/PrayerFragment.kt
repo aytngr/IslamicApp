@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import gr.aytn.islamicapp.R
 import gr.aytn.islamicapp.databinding.FragmentHomeBinding
@@ -89,6 +90,9 @@ class PrayerFragment : Fragment() {
         val selectedLocation = binding.prayerFragSelectedLocation
 
         selectedLocation.text = prefs.selected_location
+//        selectedLocation.setOnClickListener {
+//            findNavController().navigate(R.id.locationFragment)
+//        }
 
 //        val sdf = SimpleDateFormat("EEEE")
 //        val d = Date()
