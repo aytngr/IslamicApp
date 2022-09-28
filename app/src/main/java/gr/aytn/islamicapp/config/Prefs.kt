@@ -94,10 +94,6 @@ class Prefs (context: Context){
         get() = preferences.getBoolean(STICKY_NOTF,false)
         set(value) = preferences.edit().putBoolean(STICKY_NOTF, value).apply()
 
-    var settings_from_chapter: Boolean
-        get() = preferences.getBoolean(SETTINGS_FROM_CHAPTER,false)
-        set(value) = preferences.edit().putBoolean(SETTINGS_FROM_CHAPTER, value).apply()
-
     var current_month: Int
         get() = preferences.getInt(CURRENT_MONTH,-1)
         set(value) = preferences.edit().putInt(CURRENT_MONTH, value).apply()

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.SettingsFragment"
+    android:paddingBottom="60dp"
+    android:id="@+id/chapter_settings_layout"
+    android:background="@drawable/bottom_sheet_bg"
+    android:theme="@style/TextViewTheme"
+    android:orientation="vertical"
+    android:padding="10dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:text="Tənzimləmələr"
+        android:layout_marginBottom="10dp"
+        android:padding="5dp"/>
+    <TextView
+        android:id="@+id/translation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tərcümə"
+        android:textSize="17sp"
+        android:padding="10dp"
+        />
+    <TextView
+        android:id="@+id/text_size"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Yazı ölçüsü"
+        android:textSize="17sp"
+        android:padding="10dp"/>
+    <TextView
+        android:id="@+id/reading_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Yazı dili"
+        android:textSize="17sp"
+        android:padding="10dp"/>
+</LinearLayout>

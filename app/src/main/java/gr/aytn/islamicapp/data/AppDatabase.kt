@@ -19,7 +19,7 @@ import java.io.BufferedReader
 import javax.inject.Inject
 import javax.inject.Provider
 
-@Database(entities = [Ayat::class, Chapter::class,PrayerTime::class],version = 6)
+@Database(entities = [Ayat::class, Chapter::class,PrayerTime::class],version = 7)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun ayatDao(): QuranDao
     abstract fun prayerDao(): PrayerDao

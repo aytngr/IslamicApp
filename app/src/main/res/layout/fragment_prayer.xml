@@ -37,6 +37,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_gravity="center"
                 android:padding="5dp"
+                android:layout_marginStart="5dp"
                 android:src="@drawable/left" />
 
             <TextView
@@ -59,6 +60,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="center"
                 android:padding="5dp"
+                android:layout_marginEnd="5dp"
                 android:src="@drawable/right" />
         </RelativeLayout>
 
@@ -124,23 +126,24 @@
                     android:layout_height="32dp"
                     android:src="@drawable/fajr_icon"
                     android:layout_marginEnd="10dp"/>
+
                 <TextView
                     android:id="@+id/fajr_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Sübh namazı"
                     android:layout_weight="1"
-                    android:textSize="20sp"/>
+                    android:text="Sübh namazı"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/fajr_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="04:08"
+                    android:layout_weight="1"
 
                     android:gravity="center"
-                    android:layout_weight="1"
-                    android:textSize="20sp" />
+                    android:text="04:08"
+                    android:textSize="18sp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -155,22 +158,23 @@
                     android:layout_marginEnd="10dp"
                     android:layout_gravity="center"
                     />
+
                 <TextView
                     android:id="@+id/sunrise_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Gün çıxır"
                     android:layout_weight="1"
-                    android:textSize="20sp"/>
+                    android:text="Gün çıxır"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/sunrise_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="05:49"
-                    android:gravity="center"
                     android:layout_weight="1"
-                    android:textSize="20sp" />
+                    android:gravity="center"
+                    android:text="05:49"
+                    android:textSize="18sp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -183,22 +187,23 @@
                     android:layout_height="32dp"
                     android:layout_marginEnd="10dp"
                     android:src="@drawable/dhuhr_icon"/>
+
                 <TextView
                     android:id="@+id/dhuhr_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Günorta namazı"
                     android:layout_weight="1"
-                    android:textSize="20sp"/>
+                    android:text="Günorta namazı"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/dhuhr_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="12:46"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:textSize="20sp" />
+                    android:text="12:46"
+                    android:textSize="18sp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -211,22 +216,23 @@
                     android:layout_height="32dp"
                     android:layout_marginEnd="10dp"
                     android:src="@drawable/asr_icon"/>
+
                 <TextView
                     android:id="@+id/asr_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="İkindi namazı"
                     android:layout_weight="1"
-                    android:textSize="20sp"/>
+                    android:text="İkindi namazı"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/asr_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:text="16:36"
-                    android:layout_weight="1"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -239,22 +245,23 @@
                     android:layout_height="32dp"
                     android:layout_marginEnd="10dp"
                     android:src="@drawable/maghrib_icon"/>
+
                 <TextView
                     android:id="@+id/maghrib_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Axşam namazı"
                     android:layout_weight="1"
-                    android:textSize="20sp"/>
+                    android:text="Axşam namazı"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/maghrib_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="19:41"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:textSize="20sp" />
+                    android:text="19:41"
+                    android:textSize="18sp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -267,23 +274,24 @@
                     android:layout_height="32dp"
                     android:layout_marginEnd="10dp"
                     android:src="@drawable/isha_icon"/>
+
                 <TextView
                     android:id="@+id/isha_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Yatsı namazı"
-
                     android:layout_weight="1"
-                    android:textSize="20sp"/>
+
+                    android:text="Yatsı namazı"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/isha_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="21:17"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:textSize="20sp" />
+                    android:text="21:17"
+                    android:textSize="18sp" />
             </LinearLayout>
 
         </LinearLayout>

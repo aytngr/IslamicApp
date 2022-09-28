@@ -37,7 +37,7 @@ class PrayerFragment : Fragment() {
 
     lateinit var line1:View
     lateinit var line2:View
-    lateinit var warningMessage: TextView
+    var warningMessage: TextView? = null
 
     val prayerViewModel: PrayerViewModel by viewModels()
 
@@ -113,7 +113,7 @@ class PrayerFragment : Fragment() {
                     leftBtn.visibility = View.VISIBLE
                     tvDate.text = todayDateString
                     setViews("green")
-                    warningMessage.visibility = View.GONE
+                    warningMessage?.visibility = View.GONE
                 }else{
                     setPrayerTimes("yesterday")
                     leftBtn.visibility = View.GONE
@@ -122,7 +122,7 @@ class PrayerFragment : Fragment() {
                         Log.i("wa", "no yesterday")
                         setWarning()
                     }else{
-                        warningMessage.visibility = View.GONE
+                        warningMessage?.visibility = View.GONE
                     }
                     tvDate.text = yesterdayMonthDayString
                     setViews("red")
@@ -141,7 +141,7 @@ class PrayerFragment : Fragment() {
                     leftBtn.visibility = View.VISIBLE
                     tvDate.text = todayDateString
                     setViews("green")
-                    warningMessage.visibility = View.GONE
+                    warningMessage?.visibility = View.GONE
                 }else{
                     setPrayerTimes("tomorrow")
                     rightBtn.visibility = View.GONE
@@ -149,7 +149,7 @@ class PrayerFragment : Fragment() {
                     if (prefs.warning_message == "no_tomorrow"){
                         setWarning()
                     }else{
-                        warningMessage.visibility = View.GONE
+                        warningMessage?.visibility = View.GONE
                     }
                     tvDate.text = tomorrowMonthDayString
                     setViews("red")
@@ -213,13 +213,13 @@ class PrayerFragment : Fragment() {
     }
     fun setWarning(){
         if (prefs.warning_message == "no_yesterday"){
-            warningMessage.text = "Öncəki ay vaxtları üçün təqvimə baxın"
-            warningMessage.visibility = View.VISIBLE
+            warningMessage?.text = "Öncəki ay vaxtları üçün təqvimə baxın"
+            warningMessage?.visibility = View.VISIBLE
         }else if (prefs.warning_message == "no_tomorrow"){
-            warningMessage.text = "Sonrakı ay vaxtları üçün təqvimə baxın"
-            warningMessage.visibility = View.VISIBLE
+            warningMessage?.text = "Sonrakı ay vaxtları üçün təqvimə baxın"
+            warningMessage?.visibility = View.VISIBLE
         }else{
-            warningMessage.visibility = View.GONE
+            warningMessage?.visibility = View.GONE
         }
     }
 
@@ -227,6 +227,7 @@ class PrayerFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        warningMessage = null
     }
 
 }

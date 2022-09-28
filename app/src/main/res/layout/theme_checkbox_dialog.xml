@@ -7,7 +7,8 @@
     android:theme="@style/TextViewTheme"
     android:paddingStart="20dp"
     android:paddingTop="15dp"
-    android:paddingEnd="10dp">
+    android:paddingEnd="10dp"
+    android:paddingBottom="25dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,26 +32,26 @@
                 android:text="Dark"
                 android:id="@+id/dark"/>
         </RadioGroup>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="end">
-            <Button
-                android:id="@+id/ok_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ok"
-                android:textColor="@color/button_text_color"
-                android:textAllCaps="false"
-                android:background="@android:color/transparent"/>
-            <Button
-                android:id="@+id/cancel_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ləğv et"
-                android:textColor="@color/button_text_color"
-                android:textAllCaps="false"
-                android:background="@android:color/transparent"/>
-        </LinearLayout>
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:gravity="end">-->
+<!--            <Button-->
+<!--                android:id="@+id/ok_button"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Ok"-->
+<!--                android:textColor="@color/button_text_color"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:background="@android:color/transparent"/>-->
+<!--            <Button-->
+<!--                android:id="@+id/cancel_button"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Ləğv et"-->
+<!--                android:textColor="@color/button_text_color"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:background="@android:color/transparent"/>-->
+<!--        </LinearLayout>-->
 </LinearLayout>

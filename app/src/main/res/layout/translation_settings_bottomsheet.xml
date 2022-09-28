@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.SettingsFragment"
+    android:paddingBottom="60dp"
+    android:id="@+id/translation_settings_layout"
+    android:background="@drawable/bottom_sheet_bg"
+    android:theme="@style/TextViewTheme"
+    android:orientation="vertical"
+    android:padding="10dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tərcümə"
+        android:textSize="17sp"
+        android:padding="5dp"/>
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/RGroup">
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Əlixan Musayev"
+            android:scaleX="0.9"
+            android:scaleY="0.9"
+            android:buttonTint="@color/appbar_color"
+            android:textSize="16sp"
+            android:id="@+id/alikhan"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vasim Məmmədəliyev və Ziya Bünyadov"
+            android:scaleX="0.9"
+            android:scaleY="0.9"
+            android:buttonTint="@color/appbar_color"
+            android:textSize="16sp"
+            android:id="@+id/vasim"/>
+    </RadioGroup>
+</LinearLayout>

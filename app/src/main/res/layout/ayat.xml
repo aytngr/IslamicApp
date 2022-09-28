@@ -4,46 +4,55 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="5dp"
-    android:background="@color/background"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:paddingEnd="10dp"
+    android:layout_margin="5dp"
+    android:background="@drawable/verse_bg"
     android:theme="@style/TextViewTheme">
     <TextView
         android:id="@+id/tv_ayat_arabic"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ"
+        android:text="وَالَّذِينَ يَقُولُونَ رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًاِِ"
         android:textSize="25sp"
         android:layout_marginStart="10dp"
+        android:layout_marginBottom="5dp"
         android:textDirection="rtl"
         android:fontFamily="@font/arabic_font"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginStart="10dp">
+        android:paddingBottom="5dp">
         <TextView
             android:id="@+id/tv_ayat_number"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="1. "
-            android:textSize="20sp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:text="111"
+            android:layout_marginEnd="17dp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="12sp"
             android:textStyle="bold"
+            android:background="@drawable/chapter_number_bg"
             />
         <TextView
             android:id="@+id/tv_ayat"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="Azeri"
             android:textSize="20sp"
+            android:paddingBottom="5dp"
             />
     </LinearLayout>
 
-    <View
-        android:id="@+id/view1"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/divider_color"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp" />
+<!--    <View-->
+<!--        android:id="@+id/view1"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="1dp"-->
+<!--        android:background="@color/divider_color"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:layout_marginStart="15dp"-->
+<!--        android:layout_marginEnd="15dp" />-->
 </LinearLayout>

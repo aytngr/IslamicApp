@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.SettingsFragment"
+    android:paddingBottom="60dp"
+    android:id="@+id/translation_settings_layout"
+    android:background="@drawable/bottom_sheet_bg"
+    android:theme="@style/TextViewTheme"
+    android:orientation="vertical"
+    android:padding="10dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tərcümə yazı ölçüsü"
+        android:textSize="17sp"
+        android:padding="5dp"/>
+    <SeekBar
+        android:id="@+id/seekbar_az"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:min="16"
+        android:max="26"
+        android:progressTint="@color/appbar_color"
+        android:padding="10dp"
+        android:thumbTint="@color/appbar_color"
+        android:background="@drawable/chapter_bg"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ərəbcə yazı ölçüsü"
+        android:textSize="17sp"
+        android:padding="5dp"/>
+    <SeekBar
+        android:id="@+id/seekbar_ar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:min="26"
+        android:max="40"
+        android:padding="10dp"
+        android:progressTint="@color/appbar_color"
+        android:thumbTint="@color/appbar_color"
+        android:background="@drawable/chapter_bg"/>/>
+</LinearLayout>

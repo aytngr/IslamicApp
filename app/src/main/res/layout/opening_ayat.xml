@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="5dp"
-    android:background="@color/background"
+    android:background="@drawable/verse_bg"
+    android:layout_margin="5dp"
     android:theme="@style/TextViewTheme">
     <TextView
         android:id="@+id/tv_opening_arabic"

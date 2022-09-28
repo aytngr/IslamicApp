@@ -61,7 +61,7 @@ class AyatAdapter(private val mList: List<Ayat>) : RecyclerView.Adapter<Recycler
                 viewHolder2.tvAyat.text = "${ayat.text}"
             }
 
-            viewHolder2.tvAyatNumber.text = "${ayat.verse}. "
+            viewHolder2.tvAyatNumber.text = "${ayat.verse}"
 
             if (prefs.selected_text_language == "az"){
                 viewHolder2.tvAyatArabic.visibility = View.GONE
@@ -75,6 +75,7 @@ class AyatAdapter(private val mList: List<Ayat>) : RecyclerView.Adapter<Recycler
             }
         }
     }
+
     // return the number of the items in the list
     override fun getItemCount(): Int {
         return mList.size

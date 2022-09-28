@@ -61,7 +61,7 @@ class ChapterSettingsFragment : Fragment() {
         }
 
         settingsArabicFontSize.setOnClickListener {
-            val builder = android.app.AlertDialog.Builder(context)
+            val builder = android.app.AlertDialog.Builder(context,R.style.AlertDialogStyle)
                 .create()
             val view = layoutInflater.inflate(R.layout.arabic_font_checkbox_dialog, null)
             val radioGroup: RadioGroup = view.findViewById(R.id.RGroup)
@@ -96,12 +96,11 @@ class ChapterSettingsFragment : Fragment() {
                 builder.dismiss()
             }
             builder.setView(view)
-            builder.setCanceledOnTouchOutside(true)
             builder.show()
         }
 
         settingsTranslationFontSize.setOnClickListener {
-            val builder = android.app.AlertDialog.Builder(context)
+            val builder = android.app.AlertDialog.Builder(context,R.style.AlertDialogStyle)
                 .create()
             val view = layoutInflater.inflate(R.layout.translation_font_checkbox_dialog, null)
             val radioGroup: RadioGroup = view.findViewById(R.id.RGroup)
@@ -139,11 +138,10 @@ class ChapterSettingsFragment : Fragment() {
                 builder.dismiss()
             }
             builder.setView(view)
-            builder.setCanceledOnTouchOutside(true)
             builder.show()
         }
         settingsTranslation.setOnClickListener {
-            val builder = android.app.AlertDialog.Builder(context)
+            val builder = android.app.AlertDialog.Builder(context,R.style.AlertDialogStyle)
                 .create()
             val view = layoutInflater.inflate(R.layout.translation_checkbox_dialog, null)
             val radioGroup: RadioGroup = view.findViewById(R.id.RGroup)
@@ -178,11 +176,10 @@ class ChapterSettingsFragment : Fragment() {
                 builder.dismiss()
             }
             builder.setView(view)
-            builder.setCanceledOnTouchOutside(true)
             builder.show()
         }
         settingsTheme.setOnClickListener {
-            val builder = android.app.AlertDialog.Builder(context)
+            val builder = android.app.AlertDialog.Builder(context,R.style.AlertDialogStyle)
                 .create()
             val view = layoutInflater.inflate(R.layout.theme_checkbox_dialog, null)
             val radioGroup: RadioGroup = view.findViewById(R.id.RGroup)
@@ -220,7 +217,6 @@ class ChapterSettingsFragment : Fragment() {
                 builder.dismiss()
             }
             builder.setView(view)
-            builder.setCanceledOnTouchOutside(false)
             builder.show()
         }
 
