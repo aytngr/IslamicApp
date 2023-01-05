@@ -1,3 +1,3 @@
-<img src="screenshots/Screenshot_1663760849.png" width="200"> <img src="screenshots/Screenshot_1663760855.png" width="200"> 
-<img src="screenshots/Screenshot_1663760860.png" width="200"> <img src="screenshots/Screenshot_1663760863.png" width="200"> 
-<img src="screenshots/Screenshot_1663760875.png" width="200"> 
+<img src="screenshots/Picture1.png" width="250">    <img src="screenshots/Picture2.png" width="250">  
+<img src="screenshots/Picture3.png" width="250">    <img src="screenshots/Picture5.png" width="250">  
+<img src="screenshots/Picture4.png" width="250">   
