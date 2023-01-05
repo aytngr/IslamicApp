@@ -187,12 +187,21 @@ class ChapterFragment : Fragment(), HorizontalChapterAdapter.OnHorizontalItemCli
                 }
                 radioGroup?.setOnCheckedChangeListener { _, i ->
                     when (i) {
-                        R.id.ar -> {prefs.selected_text_language = "ar"
-                            findNavController().navigate(R.id.chapterFragment)}
-                        R.id.az -> {prefs.selected_text_language = "az"
-                            findNavController().navigate(R.id.chapterFragment)}
-                        R.id.araz -> {prefs.selected_text_language = "araz"
-                            findNavController().navigate(R.id.chapterFragment)}
+                        R.id.ar -> {
+                            prefs.selected_text_language = "ar"
+                                findNavController().navigate(R.id.chapterFragment)
+                                recyclerView?.adapter?.notifyDataSetChanged()
+                        }
+                        R.id.az -> {
+                            prefs.selected_text_language = "az"
+                                findNavController().navigate(R.id.chapterFragment)
+                                recyclerView?.adapter?.notifyDataSetChanged()
+                        }
+                        R.id.araz -> {
+                            prefs.selected_text_language = "araz"
+                            findNavController().navigate(R.id.chapterFragment)
+                            recyclerView?.adapter?.notifyDataSetChanged()
+                        }
                     }
                 }
 
